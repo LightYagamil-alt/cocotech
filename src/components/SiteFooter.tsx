@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, Twitter, Phone, Mail } from "lucide-react";
+import { Camera, ThumbsUp, Bird, Phone, Mail } from "lucide-react";
 
 export function SiteFooter() {
   return (
@@ -33,9 +33,9 @@ export function SiteFooter() {
             <li className="flex items-center gap-2"><Mail size={14}/> hello@cocotech.co</li>
           </ul>
           <div className="mt-4 flex gap-3">
-            <a href="#" aria-label="Instagram" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><Instagram size={16}/></a>
-            <a href="#" aria-label="Facebook" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><Facebook size={16}/></a>
-            <a href="#" aria-label="Twitter" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><Twitter size={16}/></a>
+            <a href="#" aria-label="Instagram" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><Camera size={16}/></a>
+            <a href="#" aria-label="Facebook" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><ThumbsUp size={16}/></a>
+            <a href="#" aria-label="Twitter" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><Bird size={16}/></a>
           </div>
         </div>
       </div>
