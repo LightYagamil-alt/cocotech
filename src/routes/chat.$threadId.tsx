@@ -73,14 +73,10 @@ function ChatThreadPage() {
     if (status === "ready") textareaRef.current?.focus();
   }, [status]);
 
-  function handleSubmit(e: { preventDefault: () => void }) {
-    e.preventDefault();
-    const ta = textareaRef.current;
-    if (!ta) return;
-    const text = ta.value.trim();
+  function handleSubmit(message: { text?: string }) {
+    const text = (message.text ?? "").trim();
     if (!text || status === "submitted" || status === "streaming") return;
     void sendMessage({ text });
-    ta.value = "";
   }
 
   const isBusy = status === "submitted" || status === "streaming";
@@ -98,7 +94,7 @@ function ChatThreadPage() {
           ) : (
             messages.map((message) => (
               <Message key={message.id} from={message.role}>
-                <MessageContent variant={message.role === "user" ? "contained" : "flat"}>
+                <MessageContent>
                   {message.parts.map((part, i) => {
                     if (part.type === "text") {
                       return message.role === "assistant" ? (
@@ -115,7 +111,7 @@ function ChatThreadPage() {
           )}
           {status === "submitted" && (
             <Message from="assistant">
-              <MessageContent variant="flat">
+              <MessageContent>
                 <Shimmer>Thinking...</Shimmer>
               </MessageContent>
             </Message>
@@ -134,10 +130,9 @@ function ChatThreadPage() {
           <PromptInputTextarea
             ref={textareaRef}
             placeholder="Ask Coco anything..."
-            disabled={isBusy}
           />
           <PromptInputFooter className="justify-end">
-            <PromptInputSubmit status={status} disabled={isBusy && !stop} onStop={stop} />
+            <PromptInputSubmit status={status} disabled={isBusy} onStop={stop} />
           </PromptInputFooter>
         </PromptInput>
       </div>
