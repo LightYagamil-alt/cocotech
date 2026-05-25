@@ -47,9 +47,9 @@ function ContactPage() {
             </div>
           </div>
           <div className="flex gap-3 pt-2">
-            <a href="#" aria-label="Instagram" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><Instagram size={18}/></a>
-            <a href="#" aria-label="Facebook" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><Facebook size={18}/></a>
-            <a href="#" aria-label="Twitter" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><Twitter size={18}/></a>
+            <a href="#" aria-label="Instagram" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><Camera size={18}/></a>
+            <a href="#" aria-label="Facebook" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><ThumbsUp size={18}/></a>
+            <a href="#" aria-label="Twitter" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><Bird size={18}/></a>
           </div>
         </div>
 
