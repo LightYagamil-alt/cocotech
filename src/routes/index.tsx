@@ -34,9 +34,11 @@ function Index() {
           aria-hidden
           width={1920}
           height={1080}
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover opacity-40 dark:opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/70 to-background" />
         <div className="relative mx-auto max-w-7xl px-6 py-28 md:py-40">
           <div className="max-w-3xl animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
@@ -72,7 +74,7 @@ function Index() {
             All services →
           </Link>
         </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s) => (
             <div key={s.title} className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 transition-all hover:-translate-y-1 hover:shadow-glow">
               <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-brand opacity-0 blur-3xl transition-opacity group-hover:opacity-40" />
