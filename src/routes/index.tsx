@@ -147,6 +147,8 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <ChatBubble />
     </div>
   );
 }
