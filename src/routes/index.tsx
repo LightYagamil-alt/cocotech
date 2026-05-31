@@ -4,6 +4,7 @@ import heroImg from "@/assets/hero.jpg";
 import webImg from "@/assets/work-web.jpg";
 import socialImg from "@/assets/work-social.jpg";
 import videoImg from "@/assets/work-video.jpg";
+import { ChatBubble } from "@/components/ChatBubble";
 
 export const Route = createFileRoute("/")({
   component: Index,
