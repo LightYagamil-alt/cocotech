@@ -35,11 +35,12 @@ function ChatThreadPage() {
   const { threadId } = Route.useParams();
   const { q } = Route.useSearch();
   const navigate = useNavigate();
-  const { ensureThread, updateThread } = useChatThreads();
+  const { getThread, ensureThread, updateThread } = useChatThreads();
 
-  const initialMessages = useMemo<UIMessage[]>(() => {
-    const t = ensureThread(threadId);
-    return t.messages;
+  const initialMessages = useMemo<UIMessage[]>(() => getThread(threadId).messages, [getThread, threadId]);
+
+  useEffect(() => {
+    ensureThread(threadId);
   }, [ensureThread, threadId]);
 
   const { messages, sendMessage, status, error, stop } = useChat({

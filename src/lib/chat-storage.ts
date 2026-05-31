@@ -98,5 +98,5 @@ export function useChatThreads() {
     [persist],
   );
 
-  return { threads, ensureThread, updateThread, deleteThread };
+  return { threads, getThread, ensureThread, updateThread, deleteThread };
 }
