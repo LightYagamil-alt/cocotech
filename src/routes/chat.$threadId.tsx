@@ -35,11 +35,12 @@ function ChatThreadPage() {
   const { threadId } = Route.useParams();
   const { q } = Route.useSearch();
   const navigate = useNavigate();
-  const { ensureThread, updateThread } = useChatThreads();
+  const { getThread, ensureThread, updateThread } = useChatThreads();
 
-  const initialMessages = useMemo<UIMessage[]>(() => {
-    const t = ensureThread(threadId);
-    return t.messages;
+  const initialMessages = useMemo<UIMessage[]>(() => getThread(threadId).messages, [getThread, threadId]);
+
+  useEffect(() => {
+    ensureThread(threadId);
   }, [ensureThread, threadId]);
 
   const { messages, sendMessage, status, error, stop } = useChat({
@@ -48,8 +49,9 @@ function ChatThreadPage() {
     transport: new DefaultChatTransport({ api: "/api/chat" }),
   });
 
-  // Persist on every change
+  // Persist on every change (skip empty initial state to avoid no-op writes)
   useEffect(() => {
+    if (messages.length === 0) return;
     updateThread(threadId, messages);
   }, [messages, threadId, updateThread]);
 
