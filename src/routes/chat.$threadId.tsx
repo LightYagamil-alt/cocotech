@@ -49,8 +49,9 @@ function ChatThreadPage() {
     transport: new DefaultChatTransport({ api: "/api/chat" }),
   });
 
-  // Persist on every change
+  // Persist on every change (skip empty initial state to avoid no-op writes)
   useEffect(() => {
+    if (messages.length === 0) return;
     updateThread(threadId, messages);
   }, [messages, threadId, updateThread]);
 
