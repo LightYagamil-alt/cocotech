@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote } from "lucide-react";
+import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote, Image as ImageIcon } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import webImg from "@/assets/work-web.jpg";
 import socialImg from "@/assets/work-social.jpg";
@@ -13,6 +13,7 @@ export const Route = createFileRoute("/")({
 const services = [
   { icon: Code2, title: "Website Creation", desc: "Fast, responsive sites that turn visitors into customers." },
   { icon: Palette, title: "Social Media Design", desc: "Scroll-stopping posts, stories and ad creatives." },
+  { icon: ImageIcon, title: "Poster Design", desc: "Bold print-ready posters and flyers for events and promos." },
   { icon: Film, title: "Video Editing", desc: "Cinematic edits, reels and brand films that move people." },
 ];
 

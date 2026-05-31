@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Code2, Palette, Film, Check } from "lucide-react";
+import { Code2, Palette, Film, Check, Image as ImageIcon } from "lucide-react";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -25,6 +25,12 @@ const services = [
     title: "Social Media Design",
     desc: "Branded post packs, stories, reels covers and ad creatives that stop the scroll.",
     points: ["Custom brand kits", "Weekly content packs", "Story & reel templates", "Ad creatives"],
+  },
+  {
+    icon: ImageIcon,
+    title: "Poster Design",
+    desc: "Bold, print-ready posters and flyers for events, promos and announcements — designed to grab attention.",
+    points: ["Event & promo posters", "Print-ready files", "Digital & physical formats", "Custom illustrations"],
   },
   {
     icon: Film,
