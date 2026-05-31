@@ -49,14 +49,21 @@ export function useChatThreads() {
     setThreads(sorted);
   }, []);
 
+  // Pure read — safe to call during render. Does NOT setState.
+  const getThread = useCallback((id: string): ChatThread => {
+    const current = readThreads();
+    const existing = current.find((t) => t.id === id);
+    if (existing) return existing;
+    return { id, title: "New chat", updatedAt: Date.now(), messages: [] };
+  }, []);
+
+  // Effectful — creates the thread on disk + state if missing. Call in useEffect.
   const ensureThread = useCallback(
-    (id: string): ChatThread => {
+    (id: string) => {
       const current = readThreads();
-      const existing = current.find((t) => t.id === id);
-      if (existing) return existing;
+      if (current.some((t) => t.id === id)) return;
       const fresh: ChatThread = { id, title: "New chat", updatedAt: Date.now(), messages: [] };
       persist([fresh, ...current]);
-      return fresh;
     },
     [persist],
   );
