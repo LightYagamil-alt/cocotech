@@ -75,11 +75,15 @@ function Index() {
           </Link>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s) => (
-            <div key={s.title} className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 transition-all hover:-translate-y-1 hover:shadow-glow">
+          {services.map((s, i) => (
+            <div
+              key={s.title}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 transition-all animate-fade-up hover-lift hover:shadow-glow"
+              style={{ animationDelay: `${i * 80}ms` }}
+            >
               <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-brand opacity-0 blur-3xl transition-opacity group-hover:opacity-40" />
               <div className="relative">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground transition-transform group-hover:scale-110 group-hover:rotate-3">
                   <s.icon size={22}/>
                 </div>
                 <h3 className="mt-5 text-xl font-semibold">{s.title}</h3>
