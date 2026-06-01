@@ -29,10 +29,10 @@ export function ChatBubble() {
 
   return (
     <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-6 md:right-6">
-      {/* Tooltip nudge */}
+      {/* Greeting nudge */}
       {nudge && !open && (
-        <div className="pointer-events-auto animate-fade-up rounded-2xl rounded-br-sm border border-border bg-card px-3 py-2 text-xs shadow-glow">
-          <span className="text-foreground">Hey 👋 need help? Ask Coco.</span>
+        <div className="pointer-events-auto max-w-[16rem] animate-fade-up rounded-2xl rounded-br-sm border border-border bg-card px-3 py-2 text-xs shadow-glow">
+          <span className="text-foreground">Hi, I'm Coco 👋 — here to help with anything you need.</span>
         </div>
       )}
 
