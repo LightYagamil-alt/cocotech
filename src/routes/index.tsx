@@ -130,8 +130,12 @@ function Index() {
       <section className="mx-auto max-w-7xl px-6 py-20">
         <h2 className="text-4xl font-bold md:text-5xl">Loved by founders & creators</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <figure key={t.name} className="relative rounded-2xl border border-border bg-card p-6">
+          {testimonials.map((t, i) => (
+            <figure
+              key={t.name}
+              className="relative rounded-2xl border border-border bg-card p-6 animate-fade-up hover-lift"
+              style={{ animationDelay: `${i * 120}ms` }}
+            >
               <Quote className="absolute right-4 top-4 text-brand/30" size={28}/>
               <div className="flex gap-1 text-brand">
                 {Array.from({length:5}).map((_,i)=>(<Star key={i} size={14} fill="currentColor"/>))}
