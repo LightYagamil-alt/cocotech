@@ -104,7 +104,7 @@ function ChatThreadPage() {
             />
           ) : (
             messages.map((message) => (
-              <Message key={message.id} from={message.role}>
+              <Message key={message.id} id={`msg-${message.id}`} from={message.role}>
                 <MessageContent>
                   {message.parts.map((part, i) => {
                     if (part.type === "text") {
