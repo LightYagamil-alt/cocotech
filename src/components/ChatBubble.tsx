@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { MessageCircle, X, Sparkles, ArrowRight } from "lucide-react";
+import { X, Sparkles, ArrowRight } from "lucide-react";
 import assistantLogo from "@/assets/assistant-logo.png";
 import { createThreadId } from "@/lib/chat-storage";
 
