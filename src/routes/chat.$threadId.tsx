@@ -83,9 +83,18 @@ function ChatThreadPage() {
 
   const isBusy = status === "submitted" || status === "streaming";
 
+  // When a new assistant message starts, scroll its top into view so users
+  // see the answer from the beginning instead of being pinned to the bottom.
+  const lastAssistantId = [...messages].reverse().find((m) => m.role === "assistant")?.id;
+  useEffect(() => {
+    if (!lastAssistantId) return;
+    const el = document.getElementById(`msg-${lastAssistantId}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [lastAssistantId]);
+
   return (
     <div className="flex h-[70vh] flex-col">
-      <Conversation className="flex-1">
+      <Conversation className="flex-1" initial={false} resize={false}>
         <ConversationContent>
           {messages.length === 0 ? (
             <ConversationEmptyState
