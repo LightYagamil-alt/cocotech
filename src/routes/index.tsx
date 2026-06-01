@@ -75,11 +75,15 @@ function Index() {
           </Link>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s) => (
-            <div key={s.title} className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 transition-all hover:-translate-y-1 hover:shadow-glow">
+          {services.map((s, i) => (
+            <div
+              key={s.title}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 transition-all animate-fade-up hover-lift hover:shadow-glow"
+              style={{ animationDelay: `${i * 80}ms` }}
+            >
               <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-brand opacity-0 blur-3xl transition-opacity group-hover:opacity-40" />
               <div className="relative">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground transition-transform group-hover:scale-110 group-hover:rotate-3">
                   <s.icon size={22}/>
                 </div>
                 <h3 className="mt-5 text-xl font-semibold">{s.title}</h3>
@@ -101,8 +105,12 @@ function Index() {
             { img: webImg, tag: "Website", title: "E-commerce rebuild" },
             { img: socialImg, tag: "Social", title: "Brand campaign" },
             { img: videoImg, tag: "Video", title: "Launch reel" },
-          ].map((w) => (
-            <div key={w.title} className="group overflow-hidden rounded-2xl border border-border">
+          ].map((w, i) => (
+            <div
+              key={w.title}
+              className="group overflow-hidden rounded-2xl border border-border animate-scale-in hover-lift"
+              style={{ animationDelay: `${i * 100}ms` }}
+            >
               <div className="aspect-[4/3] overflow-hidden">
                 <img src={w.img} alt={w.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"/>
               </div>
@@ -122,8 +130,12 @@ function Index() {
       <section className="mx-auto max-w-7xl px-6 py-20">
         <h2 className="text-4xl font-bold md:text-5xl">Loved by founders & creators</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <figure key={t.name} className="relative rounded-2xl border border-border bg-card p-6">
+          {testimonials.map((t, i) => (
+            <figure
+              key={t.name}
+              className="relative rounded-2xl border border-border bg-card p-6 animate-fade-up hover-lift"
+              style={{ animationDelay: `${i * 120}ms` }}
+            >
               <Quote className="absolute right-4 top-4 text-brand/30" size={28}/>
               <div className="flex gap-1 text-brand">
                 {Array.from({length:5}).map((_,i)=>(<Star key={i} size={14} fill="currentColor"/>))}
