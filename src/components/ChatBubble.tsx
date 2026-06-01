@@ -15,7 +15,7 @@ export function ChatBubble() {
   const [nudge, setNudge] = useState(false);
   const [threadId] = useState(() => createThreadId());
 
-  // Subtle nudge animation after a few seconds, once per session
+  // Greeting nudge appears after ~2.5s and lingers ~4s (once per session)
   useEffect(() => {
     const seen = sessionStorage.getItem("cocotech.bubble.nudged");
     if (seen) return;
@@ -23,7 +23,7 @@ export function ChatBubble() {
       setNudge(true);
       sessionStorage.setItem("cocotech.bubble.nudged", "1");
       setTimeout(() => setNudge(false), 4000);
-    }, 3500);
+    }, 2500);
     return () => clearTimeout(t);
   }, []);
 
