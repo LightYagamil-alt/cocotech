@@ -15,7 +15,7 @@ export function ChatBubble() {
   const [nudge, setNudge] = useState(false);
   const [threadId] = useState(() => createThreadId());
 
-  // Subtle nudge animation after a few seconds, once per session
+  // Greeting nudge appears after ~2.5s and lingers ~4s (once per session)
   useEffect(() => {
     const seen = sessionStorage.getItem("cocotech.bubble.nudged");
     if (seen) return;
@@ -23,16 +23,16 @@ export function ChatBubble() {
       setNudge(true);
       sessionStorage.setItem("cocotech.bubble.nudged", "1");
       setTimeout(() => setNudge(false), 4000);
-    }, 3500);
+    }, 2500);
     return () => clearTimeout(t);
   }, []);
 
   return (
     <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-6 md:right-6">
-      {/* Tooltip nudge */}
+      {/* Greeting nudge */}
       {nudge && !open && (
-        <div className="pointer-events-auto animate-fade-up rounded-2xl rounded-br-sm border border-border bg-card px-3 py-2 text-xs shadow-glow">
-          <span className="text-foreground">Hey 👋 need help? Ask Coco.</span>
+        <div className="pointer-events-auto max-w-[16rem] animate-fade-up rounded-2xl rounded-br-sm border border-border bg-card px-3 py-2 text-xs shadow-glow">
+          <span className="text-foreground">Hi, I'm Coco 👋 — here to help with anything you need.</span>
         </div>
       )}
 
