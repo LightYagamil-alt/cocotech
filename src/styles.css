@@ -171,8 +171,18 @@
   }
   .animate-float { animation: float-slow 6s ease-in-out infinite; }
 
-  .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-  .hover-lift:hover { transform: translateY(-4px); }
+  .hover-lift { transition: transform 0.18s ease, box-shadow 0.18s ease; }
+  .hover-lift:hover { transform: translateY(-3px); }
+
+  /* Snappy interactive defaults */
+  button, a, [role="button"] { transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease; }
+  button:active, a:active, [role="button"]:active { transform: scale(0.97); }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 oklch(from var(--brand) l c h / 0.45); }
+    50% { box-shadow: 0 0 0 14px oklch(from var(--brand) l c h / 0); }
+  }
+  .animate-pulse-glow { animation: pulse-glow 2.2s ease-in-out infinite; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
