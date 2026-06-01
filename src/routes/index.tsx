@@ -105,8 +105,12 @@ function Index() {
             { img: webImg, tag: "Website", title: "E-commerce rebuild" },
             { img: socialImg, tag: "Social", title: "Brand campaign" },
             { img: videoImg, tag: "Video", title: "Launch reel" },
-          ].map((w) => (
-            <div key={w.title} className="group overflow-hidden rounded-2xl border border-border">
+          ].map((w, i) => (
+            <div
+              key={w.title}
+              className="group overflow-hidden rounded-2xl border border-border animate-scale-in hover-lift"
+              style={{ animationDelay: `${i * 100}ms` }}
+            >
               <div className="aspect-[4/3] overflow-hidden">
                 <img src={w.img} alt={w.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"/>
               </div>
