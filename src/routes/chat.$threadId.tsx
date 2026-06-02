@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import {
   Conversation,
@@ -37,11 +37,17 @@ function ChatThreadPage() {
   const navigate = useNavigate();
   const { getThread, ensureThread, updateThread } = useChatThreads();
 
-  const initialMessages = useMemo<UIMessage[]>(() => getThread(threadId).messages, [getThread, threadId]);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const initialMessages = useMemo<UIMessage[]>(
+    () => (mounted ? getThread(threadId).messages : []),
+    [getThread, threadId, mounted],
+  );
 
   useEffect(() => {
-    ensureThread(threadId);
-  }, [ensureThread, threadId]);
+    if (mounted) ensureThread(threadId);
+  }, [ensureThread, threadId, mounted]);
 
   const { messages, sendMessage, status, error, stop } = useChat({
     id: threadId,

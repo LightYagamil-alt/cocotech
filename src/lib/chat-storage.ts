@@ -32,10 +32,12 @@ export function createThreadId() {
 }
 
 export function useChatThreads() {
-  const [threads, setThreads] = useState<ChatThread[]>(() => readThreads());
+  // Start empty on both server and client to avoid hydration mismatch; hydrate from
+  // localStorage after mount.
+  const [threads, setThreads] = useState<ChatThread[]>([]);
 
-  // Sync across tabs
   useEffect(() => {
+    setThreads(readThreads());
     function onStorage(e: StorageEvent) {
       if (e.key === STORAGE_KEY) setThreads(readThreads());
     }
