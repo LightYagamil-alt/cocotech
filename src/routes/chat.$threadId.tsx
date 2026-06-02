@@ -94,7 +94,7 @@ function ChatThreadPage() {
 
   return (
     <div className="flex h-[70vh] flex-col">
-      <Conversation className="flex-1" initial={false as never} resize={false as never}>
+      <Conversation className="flex-1" initial={false} resize={false}>
         <ConversationContent>
           {messages.length === 0 ? (
             <ConversationEmptyState
