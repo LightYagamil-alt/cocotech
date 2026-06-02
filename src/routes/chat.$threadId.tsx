@@ -37,11 +37,17 @@ function ChatThreadPage() {
   const navigate = useNavigate();
   const { getThread, ensureThread, updateThread } = useChatThreads();
 
-  const initialMessages = useMemo<UIMessage[]>(() => getThread(threadId).messages, [getThread, threadId]);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const initialMessages = useMemo<UIMessage[]>(
+    () => (mounted ? getThread(threadId).messages : []),
+    [getThread, threadId, mounted],
+  );
 
   useEffect(() => {
-    ensureThread(threadId);
-  }, [ensureThread, threadId]);
+    if (mounted) ensureThread(threadId);
+  }, [ensureThread, threadId, mounted]);
 
   const { messages, sendMessage, status, error, stop } = useChat({
     id: threadId,
