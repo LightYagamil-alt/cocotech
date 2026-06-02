@@ -39,8 +39,12 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="border-t border-border py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Coco Tech. Crafted with care in Uganda.
+      <div className="flex flex-col items-center justify-between gap-2 border-t border-border px-6 py-5 text-center text-xs text-muted-foreground md:flex-row">
+        <p>© {new Date().getFullYear()} Coco Tech. Crafted with care in Uganda.</p>
+        <div className="flex gap-4">
+          <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
+          <Link to="/terms" className="hover:text-foreground">Terms</Link>
+        </div>
       </div>
     </footer>
   );

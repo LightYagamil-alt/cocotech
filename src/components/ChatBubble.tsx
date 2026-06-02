@@ -90,26 +90,28 @@ export function ChatBubble() {
       )}
 
       {/* Floating bubble button */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Close chat" : "Chat with Coco"}
-        className={`pointer-events-auto relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-brand p-0 text-primary-foreground shadow-glow transition-transform hover:scale-110 ${
-          nudge && !open ? "animate-float" : ""
-        }`}
-      >
+      <div className="pointer-events-auto relative">
         {!open && (
-          <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-brand/40" />
+          <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-brand/40" aria-hidden />
         )}
-        {open ? (
-          <X size={22} />
-        ) : (
-          <img
-            src={assistantLogo}
-            alt=""
-            className="h-9 w-9 drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
-          />
-        )}
-      </button>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? "Close chat" : "Chat with Coco"}
+          className={`relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-brand p-0 text-primary-foreground shadow-glow transition-transform hover:scale-110 active:scale-95 ${
+            nudge && !open ? "animate-float" : ""
+          }`}
+        >
+          {open ? (
+            <X size={22} />
+          ) : (
+            <img
+              src={assistantLogo}
+              alt=""
+              className="h-9 w-9 drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
+            />
+          )}
+        </button>
+      </div>
     </div>
   );
 }
