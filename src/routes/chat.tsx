@@ -1,9 +1,10 @@
 import { createFileRoute, Link, Outlet, useNavigate, useParams, useRouterState } from "@tanstack/react-router";
-import { Plus, MessageSquare, Trash2, Menu, Download, Eraser } from "lucide-react";
+import { Plus, MessageSquare, Trash2, Menu, Download, Eraser, Search, Pencil, Check, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useChatThreads, createThreadId, type ChatThread } from "@/lib/chat-storage";
 import assistantLogo from "@/assets/assistant-logo.png";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/chat")({
   head: () => ({
@@ -53,6 +54,7 @@ function Sidebar({
   onNew,
   onSelect,
   onDelete,
+  onRename,
   onClearAll,
 }: {
   threads: ChatThread[];
@@ -60,25 +62,59 @@ function Sidebar({
   onNew: () => void;
   onSelect: (id: string) => void;
   onDelete: (id: string) => void;
+  onRename: (id: string, title: string) => void;
   onClearAll: () => void;
 }) {
+  const [query, setQuery] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [draft, setDraft] = useState("");
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return threads;
+    return threads.filter((t) => {
+      if (t.title.toLowerCase().includes(q)) return true;
+      return t.messages.some((m) =>
+        m.parts.some((p) => p.type === "text" && p.text.toLowerCase().includes(q)),
+      );
+    });
+  }, [threads, query]);
+
+  function startEdit(t: ChatThread) {
+    setEditingId(t.id);
+    setDraft(t.title);
+  }
+  function commitEdit() {
+    if (editingId) onRename(editingId, draft);
+    setEditingId(null);
+  }
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2 px-2 pb-3">
         <img src={assistantLogo} alt="" className="h-8 w-8" />
-        <div>
-          <p className="text-sm font-semibold leading-none">Coco</p>
-          <p className="text-xs text-muted-foreground">AI Assistant</p>
+        <div className="min-w-0">
+          <p className="text-sm font-semibold leading-none">Conversations</p>
+          <p className="text-xs text-muted-foreground">Your chats with Coco</p>
         </div>
       </div>
       <button
         onClick={onNew}
         className="mb-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-3 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02] active:scale-95"
       >
-        <Plus size={14} /> New chat
+        <Plus size={14} /> New Chat
       </button>
-      <div className="flex items-center justify-between px-2 pb-1 text-xs uppercase tracking-wide text-muted-foreground">
-        <span>History</span>
+      <div className="relative mb-2">
+        <Search size={13} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search conversations..."
+          className="w-full rounded-lg border border-border bg-background/60 py-1.5 pl-7 pr-2 text-xs outline-none placeholder:text-muted-foreground focus:border-brand/60"
+        />
+      </div>
+      <div className="flex items-center justify-between px-2 pb-1 text-[10px] uppercase tracking-wide text-muted-foreground">
+        <span>Recent</span>
         {threads.length > 0 && (
           <div className="flex items-center gap-1">
             <button
@@ -101,39 +137,79 @@ function Sidebar({
         )}
       </div>
       <div className="flex-1 space-y-1 overflow-y-auto pr-1">
-        {threads.length === 0 && (
-          <p className="px-2 py-4 text-xs text-muted-foreground">No conversations yet. Start one above.</p>
+        {filtered.length === 0 && (
+          <p className="px-2 py-4 text-xs text-muted-foreground">
+            {threads.length === 0 ? "No conversations yet. Start one above." : "No matches."}
+          </p>
         )}
-        {threads.map((t) => {
+        {filtered.map((t) => {
           const isActive = t.id === activeId;
+          const isEditing = editingId === t.id;
           return (
             <div
               key={t.id}
-              className={`group flex items-center gap-1 rounded-lg pr-1 transition-colors animate-fade-in ${
-                isActive ? "bg-secondary" : "hover:bg-secondary/60"
-              }`}
+              className={cn(
+                "group flex items-center gap-1 rounded-lg pr-1 transition-colors animate-fade-in",
+                isActive
+                  ? "bg-secondary ring-1 ring-brand/40"
+                  : "hover:bg-secondary/60",
+              )}
             >
-              <Link
-                to="/chat/$threadId"
-                params={{ threadId: t.id }}
-                onClick={() => onSelect(t.id)}
-                className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left text-sm"
-              >
-                <MessageSquare size={14} className="shrink-0 text-muted-foreground" />
-                <span className="min-w-0 flex-1 truncate">{t.title || "New chat"}</span>
-                <span className="shrink-0 text-[10px] text-muted-foreground">{formatTime(t.updatedAt)}</span>
-              </Link>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onDelete(t.id);
-                }}
-                aria-label="Delete chat"
-                className="rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-background hover:text-foreground group-hover:opacity-100"
-              >
-                <Trash2 size={14} />
-              </button>
+              {isEditing ? (
+                <div className="flex flex-1 items-center gap-1 px-2 py-1.5">
+                  <input
+                    autoFocus
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") commitEdit();
+                      if (e.key === "Escape") setEditingId(null);
+                    }}
+                    className="min-w-0 flex-1 rounded border border-border bg-background px-1.5 py-1 text-sm outline-none focus:border-brand/60"
+                  />
+                  <button onClick={commitEdit} className="rounded p-1 text-muted-foreground hover:text-foreground" aria-label="Save">
+                    <Check size={13} />
+                  </button>
+                  <button onClick={() => setEditingId(null)} className="rounded p-1 text-muted-foreground hover:text-foreground" aria-label="Cancel">
+                    <X size={13} />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    to="/chat/$threadId"
+                    params={{ threadId: t.id }}
+                    onClick={() => onSelect(t.id)}
+                    className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left text-sm"
+                  >
+                    <MessageSquare size={14} className={cn("shrink-0", isActive ? "text-brand" : "text-muted-foreground")} />
+                    <span className="min-w-0 flex-1 truncate">{t.title || "New chat"}</span>
+                    <span className="shrink-0 text-[10px] text-muted-foreground">{formatTime(t.updatedAt)}</span>
+                  </Link>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      startEdit(t);
+                    }}
+                    aria-label="Rename chat"
+                    className="rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-background hover:text-foreground group-hover:opacity-100"
+                  >
+                    <Pencil size={13} />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onDelete(t.id);
+                    }}
+                    aria-label="Delete chat"
+                    className="rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-background hover:text-foreground group-hover:opacity-100"
+                  >
+                    <Trash2 size={13} />
+                  </button>
+                </>
+              )}
             </div>
           );
         })}
@@ -144,7 +220,7 @@ function Sidebar({
 
 function ChatLayout() {
   const navigate = useNavigate();
-  const { threads, deleteThread } = useChatThreads();
+  const { threads, deleteThread, renameThread } = useChatThreads();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const activeId = pathname.startsWith("/chat/") ? pathname.split("/chat/")[1] : undefined;
   const [mounted, setMounted] = useState(false);
@@ -174,13 +250,13 @@ function ChatLayout() {
       <div className="mb-3 flex items-center justify-between md:hidden">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <button className="rounded-lg border border-border bg-card/60 p-2 active:scale-95" aria-label="Open chat history">
+            <button className="rounded-lg border border-border bg-card/60 p-2 active:scale-95" aria-label="Open conversations">
               <Menu size={18} />
             </button>
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px] p-3">
             <SheetHeader className="sr-only">
-              <SheetTitle>Chat history</SheetTitle>
+              <SheetTitle>Conversations</SheetTitle>
             </SheetHeader>
             {mounted && (
               <Sidebar
@@ -189,6 +265,7 @@ function ChatLayout() {
                 onNew={newChat}
                 onSelect={() => setMobileOpen(false)}
                 onDelete={handleDelete}
+                onRename={renameThread}
                 onClearAll={clearAll}
               />
             )}
@@ -200,8 +277,8 @@ function ChatLayout() {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-[260px_1fr]">
-        <aside className="hidden max-h-[80vh] rounded-2xl border border-border bg-card/60 p-3 md:flex md:flex-col">
+      <div className="grid gap-6 md:grid-cols-[280px_1fr]">
+        <aside className="hidden max-h-[80vh] rounded-2xl border border-border bg-card/60 p-3 backdrop-blur md:flex md:flex-col">
           {mounted ? (
             <Sidebar
               threads={sortedThreads}
@@ -209,12 +286,13 @@ function ChatLayout() {
               onNew={newChat}
               onSelect={() => {}}
               onDelete={handleDelete}
+              onRename={renameThread}
               onClearAll={clearAll}
             />
           ) : null}
         </aside>
 
-        <section className="flex min-h-[70vh] flex-col overflow-hidden rounded-2xl border border-border bg-card/60 shadow-sm animate-fade-in">
+        <section className="flex min-h-[70vh] flex-col overflow-hidden rounded-2xl border border-border bg-card/60 shadow-sm animate-fade-in backdrop-blur">
           <header className="flex items-center justify-between border-b border-border px-4 py-3">
             <div className="flex items-center gap-2">
               <img src={assistantLogo} alt="" className="h-8 w-8" />
