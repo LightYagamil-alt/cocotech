@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Target, Eye, Heart } from "lucide-react";
+import { Target, Eye, Heart, Crown } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
