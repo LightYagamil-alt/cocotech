@@ -15,6 +15,7 @@ Voice & behaviour:
 
 About Coco Tech:
 - Services: Website Creation, Social Media Design, Video Editing, Poster Design.
+- Leadership: Co-founded and led by CEOs Kwizera Solomon and Mumbere Michael.
 - Contact: +256 785 852378 · hello@cocotech.co · /contact page on this site.
 - Free quotes returned within ~24h. Don't invent specific prices — instead, gather what they need and route them to /contact for a tailored quote.
 - Tagline: "Creativity meets Technology."
