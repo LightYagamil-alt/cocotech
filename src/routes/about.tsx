@@ -40,6 +40,34 @@ function AboutPage() {
         ))}
       </div>
 
+      {/* LEADERSHIP */}
+      <section className="mt-20">
+        <p className="text-sm uppercase tracking-widest text-brand">Leadership</p>
+        <h2 className="mt-2 text-3xl font-bold md:text-4xl">Meet the team behind Coco Tech</h2>
+        <p className="mt-3 max-w-2xl text-muted-foreground">
+          Coco Tech is led by a duo obsessed with helping small businesses look and feel world-class online.
+        </p>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2">
+          {[
+            { name: "Kwizera Solomon", role: "Co-Founder & CEO" },
+            { name: "Mumbere Michael", role: "Co-Founder & CEO" },
+          ].map((p) => (
+            <div
+              key={p.name}
+              className="flex items-center gap-4 rounded-2xl border border-border bg-card p-6 transition-all hover:shadow-glow"
+            >
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-brand text-primary-foreground">
+                <Crown size={22} />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-lg font-semibold">{p.name}</h3>
+                <p className="text-sm text-muted-foreground">{p.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <div className="mt-16 rounded-3xl border border-border bg-card p-10 text-center">
         <h2 className="text-3xl font-bold">Let's build something worth sharing.</h2>
         <Link to="/contact" className="mt-6 inline-flex rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow hover:scale-105 transition-transform">
