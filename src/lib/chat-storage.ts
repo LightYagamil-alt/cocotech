@@ -100,5 +100,17 @@ export function useChatThreads() {
     [persist],
   );
 
-  return { threads, getThread, ensureThread, updateThread, deleteThread };
+  const renameThread = useCallback(
+    (id: string, title: string) => {
+      const current = readThreads();
+      const idx = current.findIndex((t) => t.id === id);
+      if (idx < 0) return;
+      const next = [...current];
+      next[idx] = { ...next[idx], title: title.trim() || "New chat", updatedAt: Date.now() };
+      persist(next);
+    },
+    [persist],
+  );
+
+  return { threads, getThread, ensureThread, updateThread, deleteThread, renameThread };
 }
