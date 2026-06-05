@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote, Image as ImageIcon } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
+import heroLightImg from "@/assets/hero-light.jpg";
 import webImg from "@/assets/work-web.jpg";
 import socialImg from "@/assets/work-social.jpg";
 import videoImg from "@/assets/work-video.jpg";
@@ -28,6 +29,18 @@ function Index() {
     <div>
       {/* HERO */}
       <section className="relative overflow-hidden">
+        {/* Light mode background */}
+        <img
+          src={heroLightImg}
+          alt=""
+          aria-hidden
+          width={1920}
+          height={1080}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover opacity-90 transition-opacity duration-200 dark:opacity-0"
+        />
+        {/* Dark mode background */}
         <img
           src={heroImg}
           alt=""
@@ -36,9 +49,9 @@ function Index() {
           height={1080}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover opacity-70 dark:opacity-80"
+          className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-200 dark:opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background" />
         <div className="relative mx-auto max-w-7xl px-6 py-28 md:py-40">
           <div className="max-w-3xl animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
