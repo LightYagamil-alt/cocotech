@@ -77,13 +77,6 @@ function ChatThreadPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState("");
 
-  useEffect(() => {
-    textareaRef.current?.focus();
-  }, [threadId]);
-  useEffect(() => {
-    if (status === "ready") textareaRef.current?.focus();
-  }, [status]);
-
   // Auto-resize textarea
   useEffect(() => {
     const el = textareaRef.current;
@@ -100,14 +93,6 @@ function ChatThreadPage() {
     void sendMessage({ text: value });
     setInput("");
   }
-
-  // Scroll new assistant message into view from the top
-  const lastAssistantId = [...messages].reverse().find((m) => m.role === "assistant")?.id;
-  useEffect(() => {
-    if (!lastAssistantId) return;
-    const el = document.getElementById(`msg-${lastAssistantId}`);
-    el?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [lastAssistantId]);
 
   return (
     <div className="flex h-[70vh] flex-col">
