@@ -77,13 +77,6 @@ function ChatThreadPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState("");
 
-  useEffect(() => {
-    textareaRef.current?.focus();
-  }, [threadId]);
-  useEffect(() => {
-    if (status === "ready") textareaRef.current?.focus();
-  }, [status]);
-
   // Auto-resize textarea
   useEffect(() => {
     const el = textareaRef.current;
@@ -101,14 +94,6 @@ function ChatThreadPage() {
     setInput("");
   }
 
-  // Scroll new assistant message into view from the top
-  const lastAssistantId = [...messages].reverse().find((m) => m.role === "assistant")?.id;
-  useEffect(() => {
-    if (!lastAssistantId) return;
-    const el = document.getElementById(`msg-${lastAssistantId}`);
-    el?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [lastAssistantId]);
-
   return (
     <div className="flex h-[70vh] flex-col">
       <Conversation className="flex-1" initial={false as never} resize={false as never}>
@@ -116,7 +101,7 @@ function ChatThreadPage() {
           {messages.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center gap-4 py-8 text-center">
               <ConversationEmptyState
-                icon={<img src={assistantLogo} alt="" className="h-12 w-12" />}
+                icon={<img src={assistantLogo} alt="Coco AI" className="h-24 w-24 rounded-full object-cover drop-shadow-[0_8px_24px_rgba(0,0,0,0.25)]" />}
                 title="Say hi to Coco"
                 description="Ask about our services, pricing approach, or get help scoping a project."
               />

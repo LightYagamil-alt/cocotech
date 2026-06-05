@@ -40,7 +40,7 @@ export function ChatBubble() {
       {open && (
         <div className="pointer-events-auto w-[min(20rem,calc(100vw-2rem))] origin-bottom-right animate-fade-up overflow-hidden rounded-2xl border border-border bg-card shadow-glow">
           <div className="flex items-center gap-3 border-b border-border bg-gradient-brand/10 p-4">
-            <img src={assistantLogo} alt="" className="h-10 w-10" />
+            <img src={assistantLogo} alt="Coco" className="h-12 w-12 rounded-full object-cover" />
             <div className="flex-1">
               <p className="text-sm font-semibold">Coco</p>
               <p className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -92,22 +92,22 @@ export function ChatBubble() {
       {/* Floating bubble button */}
       <div className="pointer-events-auto relative">
         {!open && (
-          <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-brand/40" aria-hidden />
+          <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-brand/30" aria-hidden />
         )}
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close chat" : "Chat with Coco"}
-          className={`relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-brand p-0 text-primary-foreground shadow-glow transition-transform hover:scale-110 active:scale-95 ${
-            nudge && !open ? "animate-float" : ""
-          }`}
+          className={`relative flex h-16 w-16 items-center justify-center rounded-full shadow-glow transition-transform hover:scale-110 active:scale-95 ${
+            open ? "bg-gradient-brand text-primary-foreground" : "bg-transparent"
+          } ${nudge && !open ? "animate-float" : ""}`}
         >
           {open ? (
-            <X size={22} />
+            <X size={24} />
           ) : (
             <img
               src={assistantLogo}
-              alt=""
-              className="h-9 w-9 drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
+              alt="Coco AI"
+              className="h-16 w-16 rounded-full object-cover drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
             />
           )}
         </button>
