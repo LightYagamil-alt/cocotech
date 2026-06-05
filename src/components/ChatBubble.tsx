@@ -40,7 +40,7 @@ export function ChatBubble() {
       {open && (
         <div className="pointer-events-auto w-[min(20rem,calc(100vw-2rem))] origin-bottom-right animate-fade-up overflow-hidden rounded-2xl border border-border bg-card shadow-glow">
           <div className="flex items-center gap-3 border-b border-border bg-gradient-brand/10 p-4">
-            <img src={assistantLogo} alt="" className="h-10 w-10" />
+            <img src={assistantLogo} alt="Coco" className="h-12 w-12 rounded-full object-cover" />
             <div className="flex-1">
               <p className="text-sm font-semibold">Coco</p>
               <p className="flex items-center gap-1 text-xs text-muted-foreground">
