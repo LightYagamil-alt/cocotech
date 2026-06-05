@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote, Image as ImageIcon } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
+import heroLightImg from "@/assets/hero-light.jpg";
 import webImg from "@/assets/work-web.jpg";
 import socialImg from "@/assets/work-social.jpg";
 import videoImg from "@/assets/work-video.jpg";
