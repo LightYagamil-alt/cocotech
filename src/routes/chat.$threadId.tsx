@@ -101,7 +101,7 @@ function ChatThreadPage() {
           {messages.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center gap-4 py-8 text-center">
               <ConversationEmptyState
-                icon={<img src={assistantLogo} alt="Coco AI" className="h-24 w-24 rounded-full object-cover drop-shadow-[0_8px_24px_rgba(0,0,0,0.25)]" />}
+                icon={<img src={assistantLogo} alt="Coco AI" className="h-24 w-24 object-contain drop-shadow-[0_8px_24px_rgba(168,85,247,0.45)]" />}
                 title="Say hi to Coco"
                 description="Ask about our services, pricing approach, or get help scoping a project."
               />
