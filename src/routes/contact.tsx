@@ -30,6 +30,7 @@ function ContactPage() {
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Phone</p>
               <p className="mt-1 font-semibold">+256 785 852378</p>
+              <p className="mt-1 font-semibold">+256 742 011601</p>
             </div>
           </a>
           <a href="mailto:hello@cocotech.co" className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-brand/60">
