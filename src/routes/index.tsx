@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote, Image as ImageIcon, Bot } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import heroLightImg from "@/assets/hero-light.jpg";
 import webImg from "@/assets/work-web.jpg";
 import socialImg from "@/assets/work-social.jpg";
 import videoImg from "@/assets/work-video.jpg";
+import assistantLogo from "@/assets/assistant-logo.png";
 import { ChatBubble } from "@/components/ChatBubble";
 
 export const Route = createFileRoute("/")({
@@ -136,6 +137,54 @@ function Index() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* COCO AI FEATURE */}
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 md:p-14">
+          <div className="absolute inset-0 bg-gradient-to-br from-brand/10 via-transparent to-accent/10" />
+          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand/20 blur-3xl animate-pulse" />
+          <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-accent/20 blur-3xl animate-pulse [animation-delay:1s]" />
+          <div className="relative grid items-center gap-10 md:grid-cols-2">
+            <div className="order-2 md:order-1">
+              <p className="inline-flex items-center gap-2 text-sm uppercase tracking-widest text-brand">
+                <Sparkles size={14} /> Meet Coco AI
+              </p>
+              <h2 className="mt-3 text-4xl font-bold md:text-5xl">
+                Your <span className="text-gradient">creative co-pilot</span>, always on.
+              </h2>
+              <p className="mt-4 max-w-lg text-muted-foreground">
+                Coco AI helps you sketch websites, draft social posts, brainstorm campaigns and brief
+                our team — instantly. Trained on what makes small brands feel big.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link
+                  to="/chat"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105"
+                >
+                  <Bot size={16} /> Try Coco AI <ArrowRight size={16} />
+                </Link>
+                <Link
+                  to="/services"
+                  className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold hover:bg-secondary"
+                >
+                  Learn more
+                </Link>
+              </div>
+            </div>
+            <div className="order-1 flex items-center justify-center md:order-2">
+              <div className="relative">
+                <div className="absolute inset-0 animate-pulse rounded-full bg-gradient-brand opacity-30 blur-3xl" />
+                <img
+                  src={assistantLogo}
+                  alt="Coco AI"
+                  loading="lazy"
+                  className="relative h-56 w-56 animate-float object-contain md:h-72 md:w-72"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

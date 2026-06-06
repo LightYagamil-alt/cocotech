@@ -40,7 +40,7 @@ export function ChatBubble() {
       {open && (
         <div className="pointer-events-auto w-[min(20rem,calc(100vw-2rem))] origin-bottom-right animate-fade-up overflow-hidden rounded-2xl border border-border bg-card shadow-glow">
           <div className="flex items-center gap-3 border-b border-border bg-gradient-brand/10 p-4">
-            <img src={assistantLogo} alt="Coco" className="h-12 w-12 rounded-full object-cover" />
+            <img src={assistantLogo} alt="Coco" className="h-12 w-12 object-contain" />
             <div className="flex-1">
               <p className="text-sm font-semibold">Coco</p>
               <p className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -107,7 +107,7 @@ export function ChatBubble() {
             <img
               src={assistantLogo}
               alt="Coco AI"
-              className="h-16 w-16 rounded-full object-cover drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
+              className="h-16 w-16 object-contain drop-shadow-[0_4px_16px_rgba(168,85,247,0.5)]"
             />
           )}
         </button>

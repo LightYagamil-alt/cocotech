@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import webImg from "@/assets/work-web.jpg";
 import socialImg from "@/assets/work-social.jpg";
 import videoImg from "@/assets/work-video.jpg";
@@ -8,38 +9,89 @@ export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
       { title: "Portfolio — Coco Tech" },
-      { name: "description", content: "A selection of websites, social media campaigns and videos we've crafted." },
+      { name: "description", content: "Selected websites, social campaigns, brand identities and videos crafted by Coco Tech." },
       { property: "og:title", content: "Portfolio — Coco Tech" },
-      { property: "og:description", content: "Recent work from Coco Tech." },
+      { property: "og:description", content: "Recent work from Coco Tech across web, social and video." },
     ],
   }),
   component: PortfolioPage,
 });
 
-const items = [
-  { img: webImg, tag: "Website", title: "Boutique e-commerce", desc: "Full storefront rebuild with modern checkout." },
-  { img: socialImg, tag: "Social", title: "Summer campaign", desc: "12-post campaign for a lifestyle brand." },
-  { img: videoImg, tag: "Video", title: "Product launch reel", desc: "60s cinematic launch video." },
-  { img: heroImg, tag: "Brand", title: "Identity refresh", desc: "Logo, palette and motion system." },
-  { img: webImg, tag: "Website", title: "Cafe landing page", desc: "Menu, gallery and booking in one page." },
-  { img: socialImg, tag: "Social", title: "Reel templates", desc: "Reusable, on-brand reel templates." },
+type Category = "All" | "Website" | "Social Media" | "Video" | "Brand";
+
+const items: { img: string; tag: Exclude<Category, "All">; title: string; desc: string }[] = [
+  { img: webImg, tag: "Website", title: "Boutique e-commerce", desc: "+118% conversions after rebuild." },
+  { img: socialImg, tag: "Social Media", title: "Summer campaign", desc: "12-post lifestyle drop, 3x reach." },
+  { img: videoImg, tag: "Video", title: "Product launch reel", desc: "60s cinematic launch film." },
+  { img: heroImg, tag: "Brand", title: "Identity refresh", desc: "Logo, palette & motion system." },
+  { img: webImg, tag: "Website", title: "Cafe landing page", desc: "Menu, gallery & booking in one." },
+  { img: socialImg, tag: "Social Media", title: "Reel templates", desc: "Reusable, on-brand reel kit." },
+  { img: videoImg, tag: "Video", title: "Founder docu-short", desc: "Story-led 90s brand film." },
+  { img: webImg, tag: "Website", title: "SaaS marketing site", desc: "From idea to launch in 9 days." },
+  { img: socialImg, tag: "Social Media", title: "Ad creatives pack", desc: "Meta + TikTok creative system." },
+  { img: heroImg, tag: "Brand", title: "Studio rebrand", desc: "End-to-end visual identity." },
+  { img: videoImg, tag: "Video", title: "Event aftermovie", desc: "Highlights edit, color graded." },
+  { img: webImg, tag: "Website", title: "Portfolio site", desc: "Editorial-style creator site." },
 ];
 
+const categories: Category[] = ["All", "Website", "Social Media", "Video", "Brand"];
+
 function PortfolioPage() {
+  const [active, setActive] = useState<Category>("All");
+  const filtered = useMemo(
+    () => (active === "All" ? items : items.filter((i) => i.tag === active)),
+    [active],
+  );
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-24">
       <p className="text-sm uppercase tracking-widest text-brand">Portfolio</p>
-      <h1 className="mt-2 max-w-3xl text-5xl font-bold md:text-6xl">Work we're <span className="text-gradient">proud of</span>.</h1>
+      <h1 className="mt-2 max-w-3xl text-5xl font-bold md:text-6xl">
+        Work we're <span className="text-gradient">proud of</span>.
+      </h1>
       <p className="mt-4 max-w-2xl text-muted-foreground">
-        A small slice of recent projects across web, social and video. Want to see something
-        specific? Reach out and we'll share more.
+        A slice of recent projects across web, social, brand and video. Filter by what you're
+        curious about.
       </p>
 
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((w, i) => (
-          <article key={i} className="group overflow-hidden rounded-2xl border border-border bg-card">
-            <div className="aspect-[4/3] overflow-hidden">
-              <img src={w.img} alt={w.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+      {/* Filters */}
+      <div className="mt-10 flex flex-wrap gap-2">
+        {categories.map((c) => {
+          const isActive = c === active;
+          return (
+            <button
+              key={c}
+              onClick={() => setActive(c)}
+              className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${
+                isActive
+                  ? "border-transparent bg-gradient-brand text-primary-foreground shadow-glow"
+                  : "border-border bg-card/50 text-muted-foreground hover:text-foreground hover:border-brand/50"
+              }`}
+            >
+              {c}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {filtered.map((w, i) => (
+          <article
+            key={`${w.title}-${i}`}
+            className="group relative overflow-hidden rounded-2xl border border-border bg-card animate-fade-up hover-lift"
+            style={{ animationDelay: `${(i % 6) * 60}ms` }}
+          >
+            <div className="relative aspect-[4/3] overflow-hidden">
+              <img
+                src={w.img}
+                alt={w.title}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-x-0 bottom-0 translate-y-4 p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                <p className="text-sm text-foreground">{w.desc}</p>
+              </div>
             </div>
             <div className="p-5">
               <p className="text-xs uppercase tracking-widest text-brand">{w.tag}</p>
@@ -49,6 +101,10 @@ function PortfolioPage() {
           </article>
         ))}
       </div>
+
+      {filtered.length === 0 && (
+        <p className="mt-10 text-center text-sm text-muted-foreground">Nothing here yet — try another category.</p>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Camera, ThumbsUp, Bird, Phone, Mail } from "lucide-react";
+import cocoLogo from "@/assets/coco-logo.png";
 
 export function SiteFooter() {
   return (
@@ -7,7 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 font-display text-lg font-bold">
-            <span className="inline-block h-8 w-8 rounded-lg bg-gradient-brand" />
+            <img src={cocoLogo} alt="Coco Tech" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
             Coco<span className="text-gradient">Tech</span>
           </div>
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
