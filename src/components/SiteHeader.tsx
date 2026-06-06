@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import cocoLogo from "@/assets/coco-logo.png";
 
 const links = [
   { to: "/", label: "Home" },
@@ -19,7 +20,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 glass">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold">
-          <span className="inline-block h-8 w-8 rounded-lg bg-gradient-brand shadow-glow" />
+          <img src={cocoLogo} alt="Coco Tech" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
           <span>Coco<span className="text-gradient"> Tech</span></span>
         </Link>
 
