@@ -30,6 +30,7 @@ export function SiteFooter() {
           <h4 className="text-sm font-semibold">Get in touch</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li className="flex items-center gap-2"><Phone size={14}/><span>+256 785 852378</span></li>
+            <li className="flex items-center gap-2"><Phone size={14}/><span>+256 742 011601</span></li>
             <li className="flex items-center gap-2"><Mail size={14}/><span>hello@cocotech.co</span></li>
           </ul>
           <div className="mt-4 flex gap-3">
