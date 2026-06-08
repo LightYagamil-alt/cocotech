@@ -19,19 +19,19 @@ export const Route = createFileRoute("/portfolio")({
 
 type Category = "All" | "Website" | "Social Media" | "Video" | "Brand";
 
-const items: { img: string; tag: Exclude<Category, "All">; title: string; desc: string }[] = [
-  { img: webImg, tag: "Website", title: "Boutique e-commerce", desc: "+118% conversions after rebuild." },
-  { img: socialImg, tag: "Social Media", title: "Summer campaign", desc: "12-post lifestyle drop, 3x reach." },
-  { img: videoImg, tag: "Video", title: "Product launch reel", desc: "60s cinematic launch film." },
-  { img: heroImg, tag: "Brand", title: "Identity refresh", desc: "Logo, palette & motion system." },
-  { img: webImg, tag: "Website", title: "Cafe landing page", desc: "Menu, gallery & booking in one." },
-  { img: socialImg, tag: "Social Media", title: "Reel templates", desc: "Reusable, on-brand reel kit." },
-  { img: videoImg, tag: "Video", title: "Founder docu-short", desc: "Story-led 90s brand film." },
-  { img: webImg, tag: "Website", title: "SaaS marketing site", desc: "From idea to launch in 9 days." },
-  { img: socialImg, tag: "Social Media", title: "Ad creatives pack", desc: "Meta + TikTok creative system." },
-  { img: heroImg, tag: "Brand", title: "Studio rebrand", desc: "End-to-end visual identity." },
-  { img: videoImg, tag: "Video", title: "Event aftermovie", desc: "Highlights edit, color graded." },
-  { img: webImg, tag: "Website", title: "Portfolio site", desc: "Editorial-style creator site." },
+const items: { img: string; tag: Exclude<Category, "All">; title: string; desc: string; client: string; year: number }[] = [
+  { img: webImg, tag: "Website", title: "Boutique e-commerce", desc: "+118% conversions after rebuild.", client: "Boutique Co.", year: 2025 },
+  { img: socialImg, tag: "Social Media", title: "Summer campaign", desc: "12-post lifestyle drop, 3x reach.", client: "Sahara Roast", year: 2025 },
+  { img: videoImg, tag: "Video", title: "Product launch reel", desc: "60s cinematic launch film.", client: "Lumen Studio", year: 2025 },
+  { img: heroImg, tag: "Brand", title: "Identity refresh", desc: "Logo, palette & motion system.", client: "North & Co", year: 2024 },
+  { img: webImg, tag: "Website", title: "Cafe landing page", desc: "Menu, gallery & booking in one.", client: "Kibo Eats", year: 2024 },
+  { img: socialImg, tag: "Social Media", title: "Reel templates", desc: "Reusable, on-brand reel kit.", client: "Pulse FM", year: 2025 },
+  { img: videoImg, tag: "Video", title: "Founder docu-short", desc: "Story-led 90s brand film.", client: "Atlas Build", year: 2024 },
+  { img: webImg, tag: "Website", title: "SaaS marketing site", desc: "From idea to launch in 9 days.", client: "Halo Skincare", year: 2025 },
+  { img: socialImg, tag: "Social Media", title: "Ad creatives pack", desc: "Meta + TikTok creative system.", client: "Drift Travel", year: 2025 },
+  { img: heroImg, tag: "Brand", title: "Studio rebrand", desc: "End-to-end visual identity.", client: "Mango & Co", year: 2024 },
+  { img: videoImg, tag: "Video", title: "Event aftermovie", desc: "Highlights edit, color graded.", client: "Pulse FM", year: 2024 },
+  { img: webImg, tag: "Website", title: "Portfolio site", desc: "Editorial-style creator site.", client: "Lumen Studio", year: 2024 },
 ];
 
 const categories: Category[] = ["All", "Website", "Social Media", "Video", "Brand"];
@@ -94,8 +94,13 @@ function PortfolioPage() {
               </div>
             </div>
             <div className="p-5">
-              <p className="text-xs uppercase tracking-widest text-brand">{w.tag}</p>
-              <h3 className="mt-1 font-semibold">{w.title}</h3>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs uppercase tracking-widest text-brand">{w.tag}</p>
+                <span className="rounded-full border border-border bg-secondary/50 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                  {w.client} · {w.year}
+                </span>
+              </div>
+              <h3 className="mt-2 font-semibold">{w.title}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{w.desc}</p>
             </div>
           </article>
