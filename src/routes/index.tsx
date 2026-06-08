@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote, Image as ImageIcon, Bot } from "lucide-react";
-import heroImg from "@/assets/hero.jpg";
-import heroLightImg from "@/assets/hero-light.jpg";
+import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote, Image as ImageIcon, Bot, Zap, Compass, Layers, Heart } from "lucide-react";
 import webImg from "@/assets/work-web.jpg";
 import socialImg from "@/assets/work-social.jpg";
 import videoImg from "@/assets/work-video.jpg";
 import assistantLogo from "@/assets/assistant-logo.png";
 import { ChatBubble } from "@/components/ChatBubble";
+import { LiveBackground } from "@/components/LiveBackground";
+import { ClientMarquee } from "@/components/ClientMarquee";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -25,57 +25,62 @@ const testimonials = [
   { name: "Linda M.", role: "Cafe Founder", text: "Professional, fast and creative. Our Instagram finally feels like a real brand." },
 ];
 
+const manifesto = [
+  { icon: Zap, title: "Move Fast, Look Sharp", text: "Speed without sacrifice. Every pixel earns its place — quickly." },
+  { icon: Compass, title: "Design With Intent", text: "Every choice ties back to your story. No filler, no fluff, no copy-paste." },
+  { icon: Layers, title: "Craft Over Trends", text: "We build for the next 5 years, not the next 5 seconds. Timeless beats trendy." },
+  { icon: Heart, title: "Treat Small Like Big", text: "Your business deserves the same polish as the giants. Always." },
+];
+
 function Index() {
+  const headline = "Creativity meets Technology.";
   return (
     <div>
-      {/* HERO */}
+      {/* HERO — massive aurora typography over live animated background */}
       <section className="relative overflow-hidden">
-        {/* Light mode background */}
-        <img
-          src={heroLightImg}
-          alt=""
-          aria-hidden
-          width={1920}
-          height={1080}
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover opacity-90 transition-opacity duration-200 dark:opacity-0"
-        />
-        {/* Dark mode background */}
-        <img
-          src={heroImg}
-          alt=""
-          aria-hidden
-          width={1920}
-          height={1080}
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-200 dark:opacity-80"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background" />
-        <div className="relative mx-auto max-w-7xl px-6 py-28 md:py-40">
-          <div className="max-w-3xl animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
+        <LiveBackground />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/10 to-background" />
+        <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-36">
+          <div className="max-w-5xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur animate-fade-in">
               <Sparkles size={12} className="text-brand"/> Creative studio · Uganda
             </span>
-            <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] md:text-7xl">
-              Creativity meets <span className="text-gradient">Technology</span>.
+            <h1 className="mt-6 font-display font-bold leading-[0.92] tracking-tight text-[clamp(2.75rem,9vw,8.5rem)] letter-rise">
+              {headline.split(" ").map((word, wi) => (
+                <span key={wi} className="mr-[0.18em] inline-block">
+                  {word.split("").map((ch, ci) => {
+                    const isHighlight = word.toLowerCase().startsWith("tech");
+                    return (
+                      <span
+                        key={ci}
+                        className={isHighlight ? "text-aurora" : ""}
+                        style={{ animationDelay: `${(wi * 6 + ci) * 35}ms` }}
+                      >
+                        {ch}
+                      </span>
+                    );
+                  })}
+                </span>
+              ))}
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-              We build beautiful websites, eye-catching social media posts, and
-              cinematic videos that make small businesses look anything but small.
+            <p className="mt-6 max-w-xl text-lg text-muted-foreground animate-fade-up [animation-delay:600ms]">
+              We build beautiful websites, eye-catching social posts, and cinematic videos that make
+              small businesses look anything but small.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3 animate-fade-up [animation-delay:750ms]">
               <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105">
                 Hire Us Now <ArrowRight size={16}/>
               </Link>
-              <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold hover:bg-secondary">
+              <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-6 py-3 font-semibold backdrop-blur hover:bg-secondary">
                 See our work
               </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {/* CLIENT MARQUEE */}
+      <ClientMarquee />
 
       {/* SERVICES */}
       <section className="mx-auto max-w-7xl px-6 py-24">
@@ -108,6 +113,41 @@ function Index() {
         </div>
       </section>
 
+      {/* THE COCO CODE — manifesto, with live animated backdrop */}
+      <section className="relative overflow-hidden py-24">
+        <LiveBackground />
+        <div className="absolute inset-0 bg-background/60" />
+        <div className="relative mx-auto max-w-7xl px-6">
+          <div className="max-w-3xl">
+            <p className="text-sm uppercase tracking-[0.3em] text-brand">Our philosophy</p>
+            <h2 className="mt-3 font-display text-5xl font-bold leading-[1] tracking-tight md:text-7xl">
+              <span className="text-aurora">#TheCocoCode</span>
+            </h2>
+            <p className="mt-5 max-w-xl text-lg text-muted-foreground">
+              Four principles that shape every project we touch. It's not a process —
+              it's a promise.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {manifesto.map((m, i) => (
+              <div
+                key={m.title}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-card/70 p-7 backdrop-blur transition-all hover-lift hover:border-brand/50 hover:shadow-glow animate-fade-up"
+                style={{ animationDelay: `${i * 90}ms` }}
+              >
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">0{i + 1}</p>
+                <div className="mt-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground">
+                  <m.icon size={20} />
+                </div>
+                <h3 className="mt-5 text-xl font-bold">{m.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{m.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* PORTFOLIO PREVIEW */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="flex items-end justify-between gap-6">
@@ -116,9 +156,9 @@ function Index() {
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {[
-            { img: webImg, tag: "Website", title: "E-commerce rebuild" },
-            { img: socialImg, tag: "Social", title: "Brand campaign" },
-            { img: videoImg, tag: "Video", title: "Launch reel" },
+            { img: webImg, tag: "Website", title: "E-commerce rebuild", client: "Boutique Co. · 2025" },
+            { img: socialImg, tag: "Social", title: "Brand campaign", client: "Sahara Roast · 2025" },
+            { img: videoImg, tag: "Video", title: "Launch reel", client: "Lumen Studio · 2025" },
           ].map((w, i) => (
             <div
               key={w.title}
@@ -130,7 +170,7 @@ function Index() {
               </div>
               <div className="flex items-center justify-between bg-card p-4">
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-brand">{w.tag}</p>
+                  <p className="text-xs uppercase tracking-widest text-brand">{w.tag} · {w.client}</p>
                   <h3 className="mt-1 font-semibold">{w.title}</h3>
                 </div>
                 <ArrowRight size={18} className="opacity-50 transition-transform group-hover:translate-x-1"/>
@@ -143,16 +183,15 @@ function Index() {
       {/* COCO AI FEATURE */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 md:p-14">
-          <div className="absolute inset-0 bg-gradient-to-br from-brand/10 via-transparent to-accent/10" />
-          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand/20 blur-3xl animate-pulse" />
-          <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-accent/20 blur-3xl animate-pulse [animation-delay:1s]" />
+          <LiveBackground />
+          <div className="absolute inset-0 bg-card/60" />
           <div className="relative grid items-center gap-10 md:grid-cols-2">
             <div className="order-2 md:order-1">
               <p className="inline-flex items-center gap-2 text-sm uppercase tracking-widest text-brand">
                 <Sparkles size={14} /> Meet Coco AI
               </p>
               <h2 className="mt-3 text-4xl font-bold md:text-5xl">
-                Your <span className="text-gradient">creative co-pilot</span>, always on.
+                Your <span className="text-aurora">creative co-pilot</span>, always on.
               </h2>
               <p className="mt-4 max-w-lg text-muted-foreground">
                 Coco AI helps you sketch websites, draft social posts, brainstorm campaigns and brief
