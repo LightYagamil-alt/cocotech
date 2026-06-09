@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import cocoLogo from "@/assets/coco-logo.png";
 
@@ -52,10 +51,13 @@ export function SiteHeader() {
           <ThemeToggle />
           <button
             onClick={() => setOpen(!open)}
-            className="rounded-md p-2"
+            className="rounded-md p-2 text-foreground"
             aria-label="Toggle menu"
+            aria-expanded={open}
           >
-            {open ? <X size={20} /> : <Menu size={20} />}
+            <span className={`hamburger ${open ? "is-open" : ""}`} aria-hidden>
+              <span /><span /><span />
+            </span>
           </button>
         </div>
       </div>

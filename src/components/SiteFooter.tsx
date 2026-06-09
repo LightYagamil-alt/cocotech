@@ -1,51 +1,60 @@
 import { Link } from "@tanstack/react-router";
 import { Camera, ThumbsUp, Bird, Phone, Mail } from "lucide-react";
 import cocoLogo from "@/assets/coco-logo.png";
+import nebula from "@/assets/nebula-bg.jpg";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-border bg-card/40">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
+    <footer className="relative isolate mt-24 overflow-hidden border-t border-border text-white">
+      {/* Live nebula background */}
+      <div className="absolute inset-0 -z-10">
+        <img src={nebula} alt="" aria-hidden className="nebula-bg h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-black/65" />
+      </div>
+
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 font-display text-lg font-bold">
-            <img src={cocoLogo} alt="Coco Tech" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
-            Coco<span className="text-gradient">Tech</span>
+            <img src={cocoLogo} alt="Coco Tech" className="h-10 w-10 object-contain drop-shadow-[0_2px_12px_rgba(168,85,247,0.7)]" />
+            Coco<span className="text-aurora">Tech</span>
           </div>
-          <p className="mt-3 max-w-sm text-sm text-muted-foreground">
-            Creativity meets technology. Websites, social media design, poster design and video
-            editing for ambitious small businesses.
+          <p className="mt-4 max-w-sm text-sm text-white/70">
+            Creativity meets technology. Websites, social media design, posters and
+            video editing for ambitious brands across East Africa.
           </p>
+          <div className="mt-6 flex gap-3">
+            <a href="#" aria-label="Instagram" className="rounded-full border border-white/20 bg-white/10 p-2.5 backdrop-blur transition hover:bg-white/20"><Camera size={16}/></a>
+            <a href="#" aria-label="Facebook" className="rounded-full border border-white/20 bg-white/10 p-2.5 backdrop-blur transition hover:bg-white/20"><ThumbsUp size={16}/></a>
+            <a href="#" aria-label="Twitter" className="rounded-full border border-white/20 bg-white/10 p-2.5 backdrop-blur transition hover:bg-white/20"><Bird size={16}/></a>
+          </div>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold">Explore</h4>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/about" className="hover:text-foreground">About</Link></li>
-            <li><Link to="/services" className="hover:text-foreground">Services</Link></li>
-            <li><Link to="/portfolio" className="hover:text-foreground">Portfolio</Link></li>
-            <li><Link to="/contact" className="hover:text-foreground">Contact</Link></li>
+          <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">Explore</h4>
+          <ul className="mt-4 space-y-3 text-sm">
+            <li><Link to="/about" className="text-white/80 hover:text-white">About</Link></li>
+            <li><Link to="/services" className="text-white/80 hover:text-white">Services</Link></li>
+            <li><Link to="/portfolio" className="text-white/80 hover:text-white">Portfolio</Link></li>
+            <li><Link to="/chat" className="text-white/80 hover:text-white">Coco AI</Link></li>
+            <li><Link to="/contact" className="text-white/80 hover:text-white">Contact</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold">Get in touch</h4>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+          <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">Get in touch</h4>
+          <ul className="mt-4 space-y-3 text-sm text-white/80">
             <li className="flex items-center gap-2"><Phone size={14}/><span>+256 785 852378</span></li>
             <li className="flex items-center gap-2"><Phone size={14}/><span>+256 742 011601</span></li>
             <li className="flex items-center gap-2"><Mail size={14}/><span>hello@cocotech.co</span></li>
           </ul>
-          <div className="mt-4 flex gap-3">
-            <a href="#" aria-label="Instagram" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><Camera size={16}/></a>
-            <a href="#" aria-label="Facebook" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><ThumbsUp size={16}/></a>
-            <a href="#" aria-label="Twitter" className="rounded-full bg-secondary p-2 hover:bg-accent/30"><Bird size={16}/></a>
-          </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-between gap-2 border-t border-border px-6 py-5 text-center text-xs text-muted-foreground md:flex-row">
+
+      <div className="relative flex flex-col items-center justify-between gap-2 border-t border-white/10 px-6 py-6 text-center text-xs text-white/60 md:flex-row">
         <p>© {new Date().getFullYear()} Coco Tech. Crafted with care in Uganda.</p>
         <div className="flex gap-4">
-          <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
-          <Link to="/terms" className="hover:text-foreground">Terms</Link>
+          <Link to="/privacy" className="hover:text-white">Privacy</Link>
+          <Link to="/terms" className="hover:text-white">Terms</Link>
         </div>
       </div>
     </footer>
