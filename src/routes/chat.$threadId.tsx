@@ -62,12 +62,12 @@ function ChatThreadPage() {
   }, [getThread, mounted, setMessages, threadId]);
 
   useEffect(() => {
-    latestMessagesRef.current = messages;
     if (loadedThreadRef.current !== threadId) return;
     if (justLoadedThreadRef.current === threadId) {
       justLoadedThreadRef.current = null;
       return;
     }
+    latestMessagesRef.current = messages;
     if (messages.length === 0) return;
 
     if (saveTimerRef.current) window.clearTimeout(saveTimerRef.current);
