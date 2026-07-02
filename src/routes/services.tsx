@@ -75,7 +75,7 @@ function ServicesPage() {
 
       <div className="mt-16 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-border bg-card p-10">
         <h2 className="text-2xl font-bold">Not sure what you need?</h2>
-        <Link to="/contact" className="rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow hover:scale-105 transition-transform">
+        <Link to="/contact" className="rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.98]">
           Talk to us
         </Link>
       </div>

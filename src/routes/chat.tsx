@@ -220,7 +220,7 @@ function Sidebar({
 
 function ChatLayout() {
   const navigate = useNavigate();
-  const { threads, deleteThread, renameThread } = useChatThreads();
+  const { threads, deleteThread, renameThread, clearThreads } = useChatThreads();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const activeId = pathname.startsWith("/chat/") ? pathname.split("/chat/")[1] : undefined;
   const [mounted, setMounted] = useState(false);
@@ -238,7 +238,7 @@ function ChatLayout() {
   }
   function clearAll() {
     if (!confirm("Delete all conversations? This cannot be undone.")) return;
-    threads.forEach((t) => deleteThread(t.id));
+    clearThreads();
     navigate({ to: "/chat" });
   }
 

@@ -1,15 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { Camera, ThumbsUp, Bird, Phone, Mail } from "lucide-react";
 import cocoLogo from "@/assets/coco-logo.png";
-import nebula from "@/assets/nebula-bg.jpg";
 
 export function SiteFooter() {
   return (
     <footer className="relative isolate mt-24 overflow-hidden border-t border-border text-white">
       {/* Live nebula background */}
       <div className="absolute inset-0 -z-10">
-        <img src={nebula} alt="" aria-hidden className="nebula-bg h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-black/65" />
+        <div className="glow-lamp" aria-hidden />
+        <div className="absolute inset-0 bg-black/82" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,transparent,rgba(0,0,0,0.46))]" aria-hidden />
       </div>
 
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-4">

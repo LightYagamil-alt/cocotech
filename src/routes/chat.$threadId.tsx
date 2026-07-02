@@ -1,21 +1,15 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { z } from "zod";
 import { Send, Square, Copy, Check, RotateCcw, ThumbsUp, ThumbsDown } from "lucide-react";
-import {
-  Conversation,
-  ConversationContent,
-  ConversationScrollButton,
-  ConversationEmptyState,
-} from "@/components/ai-elements/conversation";
+import { ConversationEmptyState } from "@/components/ai-elements/conversation";
 import {
   Message,
   MessageContent,
   MessageResponse,
 } from "@/components/ai-elements/message";
-import { Shimmer } from "@/components/ai-elements/shimmer";
 import { useChatThreads } from "@/lib/chat-storage";
 import assistantLogo from "@/assets/assistant-logo.png";
 import { cn } from "@/lib/utils";
@@ -43,36 +37,71 @@ function ChatThreadPage() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const initialMessages = useMemo<UIMessage[]>(
-    () => (mounted ? getThread(threadId).messages : []),
-    [getThread, threadId, mounted],
-  );
-
   useEffect(() => {
     if (mounted) ensureThread(threadId);
   }, [ensureThread, threadId, mounted]);
 
-  const { messages, sendMessage, status, error, stop, regenerate } = useChat({
+  const { messages, setMessages, sendMessage, status, error, stop, regenerate, clearError } = useChat({
     id: threadId,
-    messages: initialMessages,
+    messages: [],
+    experimental_throttle: 80,
     transport: new DefaultChatTransport({ api: "/api/chat" }),
   });
 
+  const loadedThreadRef = useRef<string | null>(null);
+  const justLoadedThreadRef = useRef<string | null>(null);
+  const latestMessagesRef = useRef<UIMessage[]>([]);
+  const saveTimerRef = useRef<number | null>(null);
   useEffect(() => {
+    if (!mounted || loadedThreadRef.current === threadId) return;
+    const storedMessages = getThread(threadId).messages;
+    setMessages(storedMessages);
+    latestMessagesRef.current = storedMessages;
+    loadedThreadRef.current = threadId;
+    justLoadedThreadRef.current = threadId;
+  }, [getThread, mounted, setMessages, threadId]);
+
+  useEffect(() => {
+    if (loadedThreadRef.current !== threadId) return;
+    if (justLoadedThreadRef.current === threadId) {
+      justLoadedThreadRef.current = null;
+      return;
+    }
+    latestMessagesRef.current = messages;
     if (messages.length === 0) return;
-    updateThread(threadId, messages);
-  }, [messages, threadId, updateThread]);
+
+    if (saveTimerRef.current) window.clearTimeout(saveTimerRef.current);
+
+    const save = () => updateThread(threadId, latestMessagesRef.current);
+    if (status === "streaming" || status === "submitted") {
+      saveTimerRef.current = window.setTimeout(save, 900);
+      return;
+    }
+
+    save();
+  }, [messages, status, threadId, updateThread]);
+
+  useEffect(() => {
+    return () => {
+      if (saveTimerRef.current) window.clearTimeout(saveTimerRef.current);
+      if (latestMessagesRef.current.length > 0) updateThread(threadId, latestMessagesRef.current);
+    };
+  }, [threadId, updateThread]);
 
   // One-shot suggested prompt
   const sentInitialRef = useRef(false);
   useEffect(() => {
+    sentInitialRef.current = false;
+  }, [threadId]);
+  useEffect(() => {
     if (sentInitialRef.current) return;
-    if (q && messages.length === 0) {
+    if (!mounted || loadedThreadRef.current !== threadId) return;
+    if (q && messages.length === 0 && getThread(threadId).messages.length === 0) {
       sentInitialRef.current = true;
       void sendMessage({ text: q });
       navigate({ to: "/chat/$threadId", params: { threadId }, search: {}, replace: true });
     }
-  }, [q, messages.length, sendMessage, navigate, threadId]);
+  }, [q, messages.length, sendMessage, navigate, threadId, mounted, getThread]);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState("");
@@ -90,14 +119,15 @@ function ChatThreadPage() {
   function submit(text?: string) {
     const value = (text ?? input).trim();
     if (!value || isBusy) return;
+    clearError();
     void sendMessage({ text: value });
     setInput("");
   }
 
   return (
-    <div className="flex h-[70vh] flex-col">
-      <Conversation className="flex-1" initial={false as never} resize={false as never}>
-        <ConversationContent className="space-y-4">
+    <div className="flex h-[70vh] flex-col md:h-[72vh]">
+      <div className="relative flex-1 overflow-y-auto overscroll-contain">
+        <div className="flex min-h-full flex-col gap-8 space-y-4 p-4">
           {messages.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center gap-4 py-8 text-center">
               <ConversationEmptyState
@@ -110,7 +140,7 @@ function ChatThreadPage() {
                   <button
                     key={s}
                     onClick={() => submit(s)}
-                    className="rounded-xl border border-border bg-card/50 px-3 py-2 text-left text-xs text-muted-foreground transition-all hover:border-brand/60 hover:text-foreground hover:shadow-sm"
+                    className="rounded-xl border border-border bg-card/70 px-3 py-2 text-left text-xs text-muted-foreground transition-colors hover:border-brand/60 hover:text-foreground active:scale-[0.99]"
                   >
                     {s}
                   </button>
@@ -160,17 +190,16 @@ function ChatThreadPage() {
               {error.message || "Something went wrong. Please try again."}
             </div>
           )}
-        </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
+        </div>
+      </div>
 
-      <div className="border-t border-border p-3">
+      <div className="border-t border-border bg-card/80 p-3 backdrop-blur-sm">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             submit();
           }}
-          className="group relative flex items-end gap-2 rounded-2xl border border-border bg-background/80 px-3 py-2 shadow-sm backdrop-blur transition-all focus-within:border-brand/60 focus-within:shadow-[0_0_0_3px_color-mix(in_oklab,var(--brand,theme(colors.primary.DEFAULT))_18%,transparent)]"
+          className="group relative flex items-end gap-2 rounded-2xl border border-border bg-background/90 px-3 py-2 shadow-sm backdrop-blur transition-colors focus-within:border-brand/60"
         >
           <textarea
             ref={textareaRef}
@@ -184,14 +213,14 @@ function ChatThreadPage() {
             }}
             rows={1}
             placeholder="Message Coco..."
-            className="max-h-[200px] min-h-[28px] flex-1 resize-none bg-transparent py-1.5 text-sm leading-relaxed outline-none placeholder:text-muted-foreground"
+              className="max-h-[200px] min-h-[28px] flex-1 resize-none bg-transparent py-1.5 text-sm leading-relaxed outline-none placeholder:text-muted-foreground"
           />
           {isBusy ? (
             <button
               type="button"
               onClick={stop}
               aria-label="Stop"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-secondary text-foreground shadow-sm transition-all hover:bg-secondary/80 active:scale-90"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-secondary text-foreground shadow-sm transition-colors hover:bg-secondary/80 active:scale-95"
             >
               <Square size={14} fill="currentColor" />
             </button>
@@ -201,8 +230,8 @@ function ChatThreadPage() {
               disabled={!input.trim()}
               aria-label="Send message"
               className={cn(
-                "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-md transition-all duration-150 ease-out",
-                "bg-gradient-brand text-primary-foreground hover:shadow-glow hover:-translate-y-0.5 active:translate-y-0 active:scale-90",
+                "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-md transition-transform duration-100 ease-out",
+                "bg-gradient-brand text-primary-foreground hover:shadow-glow hover:-translate-y-0.5 active:translate-y-0 active:scale-95",
                 "disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:shadow-sm",
               )}
             >
@@ -284,7 +313,7 @@ function ActionBtn({
   onClick,
   active,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   label: string;
   onClick: () => void;
   active?: boolean;
