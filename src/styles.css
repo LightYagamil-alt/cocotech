@@ -69,7 +69,7 @@
   --shadow-glow-2: 0 18px 45px -24px oklch(0.60 0.16 18 / 0.38);
 
   --glass-bg: oklch(0.99 0.012 78 / 0.82);
-  --glass-border: oklch(0.18 0.02 270 / 0.08);
+  --glass-border: oklch(0.18 0.02 270 / 0.15);
 }
 
 /* Dark theme */
@@ -102,7 +102,7 @@
   --shadow-glow-2: 0 18px 52px -28px oklch(0.74 0.13 38 / 0.35);
 
   --glass-bg: oklch(0.13 0.018 265 / 0.76);
-  --glass-border: oklch(1 0 0 / 0.09);
+  --glass-border: oklch(1 0 0 / 0.2);
 }
 
 @layer base {
@@ -134,9 +134,11 @@
   .shadow-glow-2 { box-shadow: var(--shadow-glow-2); }
   .glass {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--glass-border);
+    transform: translateZ(0);
+    will-change: transform;
   }
   .theme-switching *, .theme-switching *::before, .theme-switching *::after {
     transition-duration: 0ms !important;
@@ -189,7 +191,7 @@
     transition-duration: 105ms;
     transition-timing-function: ease-out;
   }
-  button:active, a:active, [role="button"]:active { transform: translateY(1px) scale(0.985); }
+  button:active, a:active, [role="button"]:active { transform: translateY(1px) scale(0.985); transition-duration: 55ms; }
 
   @keyframes pulse-glow {
     0%, 100% { box-shadow: 0 0 0 0 oklch(from var(--brand) l c h / 0.45); }
