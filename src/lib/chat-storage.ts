@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { UIMessage } from "ai";
 
 const STORAGE_KEY = "cocotech.chat.threads.v1";
+const CHANGE_EVENT = "cocotech.chat.threads.changed";
 
 export type ChatThread = {
   id: string;
@@ -24,7 +25,13 @@ function readThreads(): ChatThread[] {
 
 function writeThreads(threads: ChatThread[]) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(threads));
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(threads));
+    window.dispatchEvent(new Event(CHANGE_EVENT));
+  } catch {
+    // Storage can fail in private mode or if the browser quota is full.
+    // Keep the chat UI responsive even if persistence is unavailable.
+  }
 }
 
 export function createThreadId() {
@@ -41,8 +48,15 @@ export function useChatThreads() {
     function onStorage(e: StorageEvent) {
       if (e.key === STORAGE_KEY) setThreads(readThreads());
     }
+    function onLocalChange() {
+      setThreads(readThreads());
+    }
     window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    window.addEventListener(CHANGE_EVENT, onLocalChange);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener(CHANGE_EVENT, onLocalChange);
+    };
   }, []);
 
   const persist = useCallback((next: ChatThread[]) => {
@@ -84,7 +98,11 @@ export function useChatThreads() {
         : "New chat";
       if (idx >= 0) {
         const next = [...current];
-        next[idx] = { ...next[idx], messages, title: titleText, updatedAt: Date.now() };
+        const currentTitle = next[idx].title;
+        const title = currentTitle && currentTitle !== "New chat" && currentTitle !== titleText
+          ? currentTitle
+          : titleText;
+        next[idx] = { ...next[idx], messages, title, updatedAt: Date.now() };
         persist(next);
       } else {
         persist([{ id, title: titleText, updatedAt: Date.now(), messages }, ...current]);
@@ -100,6 +118,10 @@ export function useChatThreads() {
     [persist],
   );
 
+  const clearThreads = useCallback(() => {
+    persist([]);
+  }, [persist]);
+
   const renameThread = useCallback(
     (id: string, title: string) => {
       const current = readThreads();
@@ -112,5 +134,5 @@ export function useChatThreads() {
     [persist],
   );
 
-  return { threads, getThread, ensureThread, updateThread, deleteThread, renameThread };
+  return { threads, getThread, ensureThread, updateThread, deleteThread, renameThread, clearThreads };
 }

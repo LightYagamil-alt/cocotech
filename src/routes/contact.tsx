@@ -56,7 +56,7 @@ function ContactPage() {
 
         <form
           onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-          className="rounded-3xl border border-border bg-card p-8"
+          className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8"
         >
           {sent ? (
             <div className="flex h-full min-h-[300px] flex-col items-center justify-center text-center">
@@ -81,7 +81,7 @@ function ContactPage() {
                   placeholder="A few sentences is enough..."
                 />
               </div>
-              <button type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02]">
+              <button type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.01] active:scale-[0.98]">
                 Send message <Send size={16}/>
               </button>
             </div>

@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles, Code2, Palette, Film, Star, Quote, Image as ImageIcon, Bot, Zap, Compass, Layers, Heart } from "lucide-react";
 import doodles from "@/assets/hero-doodles.png";
-import nebula from "@/assets/nebula-bg.jpg";
 import pBoutique from "@/assets/project-boutique.jpg";
 import pCoffee from "@/assets/project-coffee.jpg";
 import pFestival from "@/assets/project-festival.jpg";
@@ -50,7 +49,7 @@ function Index() {
   return (
     <div>
       {/* HERO — bold doodle wallpaper, giant typography, zigzag cut */}
-      <section className="relative isolate overflow-hidden bg-foreground clip-zigzag-bottom">
+      <section className="relative isolate overflow-hidden bg-[#070817] clip-zigzag-bottom">
         {/* Doodle wallpaper */}
         <div
           className="absolute inset-0 doodle-bg opacity-[0.18] dark:opacity-[0.22]"
@@ -58,14 +57,14 @@ function Index() {
           aria-hidden
         />
         {/* Color overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-600/40 via-fuchsia-600/30 to-cyan-500/30 mix-blend-overlay" aria-hidden />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-foreground/40 to-foreground" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/32 via-amber-400/18 to-sky-400/24 mix-blend-screen" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-[#070817]/58 to-[#070817]" aria-hidden />
 
         <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-32 md:pt-28 md:pb-44">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur animate-fade-in">
             <Sparkles size={12} /> Creative studio · Uganda
           </span>
-          <h1 className="mt-6 font-display font-black uppercase leading-[0.85] tracking-tight text-white text-[clamp(3rem,13vw,11rem)] letter-rise">
+          <h1 className="mt-6 font-display font-extrabold leading-[0.88] tracking-tight text-white text-[clamp(3.15rem,12vw,10rem)] letter-rise">
             {headline.split(" ").map((word, wi) => (
               <span key={wi} className="mr-[0.12em] inline-block">
                 {word.split("").map((ch, ci) => {
@@ -84,14 +83,14 @@ function Index() {
             ))}
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/80 animate-fade-up [animation-delay:600ms]">
-            We build beautiful websites, eye-catching social posts, and cinematic videos
-            that make small businesses look anything but small.
+            We build websites, posters, social campaigns and video stories with the kind
+            of craft that makes a growing business feel established from day one.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 animate-fade-up [animation-delay:750ms]">
-            <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-foreground shadow-glow transition-transform hover:scale-105">
+             <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-slate-950 shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.98]">
               Hire Us Now <ArrowRight size={16}/>
             </Link>
-            <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-3 font-semibold text-white backdrop-blur hover:bg-white/20">
+             <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-3 font-semibold text-white backdrop-blur hover:bg-white/20 active:scale-[0.98]">
               See our work
             </Link>
           </div>
@@ -118,18 +117,18 @@ function Index() {
           {services.map((s, i) => (
             <div
               key={s.title}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition-all animate-fade-up hover-lift hover:shadow-glow"
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition-colors animate-fade-up hover-lift hover:shadow-glow"
               style={{ animationDelay: `${i * 80}ms` }}
             >
               {/* Doodle illustration */}
               <div
-                className="absolute -right-8 -top-8 h-40 w-40 rounded-full opacity-[0.08] transition-all duration-500 group-hover:scale-125 group-hover:opacity-[0.16]"
+                className="absolute -right-8 -top-8 h-40 w-40 rounded-full opacity-[0.08] transition-transform duration-300 group-hover:scale-110"
                 style={{ backgroundImage: `url(${doodles})`, backgroundSize: "240px" }}
                 aria-hidden
               />
               <div className={`absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-gradient-to-br ${s.tint} opacity-20 blur-3xl transition-opacity group-hover:opacity-40`} />
               <div className="relative">
-                <div className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${s.tint} text-white shadow-lg transition-transform group-hover:scale-110 group-hover:-rotate-6`}>
+                <div className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${s.tint} text-white shadow-lg transition-transform group-hover:scale-105 group-hover:-rotate-3`}>
                   <s.icon size={26}/>
                 </div>
                 <h3 className="mt-6 text-2xl font-bold">{s.title}</h3>
@@ -144,17 +143,17 @@ function Index() {
       </section>
 
       {/* THE COCO CODE — manifesto over doodle wallpaper */}
-      <section className="relative overflow-hidden bg-foreground py-28 clip-zigzag-top clip-zigzag-bottom">
+      <section className="relative overflow-hidden bg-[#090a16] py-28 clip-zigzag-top clip-zigzag-bottom">
         <div
           className="absolute inset-0 doodle-bg opacity-[0.12]"
           style={{ backgroundImage: `url(${doodles})`, filter: "invert(1)" }}
           aria-hidden
         />
-        <div className="absolute inset-0 bg-gradient-to-tr from-violet-700/30 via-transparent to-cyan-500/20" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/16 via-black/28 to-amber-400/14" aria-hidden />
         <div className="relative mx-auto max-w-7xl px-6 text-white">
           <div className="max-w-3xl">
-            <p className="text-sm uppercase tracking-[0.3em] text-cyan-300">Our philosophy</p>
-            <h2 className="mt-3 font-display font-black uppercase leading-[0.9] tracking-tight text-5xl md:text-8xl">
+            <p className="text-sm uppercase tracking-[0.3em] text-amber-200">Our philosophy</p>
+            <h2 className="mt-3 font-display font-extrabold leading-[0.92] tracking-tight text-5xl md:text-8xl">
               <span className="text-aurora">#TheCocoCode</span>
             </h2>
             <p className="mt-5 max-w-xl text-lg text-white/80">
@@ -166,7 +165,7 @@ function Index() {
             {manifesto.map((m, i) => (
               <div
                 key={m.title}
-                className="group relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.04] p-7 backdrop-blur transition-all hover-lift hover:border-cyan-300/50 hover:bg-white/[0.08] animate-fade-up"
+                className="group relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.04] p-7 backdrop-blur transition-colors hover-lift hover:border-amber-200/50 hover:bg-white/[0.08] animate-fade-up"
                 style={{ animationDelay: `${i * 90}ms` }}
               >
                 <p className="text-xs font-mono uppercase tracking-widest text-white/50">0{i + 1}</p>
@@ -206,7 +205,7 @@ function Index() {
                 style={{ animationDelay: `${i * 100}ms` }}
               >
                 <div className="absolute inset-0">
-                  <img src={w.img} alt={w.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+                  <img src={w.img} alt={w.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                 <div className="relative flex h-full min-h-[220px] flex-col justify-end p-6 text-white md:min-h-[260px]">
@@ -230,7 +229,7 @@ function Index() {
               style={{ animationDelay: `${i * 100}ms` }}
             >
               <div className="aspect-[16/10] overflow-hidden">
-                <img src={w.img} alt={w.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+                <img src={w.img} alt={w.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white">
@@ -245,7 +244,7 @@ function Index() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border-2 border-foreground px-7 py-3 font-semibold transition-all hover:bg-foreground hover:text-background">
+          <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border-2 border-foreground px-7 py-3 font-semibold transition-colors hover:bg-foreground hover:text-background active:scale-[0.98]">
             More Work <ArrowRight size={16} />
           </Link>
         </div>
@@ -273,7 +272,7 @@ function Index() {
                 our team — instantly. Trained on what makes small brands feel big.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
-                <Link to="/chat" className="inline-flex items-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105">
+                <Link to="/chat" className="inline-flex items-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.98]">
                   <Bot size={16} /> Try Coco AI <ArrowRight size={16} />
                 </Link>
                 <Link to="/services" className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold hover:bg-secondary">
@@ -283,7 +282,7 @@ function Index() {
             </div>
             <div className="order-1 flex items-center justify-center md:order-2">
               <div className="relative">
-                <div className="absolute inset-0 animate-pulse rounded-full bg-gradient-brand opacity-30 blur-3xl" />
+                <div className="absolute inset-0 rounded-full bg-gradient-brand opacity-25 blur-3xl" />
                 <img src={assistantLogo} alt="Coco AI" loading="lazy" className="relative h-56 w-56 animate-float object-contain md:h-72 md:w-72"/>
               </div>
             </div>
@@ -312,14 +311,15 @@ function Index() {
         </div>
       </section>
 
-      {/* FINAL CTA — Nebula live background */}
+      {/* FINAL CTA — glow-lamp live background */}
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img src={nebula} alt="" aria-hidden className="nebula-bg h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="glow-lamp" aria-hidden />
+          <div className="absolute inset-0 bg-black/48" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,0.42))]" aria-hidden />
         </div>
         <div className="relative mx-auto max-w-5xl px-6 py-28 text-center text-white md:py-40">
-          <h2 className="font-display font-black uppercase leading-[0.9] tracking-tight text-5xl md:text-8xl">
+          <h2 className="font-display font-extrabold leading-[0.92] tracking-tight text-5xl md:text-8xl">
             Let's make it<br/><span className="text-aurora">Happen together.</span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg text-white/80">
@@ -327,10 +327,10 @@ function Index() {
             people actually remember?
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-foreground transition-transform hover:scale-105">
+            <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-slate-950 transition-transform hover:scale-[1.03] active:scale-[0.98]">
               Get Started Today <ArrowRight size={18}/>
             </Link>
-            <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-8 py-4 text-base font-bold text-white backdrop-blur hover:bg-white/20">
+            <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-8 py-4 text-base font-bold text-white backdrop-blur hover:bg-white/20 active:scale-[0.98]">
               See the work
             </Link>
           </div>

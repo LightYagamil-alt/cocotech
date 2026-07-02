@@ -65,7 +65,7 @@ function PortfolioPage() {
             <button
               key={c}
               onClick={() => setActive(c)}
-              className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-all ${
+              className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors active:scale-[0.98] ${
                 isActive
                   ? "border-transparent bg-foreground text-background shadow-glow"
                   : "border-border bg-card/50 text-muted-foreground hover:text-foreground hover:border-brand/50"
@@ -90,7 +90,8 @@ function PortfolioPage() {
                 src={w.img}
                 alt={w.title}
                 loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5 text-white">

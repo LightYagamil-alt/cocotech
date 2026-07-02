@@ -41,7 +41,7 @@ export function SiteHeader() {
           <ThemeToggle />
           <Link
             to="/contact"
-            className="rounded-full bg-gradient-brand px-5 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105"
+            className="rounded-full bg-gradient-brand px-5 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.98]"
           >
             Get a Quote
           </Link>
