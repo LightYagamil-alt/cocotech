@@ -71,7 +71,7 @@ export function ChatBubble() {
                   params={{ threadId }}
                   search={{ q: s }}
                   onClick={() => setOpen(false)}
-                  className="group flex items-center justify-between rounded-lg border border-border bg-background/50 px-3 py-2 text-left text-xs text-muted-foreground transition-colors hover:border-brand/60 hover:text-foreground"
+                  className="group flex items-center justify-between rounded-lg border border-border bg-background/50 px-3 py-2 text-left text-xs text-muted-foreground transition-colors hover:border-brand/60 hover:text-foreground active:scale-[0.99]"
                 >
                   <span>{s}</span>
                   <ArrowRight size={12} className="opacity-0 transition-opacity group-hover:opacity-100" />
@@ -81,7 +81,7 @@ export function ChatBubble() {
             <Link
               to="/chat"
               onClick={() => setOpen(false)}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02]"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform duration-100 hover:scale-[1.02] active:scale-[0.98]"
             >
               Start a chat <ArrowRight size={14} />
             </Link>
@@ -97,7 +97,7 @@ export function ChatBubble() {
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close chat" : "Chat with Coco"}
-          className={`relative flex h-16 w-16 items-center justify-center rounded-full shadow-glow transition-transform hover:scale-110 active:scale-95 ${
+          className={`relative flex h-16 w-16 items-center justify-center rounded-full shadow-glow transition-transform duration-100 hover:scale-105 active:scale-95 ${
             open ? "bg-gradient-brand text-primary-foreground" : "bg-transparent"
           } ${nudge && !open ? "animate-float" : ""}`}
         >

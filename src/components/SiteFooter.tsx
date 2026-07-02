@@ -8,7 +8,7 @@ export function SiteFooter() {
       {/* Live nebula background */}
       <div className="absolute inset-0 -z-10">
         <div className="glow-lamp" aria-hidden />
-        <div className="absolute inset-0 bg-black/68" />
+        <div className="absolute inset-0 bg-black/82" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,transparent,rgba(0,0,0,0.46))]" aria-hidden />
       </div>
 
