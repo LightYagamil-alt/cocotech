@@ -88,6 +88,8 @@ function Index() {
         </div>
       </section>
 
+      <div className="seam seam-dark-to-light" aria-hidden />
+
       <ClientMarquee />
 
       {/* ============================================================
@@ -137,6 +139,8 @@ function Index() {
         </div>
       </section>
 
+      <div className="seam seam-light-to-dark" aria-hidden />
+
       {/* ============================================================
           THE COCO CODE — editorial numbered manifesto.
           One dominant statement, four supporting principles.
@@ -179,10 +183,17 @@ function Index() {
         </div>
       </section>
 
+      <div className="seam seam-dark-to-light" aria-hidden />
+
+      {/* A breath — deliberate pause between manifesto and work */}
+      <div className="mx-auto max-w-[86rem] px-6 pt-20 md:pt-28">
+        <span className="rule-breath text-foreground" />
+      </div>
+
       {/* ============================================================
           FEATURED WORK — magazine grid, asymmetric, tighter type.
       ============================================================ */}
-      <section className="mx-auto max-w-[86rem] px-6 py-32">
+      <section className="mx-auto max-w-[86rem] px-6 py-32 reveal-on-scroll">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground">(03) Selected work</p>
@@ -241,6 +252,8 @@ function Index() {
         </div>
       </section>
 
+      <div className="seam seam-light-to-dark" aria-hidden />
+
       {/* ============================================================
           COCO AI — flagship product moment.
           Full-bleed dark, live nebula, oversized composition.
@@ -289,10 +302,12 @@ function Index() {
         </div>
       </section>
 
+      <div className="seam seam-dark-to-light" aria-hidden />
+
       {/* ============================================================
           TESTIMONIALS — one dominant pull-quote, not a grid.
       ============================================================ */}
-      <section className="mx-auto max-w-[80rem] px-6 py-32 md:py-44">
+      <section className="mx-auto max-w-[80rem] px-6 py-36 md:py-52 reveal-on-scroll">
         <p className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground">(05) In their words</p>
         <blockquote className="mt-10 max-w-5xl font-display text-4xl font-medium leading-[1.15] tracking-tight md:text-7xl">
           <span className="text-muted-foreground/40">"</span>
@@ -323,6 +338,8 @@ function Index() {
           </figure>
         </div>
       </section>
+
+      <div className="seam seam-light-to-dark" aria-hidden />
 
       {/* ============================================================
           FINAL CTA — glow-lamp live background.
