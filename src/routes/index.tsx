@@ -8,6 +8,7 @@ import pSkincare from "@/assets/project-skincare.jpg";
 import pRealestate from "@/assets/project-realestate.jpg";
 import pFitness from "@/assets/project-fitness.jpg";
 import assistantLogo from "@/assets/assistant-logo.png";
+import inkCloudAsset from "@/assets/ink-cloud.mp4.asset.json";
 import { ChatBubble } from "@/components/ChatBubble";
 import { ClientMarquee } from "@/components/ClientMarquee";
 
@@ -260,8 +261,19 @@ function Index() {
       ============================================================ */}
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10" aria-hidden>
-          <div className="glow-lamp" />
-          <div className="absolute inset-0 bg-black/40" />
+          <video
+            src={inkCloudAsset.url}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            aria-hidden
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          {/* deep vignette so headline stays legible */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/85" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.55)_80%)]" />
         </div>
 
         <div className="relative mx-auto grid max-w-[92rem] items-center gap-12 px-6 py-32 md:py-48 lg:grid-cols-12">
