@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "coco-tech-mcp",
+      "version": "0.1.0",
+      "title": "Coco Tech"
+    },
+    "tools": [
+      {
+        "name": "list_services",
+        "title": "List Coco Tech services",
+        "description": "Return the list of creative services Coco Tech offers, with short descriptions.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_contact_info",
+        "title": "Get Coco Tech contact info",
+        "description": "Return Coco Tech's public contact details (phone, email, location, contact page URL).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "request_quote",
+        "title": "Draft a Coco Tech project quote request",
+        "description": "Take a project brief and return a structured summary the client can send to Coco Tech via the /contact page. Does not submit anything on the client's behalf.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "service": {
+              "type": "string",
+              "enum": [
+                "website",
+                "social-media",
+                "video-editing",
+                "poster",
+                "other"
+              ],
+              "description": "Which Coco Tech service the quote is for."
+            },
+            "description": {
+              "type": "string",
+              "minLength": 10,
+              "description": "Short project description or goal."
+            },
+            "budgetRange": {
+              "description": "Optional budget range, e.g. '$500-$1000'.",
+              "type": "string"
+            },
+            "deadline": {
+              "description": "Optional target deadline, natural language ok.",
+              "type": "string"
+            },
+            "contactName": {
+              "description": "Client name, if known.",
+              "type": "string"
+            },
+            "contactEmail": {
+              "description": "Client email, if known.",
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            }
+          },
+          "required": [
+            "service",
+            "description"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
