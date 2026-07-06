@@ -12,7 +12,7 @@ export function SiteFooter() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,transparent,rgba(0,0,0,0.46))]" aria-hidden />
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-5">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 font-display text-lg font-bold">
             <img src={cocoLogo} alt="Coco Tech" className="h-10 w-10 object-contain drop-shadow-[0_2px_12px_rgba(168,85,247,0.7)]" />
@@ -30,13 +30,24 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">Explore</h4>
+          <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">Quick Links</h4>
           <ul className="mt-4 space-y-3 text-sm">
+            <li><Link to="/" className="text-white/80 hover:text-white">Home</Link></li>
             <li><Link to="/about" className="text-white/80 hover:text-white">About</Link></li>
             <li><Link to="/services" className="text-white/80 hover:text-white">Services</Link></li>
-            <li><Link to="/portfolio" className="text-white/80 hover:text-white">Portfolio</Link></li>
+            <li><Link to="/portfolio" className="text-white/80 hover:text-white">Work</Link></li>
             <li><Link to="/chat" className="text-white/80 hover:text-white">Coco AI</Link></li>
             <li><Link to="/contact" className="text-white/80 hover:text-white">Contact</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">Resources</h4>
+          <ul className="mt-4 space-y-3 text-sm">
+            <li><Link to="/portfolio" className="text-white/80 hover:text-white">Case Studies</Link></li>
+            <li><Link to="/about" className="text-white/80 hover:text-white">Our Process</Link></li>
+            <li><Link to="/contact" className="text-white/80 hover:text-white">Get a Quote</Link></li>
+            <li><Link to="/services" className="text-white/80 hover:text-white">What's Included</Link></li>
           </ul>
         </div>
 
@@ -53,7 +64,7 @@ export function SiteFooter() {
       <div className="relative flex flex-col items-center justify-between gap-2 border-t border-white/10 px-6 py-6 text-center text-xs text-white/60 md:flex-row">
         <p>© {new Date().getFullYear()} Coco Tech. Crafted with care in Uganda.</p>
         <div className="flex gap-4">
-          <Link to="/privacy" className="hover:text-white">Privacy</Link>
+          <Link to="/privacy" className="hover:text-white">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-white">Terms</Link>
         </div>
       </div>
