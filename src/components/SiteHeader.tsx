@@ -24,15 +24,32 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 glass">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
           <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold" onClick={() => setOpen(false)}>
             <img src={cocoLogo} alt="Coco Tech" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
             <span>Coco<span className="text-gradient"> Tech</span></span>
           </Link>
 
+          {/* Inline nav — visible on desktop for quick access */}
+          <nav className="hidden lg:flex items-center gap-1 text-sm">
+            {links.slice(1).map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                preload="intent"
+                activeOptions={{ exact: l.to === "/" }}
+                className="rounded-full px-3 py-1.5 text-foreground/75 transition-colors hover:text-foreground hover:bg-foreground/5"
+                activeProps={{ className: "text-foreground bg-foreground/8" }}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+
           <div className="flex items-center gap-2 md:gap-3">
             <Link
               to="/contact"
+              preload="intent"
               className="hidden rounded-full bg-gradient-brand px-5 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.98] md:inline-block"
             >
               Get a Quote
@@ -40,7 +57,7 @@ export function SiteHeader() {
             <ThemeToggle />
             <button
               onClick={() => setOpen((o) => !o)}
-              className="relative z-[60] rounded-md p-2 text-foreground"
+              className="relative z-[60] rounded-md p-2 text-foreground lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
             >
