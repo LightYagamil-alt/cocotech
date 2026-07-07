@@ -3,8 +3,13 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { z } from "zod";
-import { Send, Square, Copy, Check, RotateCcw, ThumbsUp, ThumbsDown } from "lucide-react";
-import { ConversationEmptyState } from "@/components/ai-elements/conversation";
+import { ArrowUp, Square, Copy, Check, RotateCcw, ThumbsUp, ThumbsDown } from "lucide-react";
+import {
+  Conversation,
+  ConversationContent,
+  ConversationEmptyState,
+  ConversationScrollButton,
+} from "@/components/ai-elements/conversation";
 import {
   Message,
   MessageContent,
@@ -106,13 +111,18 @@ function ChatThreadPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState("");
 
-  // Auto-resize textarea
+  // Auto-resize textarea (up to ~8 lines)
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
     el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, 200)}px`;
+    el.style.height = `${Math.min(el.scrollHeight, 240)}px`;
   }, [input]);
+
+  // Autofocus on mount and after thread change
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, [threadId]);
 
   const isBusy = status === "submitted" || status === "streaming";
 
@@ -122,84 +132,119 @@ function ChatThreadPage() {
     clearError();
     void sendMessage({ text: value });
     setInput("");
+    // Refocus after send
+    requestAnimationFrame(() => textareaRef.current?.focus());
   }
 
   return (
-    <div className="flex h-[70vh] flex-col md:h-[72vh]">
-      <div className="relative flex-1 overflow-y-auto overscroll-contain">
-        <div className="flex min-h-full flex-col gap-8 space-y-4 p-4">
-          {messages.length === 0 ? (
-            <div className="flex h-full flex-col items-center justify-center gap-4 py-8 text-center">
-              <ConversationEmptyState
-                icon={<img src={assistantLogo} alt="Coco AI" className="h-24 w-24 object-contain drop-shadow-[0_8px_24px_rgba(168,85,247,0.45)]" />}
-                title="Say hi to Coco"
-                description="Ask about our services, pricing approach, or get help scoping a project."
-              />
-              <div className="grid w-full max-w-md gap-2 sm:grid-cols-2">
-                {SUGGESTIONS.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => submit(s)}
-                    className="rounded-xl border border-border bg-card/70 px-3 py-2 text-left text-xs text-muted-foreground transition-colors hover:border-brand/60 hover:text-foreground active:scale-[0.99]"
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            messages.map((message, idx) => {
-              const isLast = idx === messages.length - 1;
-              const text = message.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
-              return (
-                <div key={message.id} className="flex flex-col gap-1">
-                  <Message id={`msg-${message.id}`} from={message.role}>
-                    <MessageContent>
-                      {message.parts.map((part, i) => {
-                        if (part.type === "text") {
-                          return message.role === "assistant" ? (
-                            <MessageResponse key={i}>{part.text}</MessageResponse>
-                          ) : (
-                            <span key={i} className="whitespace-pre-wrap">{part.text}</span>
-                          );
-                        }
-                        return null;
-                      })}
-                    </MessageContent>
-                  </Message>
-                  {message.role === "assistant" && !isBusy && (
-                    <AssistantActions
-                      text={text}
-                      canRegenerate={isLast}
-                      onRegenerate={() => regenerate()}
+    <div className="flex h-full flex-col">
+      {/* Scroll region with soft fade masks top & bottom */}
+      <div
+        className="relative min-h-0 flex-1"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)",
+        }}
+      >
+        <Conversation className="h-full">
+          <ConversationContent className="mx-auto w-full max-w-3xl gap-6 px-3 py-6 sm:px-6 md:px-8 md:py-8 lg:max-w-4xl">
+            {messages.length === 0 ? (
+              <div className="flex h-full min-h-[50vh] flex-col items-center justify-center gap-6 py-8 text-center">
+                <ConversationEmptyState
+                  icon={
+                    <img
+                      src={assistantLogo}
+                      alt="Coco AI"
+                      className="h-24 w-24 object-contain drop-shadow-[0_8px_24px_rgba(168,85,247,0.45)]"
                     />
-                  )}
+                  }
+                  title="Say hi to Coco"
+                  description="Ask about our services, pricing approach, or get help scoping a project."
+                />
+                <div className="grid w-full max-w-md gap-2 sm:grid-cols-2">
+                  {SUGGESTIONS.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => submit(s)}
+                      className="rounded-xl border border-border bg-card/70 px-3 py-2.5 text-left text-xs text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:text-foreground hover:shadow-sm active:scale-[0.99]"
+                    >
+                      {s}
+                    </button>
+                  ))}
                 </div>
-              );
-            })
-          )}
-          {status === "submitted" && (
-            <Message from="assistant">
-              <MessageContent>
-                <TypingDots />
-              </MessageContent>
-            </Message>
-          )}
-          {error && (
-            <div className="mx-4 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-              {error.message || "Something went wrong. Please try again."}
-            </div>
-          )}
-        </div>
+              </div>
+            ) : (
+              messages.map((message, idx) => {
+                const isLast = idx === messages.length - 1;
+                const text = message.parts
+                  .map((p) => (p.type === "text" ? p.text : ""))
+                  .join("");
+                return (
+                  <div
+                    key={message.id}
+                    className="flex flex-col gap-1"
+                    style={{ contentVisibility: "auto", containIntrinsicSize: "auto 120px" }}
+                  >
+                    <Message id={`msg-${message.id}`} from={message.role}>
+                      <MessageContent>
+                        {message.parts.map((part, i) => {
+                          if (part.type === "text") {
+                            return message.role === "assistant" ? (
+                              <MessageResponse key={i}>{part.text}</MessageResponse>
+                            ) : (
+                              <span key={i} className="whitespace-pre-wrap">
+                                {part.text}
+                              </span>
+                            );
+                          }
+                          return null;
+                        })}
+                      </MessageContent>
+                    </Message>
+                    {message.role === "assistant" && !isBusy && (
+                      <AssistantActions
+                        text={text}
+                        canRegenerate={isLast}
+                        onRegenerate={() => regenerate()}
+                      />
+                    )}
+                  </div>
+                );
+              })
+            )}
+            {status === "submitted" && (
+              <Message from="assistant">
+                <MessageContent>
+                  <TypingDots />
+                </MessageContent>
+              </Message>
+            )}
+            {error && (
+              <div
+                role="alert"
+                className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+              >
+                {error.message || "Something went wrong. Please try again."}
+              </div>
+            )}
+          </ConversationContent>
+          <ConversationScrollButton />
+        </Conversation>
       </div>
 
-      <div className="border-t border-border bg-card/80 p-3 backdrop-blur-sm">
+      {/* Sticky composer */}
+      <div className="shrink-0 border-t border-border/60 bg-card/60 px-3 pb-3 pt-2 backdrop-blur-xl sm:px-6 md:px-8 md:pb-4 md:pt-3">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             submit();
           }}
-          className="group relative flex items-end gap-2 rounded-2xl border border-border bg-background/90 px-3 py-2 shadow-sm backdrop-blur transition-colors focus-within:border-brand/60"
+          className={cn(
+            "group relative mx-auto flex w-full max-w-3xl items-end gap-2 rounded-2xl border border-border/70 bg-background/70 px-3 py-2.5 shadow-lg shadow-black/5 backdrop-blur-xl transition-all lg:max-w-4xl",
+            "focus-within:border-brand/60 focus-within:shadow-glow focus-within:shadow-brand/10",
+          )}
         >
           <textarea
             ref={textareaRef}
@@ -212,15 +257,16 @@ function ChatThreadPage() {
               }
             }}
             rows={1}
-            placeholder="Message Coco..."
-              className="max-h-[200px] min-h-[28px] flex-1 resize-none bg-transparent py-1.5 text-sm leading-relaxed outline-none placeholder:text-muted-foreground"
+            aria-label="Message Coco"
+            placeholder="Message Coco…  (Shift + Enter for a new line)"
+            className="max-h-[240px] min-h-[40px] flex-1 resize-none bg-transparent px-1 py-2 text-[15px] leading-relaxed outline-none placeholder:text-muted-foreground"
           />
           {isBusy ? (
             <button
               type="button"
               onClick={stop}
-              aria-label="Stop"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-secondary text-foreground shadow-sm transition-colors hover:bg-secondary/80 active:scale-95"
+              aria-label="Stop generating"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary text-foreground shadow-sm transition-all hover:bg-secondary/80 active:scale-95"
             >
               <Square size={14} fill="currentColor" />
             </button>
@@ -230,16 +276,16 @@ function ChatThreadPage() {
               disabled={!input.trim()}
               aria-label="Send message"
               className={cn(
-                "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-md transition-transform duration-100 ease-out",
-                "bg-gradient-brand text-primary-foreground hover:shadow-glow hover:-translate-y-0.5 active:translate-y-0 active:scale-95",
-                "disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:shadow-sm",
+                "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-md transition-all duration-150 ease-out",
+                "bg-gradient-brand text-primary-foreground hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-95",
+                "disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:shadow-sm",
               )}
             >
-              <Send size={15} className="-rotate-0 translate-x-[1px]" />
+              <ArrowUp size={18} strokeWidth={2.5} />
             </button>
           )}
         </form>
-        <p className="mt-1.5 px-1 text-[10px] text-muted-foreground">
+        <p className="mx-auto mt-2 max-w-3xl px-1 text-center text-[10px] text-muted-foreground lg:max-w-4xl">
           Coco can make mistakes. Verify important details with our team.
         </p>
       </div>
