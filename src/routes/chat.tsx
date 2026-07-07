@@ -261,7 +261,7 @@ function ChatLayout() {
         <div className="absolute inset-0 bg-background/85 backdrop-blur-2xl" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 md:py-10">
+      <div className="mx-auto w-full max-w-[1400px] px-2 py-3 sm:px-4 md:px-6 md:py-6">
       {/* Mobile header */}
       <div className="mb-3 flex items-center justify-between md:hidden">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -293,8 +293,8 @@ function ChatLayout() {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-[280px_1fr]">
-        <aside className="hidden max-h-[80vh] rounded-2xl border border-border bg-card/60 p-3 backdrop-blur md:flex md:flex-col">
+      <div className="grid gap-4 md:grid-cols-[280px_1fr] md:gap-6">
+        <aside className="hidden max-h-[calc(100dvh-8rem)] rounded-2xl border border-border bg-card/60 p-3 backdrop-blur md:flex md:flex-col">
           {mounted ? (
             <Sidebar
               threads={sortedThreads}
@@ -308,18 +308,20 @@ function ChatLayout() {
           ) : null}
         </aside>
 
-        <section className="flex min-h-[70vh] flex-col overflow-hidden rounded-2xl border border-border bg-card/60 shadow-sm animate-fade-in backdrop-blur">
-          <header className="flex items-center justify-between border-b border-border px-4 py-3">
-            <div className="flex items-center gap-2">
-              <img src={assistantLogo} alt="" className="h-8 w-8" />
+        <section className="flex h-[calc(100dvh-6.5rem)] flex-col overflow-hidden rounded-3xl border border-border/70 bg-card/70 shadow-xl shadow-black/5 animate-fade-in backdrop-blur-xl md:h-[calc(100dvh-8rem)]">
+          <header className="flex shrink-0 items-center justify-between border-b border-border/60 bg-card/40 px-4 py-3 backdrop-blur-md md:px-6">
+            <div className="flex items-center gap-2.5">
+              <div className="relative">
+                <img src={assistantLogo} alt="" className="h-9 w-9" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-card bg-emerald-500 shadow-[0_0_8px_rgb(16_185_129)]" aria-hidden />
+              </div>
               <div>
                 <p className="text-sm font-semibold leading-none">Coco</p>
-                <p className="text-xs text-muted-foreground">Online · AI Assistant</p>
+                <p className="mt-1 text-[11px] text-muted-foreground">Online · AI Assistant</p>
               </div>
             </div>
-            <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgb(16_185_129)]" aria-hidden />
           </header>
-          <div className="flex-1">
+          <div className="min-h-0 flex-1">
             <Outlet />
           </div>
         </section>
