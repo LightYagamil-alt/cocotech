@@ -27,10 +27,15 @@ export const Route = createFileRoute("/chat/$threadId")({
 });
 
 const SUGGESTIONS = [
-  "Show pricing plans",
-  "See portfolio",
-  "What's included?",
-  "Timeline estimate",
+  "How much does a website cost?",
+  "Start my project",
+  "Show your portfolio",
+  "Build a mobile app",
+  "Branding packages",
+  "Hosting & domains",
+  "SEO services",
+  "Website maintenance",
+  "Talk to a human",
 ];
 
 function ChatThreadPage() {
@@ -163,12 +168,12 @@ function ChatThreadPage() {
                   title="Say hi to Coco"
                   description="Ask about our services, pricing approach, or get help scoping a project."
                 />
-                <div className="grid w-full max-w-md gap-2 sm:grid-cols-2">
+                <div className="grid w-full max-w-2xl grid-cols-2 gap-2 sm:grid-cols-3">
                   {SUGGESTIONS.map((s) => (
                     <button
                       key={s}
                       onClick={() => submit(s)}
-                      className="rounded-xl border border-border bg-card/70 px-3 py-2.5 text-left text-xs text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:text-foreground hover:shadow-sm active:scale-[0.99]"
+                      className="rounded-xl border border-border bg-card/70 px-3 py-2.5 text-left text-xs font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:text-foreground hover:shadow-sm active:scale-[0.99]"
                     >
                       {s}
                     </button>
@@ -235,14 +240,14 @@ function ChatThreadPage() {
       </div>
 
       {/* Sticky composer */}
-      <div className="shrink-0 border-t border-border/60 bg-card/60 px-3 pb-3 pt-2 backdrop-blur-xl sm:px-6 md:px-8 md:pb-4 md:pt-3">
+      <div className="shrink-0 border-t border-border/60 bg-card/60 px-3 pb-4 pt-3 backdrop-blur-xl sm:px-6 md:px-8 md:pb-5 md:pt-4">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             submit();
           }}
           className={cn(
-            "group relative mx-auto flex w-full max-w-3xl items-end gap-2 rounded-2xl border border-border/70 bg-background/70 px-3 py-2.5 shadow-lg shadow-black/5 backdrop-blur-xl transition-all lg:max-w-4xl",
+            "group relative mx-auto flex w-full max-w-3xl items-end gap-2 rounded-3xl border border-border/70 bg-background/80 px-4 py-3 shadow-lg shadow-black/5 backdrop-blur-xl transition-all lg:max-w-4xl",
             "focus-within:border-brand/60 focus-within:shadow-glow focus-within:shadow-brand/10",
           )}
         >
@@ -258,17 +263,17 @@ function ChatThreadPage() {
             }}
             rows={1}
             aria-label="Message Coco"
-            placeholder="Message Coco…  (Shift + Enter for a new line)"
-            className="max-h-[240px] min-h-[40px] flex-1 resize-none bg-transparent px-1 py-2 text-[15px] leading-relaxed outline-none placeholder:text-muted-foreground"
+            placeholder="Message Coco…"
+            className="max-h-[280px] min-h-[60px] flex-1 resize-none bg-transparent px-1 py-2 text-[15px] leading-relaxed outline-none placeholder:text-muted-foreground"
           />
           {isBusy ? (
             <button
               type="button"
               onClick={stop}
               aria-label="Stop generating"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary text-foreground shadow-sm transition-all hover:bg-secondary/80 active:scale-95"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-foreground shadow-sm transition-all hover:bg-secondary/80 active:scale-95"
             >
-              <Square size={14} fill="currentColor" />
+              <Square size={16} fill="currentColor" />
             </button>
           ) : (
             <button
@@ -276,17 +281,20 @@ function ChatThreadPage() {
               disabled={!input.trim()}
               aria-label="Send message"
               className={cn(
-                "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-md transition-all duration-150 ease-out",
+                "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-md transition-all duration-150 ease-out",
                 "bg-gradient-brand text-primary-foreground hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-95",
                 "disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:shadow-sm",
               )}
             >
-              <ArrowUp size={18} strokeWidth={2.5} />
+              <ArrowUp size={20} strokeWidth={2.5} />
             </button>
           )}
         </form>
-        <p className="mx-auto mt-2 max-w-3xl px-1 text-center text-[10px] text-muted-foreground lg:max-w-4xl">
-          Coco can make mistakes. Verify important details with our team.
+        <p className="mx-auto mt-2 hidden max-w-3xl px-1 text-center text-[10px] text-muted-foreground md:block lg:max-w-4xl">
+          Shift + Enter for a new line · Coco can make mistakes, verify important details with our team.
+        </p>
+        <p className="mx-auto mt-2 max-w-3xl px-1 text-center text-[10px] text-muted-foreground md:hidden">
+          Coco can make mistakes.
         </p>
       </div>
     </div>
