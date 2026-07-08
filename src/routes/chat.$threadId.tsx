@@ -168,12 +168,12 @@ function ChatThreadPage() {
                   title="Say hi to Coco"
                   description="Ask about our services, pricing approach, or get help scoping a project."
                 />
-                <div className="grid w-full max-w-md gap-2 sm:grid-cols-2">
+                <div className="grid w-full max-w-2xl grid-cols-2 gap-2 sm:grid-cols-3">
                   {SUGGESTIONS.map((s) => (
                     <button
                       key={s}
                       onClick={() => submit(s)}
-                      className="rounded-xl border border-border bg-card/70 px-3 py-2.5 text-left text-xs text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:text-foreground hover:shadow-sm active:scale-[0.99]"
+                      className="rounded-xl border border-border bg-card/70 px-3 py-2.5 text-left text-xs font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:text-foreground hover:shadow-sm active:scale-[0.99]"
                     >
                       {s}
                     </button>
