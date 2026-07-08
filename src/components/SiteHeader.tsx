@@ -29,7 +29,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setOpen((o) => !o)}
-              className="relative z-[60] -ml-1 rounded-md p-2 text-foreground lg:hidden"
+              className="relative z-[60] inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/70 text-foreground shadow-sm backdrop-blur-md transition-colors hover:bg-background/90 lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
             >
