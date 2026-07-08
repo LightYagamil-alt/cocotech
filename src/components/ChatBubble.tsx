@@ -84,7 +84,8 @@ export function ChatBubble() {
                   to="/chat/$threadId"
                   params={{ threadId }}
                   search={{ q: s }}
-                  onClick={() => setOpen(false)}
+                  preload="intent"
+                  onClick={() => { setOpening(true); setOpen(false); }}
                   className="group flex items-center justify-between rounded-lg border border-border bg-background/50 px-3 py-2 text-left text-xs text-muted-foreground transition-colors hover:border-brand/60 hover:text-foreground active:scale-[0.99]"
                 >
                   <span>{s}</span>
@@ -93,13 +94,23 @@ export function ChatBubble() {
               ))}
             </div>
             <Link
-              to="/chat"
-              onClick={() => setOpen(false)}
+              to="/chat/$threadId"
+              params={{ threadId }}
+              preload="intent"
+              onClick={() => { setOpening(true); setOpen(false); }}
               className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform duration-100 hover:scale-[1.02] active:scale-[0.98]"
             >
               Start a chat <ArrowRight size={14} />
             </Link>
           </div>
+        </div>
+      )}
+
+      {/* Opening overlay */}
+      {opening && (
+        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-border bg-card/90 px-3 py-2 text-xs text-foreground shadow-glow backdrop-blur-md animate-fade-in">
+          <Loader2 size={14} className="animate-spin text-brand" />
+          <span>Opening Coco…</span>
         </div>
       )}
 
