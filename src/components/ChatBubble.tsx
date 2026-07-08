@@ -1,19 +1,33 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { X, Sparkles, ArrowRight } from "lucide-react";
+import { Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { X, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import assistantLogo from "@/assets/assistant-logo.png";
 import { createThreadId } from "@/lib/chat-storage";
 
 const suggestions = [
-  "Build me a website",
-  "Redesign my socials",
-  "Edit a launch reel",
+  "How much does a website cost?",
+  "Start my project",
+  "Show your portfolio",
 ];
 
 export function ChatBubble() {
+  const router = useRouter();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
+  const [opening, setOpening] = useState(false);
   const [nudge, setNudge] = useState(false);
   const [threadId] = useState(() => createThreadId());
+
+  // Prewarm the chat route so navigation feels instant
+  useEffect(() => {
+    void router.preloadRoute({ to: "/chat/$threadId", params: { threadId } }).catch(() => {});
+  }, [router, threadId]);
+
+  // Reset opening state whenever the route actually changes to /chat/*
+  useEffect(() => {
+    if (opening && pathname.startsWith("/chat")) setOpening(false);
+  }, [pathname, opening]);
+
 
   // Greeting nudge appears after ~2.5s and lingers ~4s (once per session)
   useEffect(() => {
