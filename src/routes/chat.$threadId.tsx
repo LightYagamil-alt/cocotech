@@ -27,10 +27,15 @@ export const Route = createFileRoute("/chat/$threadId")({
 });
 
 const SUGGESTIONS = [
-  "Show pricing plans",
-  "See portfolio",
-  "What's included?",
-  "Timeline estimate",
+  "How much does a website cost?",
+  "Start my project",
+  "Show your portfolio",
+  "Build a mobile app",
+  "Branding packages",
+  "Hosting & domains",
+  "SEO services",
+  "Website maintenance",
+  "Talk to a human",
 ];
 
 function ChatThreadPage() {
