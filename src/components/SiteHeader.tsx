@@ -24,13 +24,26 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 glass">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
-          <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold" onClick={() => setOpen(false)}>
-            <img src={cocoLogo} alt="Coco Tech" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
-            <span>Coco<span className="text-gradient"> Tech</span></span>
-          </Link>
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-4">
+          {/* Left: hamburger (mobile) + logo */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="relative z-[60] -ml-1 rounded-md p-2 text-foreground lg:hidden"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+            >
+              <span className={`hamburger ${open ? "is-open" : ""}`} aria-hidden>
+                <span /><span /><span />
+              </span>
+            </button>
+            <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold" onClick={() => setOpen(false)}>
+              <img src={cocoLogo} alt="Coco Tech" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
+              <span>Coco<span className="text-gradient"> Tech</span></span>
+            </Link>
+          </div>
 
-          {/* Inline nav — visible on desktop for quick access */}
+          {/* Center: desktop inline nav */}
           <nav className="hidden lg:flex items-center gap-1 text-sm">
             {links.slice(1).map((l) => (
               <Link
@@ -46,6 +59,7 @@ export function SiteHeader() {
             ))}
           </nav>
 
+          {/* Right: CTA + theme toggle */}
           <div className="flex items-center gap-2 md:gap-3">
             <Link
               to="/contact"
@@ -55,16 +69,6 @@ export function SiteHeader() {
               Get a Quote
             </Link>
             <ThemeToggle />
-            <button
-              onClick={() => setOpen((o) => !o)}
-              className="relative z-[60] rounded-md p-2 text-foreground lg:hidden"
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-            >
-              <span className={`hamburger ${open ? "is-open" : ""}`} aria-hidden>
-                <span /><span /><span />
-              </span>
-            </button>
           </div>
         </div>
       </header>
