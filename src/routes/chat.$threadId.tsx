@@ -148,32 +148,32 @@ function ChatThreadPage() {
         className="relative min-h-0 flex-1"
         style={{
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)",
+            "linear-gradient(to bottom, transparent 0, black 28px, black calc(100% - 28px), transparent 100%)",
           maskImage:
-            "linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)",
+            "linear-gradient(to bottom, transparent 0, black 28px, black calc(100% - 28px), transparent 100%)",
         }}
       >
         <Conversation className="h-full">
-          <ConversationContent className="mx-auto w-full max-w-3xl gap-6 px-3 py-6 sm:px-6 md:px-8 md:py-8 lg:max-w-4xl">
+          <ConversationContent className="mx-auto w-full max-w-3xl gap-8 px-4 py-7 sm:px-7 md:px-10 md:py-10 lg:max-w-4xl">
             {messages.length === 0 ? (
-              <div className="flex h-full min-h-[50vh] flex-col items-center justify-center gap-6 py-8 text-center">
+              <div className="flex h-full min-h-[50vh] flex-col items-center justify-center gap-8 py-10 text-center">
                 <ConversationEmptyState
                   icon={
                     <img
                       src={assistantLogo}
                       alt="Coco AI"
-                      className="h-24 w-24 object-contain drop-shadow-[0_8px_24px_rgba(168,85,247,0.45)]"
+                      className="h-28 w-28 object-contain drop-shadow-[0_10px_30px_rgba(168,85,247,0.45)]"
                     />
                   }
                   title="Say hi to Coco"
                   description="Ask about our services, pricing approach, or get help scoping a project."
                 />
-                <div className="grid w-full max-w-2xl grid-cols-2 gap-2 sm:grid-cols-3">
+                <div className="grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                   {SUGGESTIONS.map((s) => (
                     <button
                       key={s}
                       onClick={() => submit(s)}
-                      className="rounded-xl border border-border bg-card/70 px-3 py-2.5 text-left text-xs font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:text-foreground hover:shadow-sm active:scale-[0.99]"
+                      className="rounded-2xl border border-border bg-card/70 px-4 py-3.5 text-left text-sm font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:text-foreground hover:shadow-sm active:scale-[0.99]"
                     >
                       {s}
                     </button>
@@ -189,11 +189,21 @@ function ChatThreadPage() {
                 return (
                   <div
                     key={message.id}
-                    className="flex flex-col gap-1"
-                    style={{ contentVisibility: "auto", containIntrinsicSize: "auto 120px" }}
+                    className={cn(
+                      "flex flex-col gap-2",
+                      message.role === "user" ? "items-end" : "items-start",
+                    )}
+                    style={{ contentVisibility: "auto", containIntrinsicSize: "auto 140px" }}
                   >
-                    <Message id={`msg-${message.id}`} from={message.role}>
-                      <MessageContent>
+                    <Message
+                      id={`msg-${message.id}`}
+                      from={message.role}
+                      className={cn(
+                        "max-w-[92%] sm:max-w-[88%]",
+                        message.role === "user" ? "animate-slide-in-right" : "animate-slide-in-left",
+                      )}
+                    >
+                      <MessageContent className="px-5 py-3.5 text-[15px] leading-relaxed">
                         {message.parts.map((part, i) => {
                           if (part.type === "text") {
                             return message.role === "assistant" ? (
@@ -220,8 +230,8 @@ function ChatThreadPage() {
               })
             )}
             {status === "submitted" && (
-              <Message from="assistant">
-                <MessageContent>
+              <Message from="assistant" className="animate-slide-in-left">
+                <MessageContent className="px-5 py-3.5 text-[15px]">
                   <TypingDots />
                 </MessageContent>
               </Message>
@@ -229,7 +239,7 @@ function ChatThreadPage() {
             {error && (
               <div
                 role="alert"
-                className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+                className="mx-auto w-full max-w-3xl rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive lg:max-w-4xl"
               >
                 {error.message || "Something went wrong. Please try again."}
               </div>
@@ -240,15 +250,15 @@ function ChatThreadPage() {
       </div>
 
       {/* Sticky composer */}
-      <div className="shrink-0 border-t border-border/60 bg-card/60 px-3 pb-4 pt-3 backdrop-blur-xl sm:px-6 md:px-8 md:pb-5 md:pt-4">
+      <div className="shrink-0 border-t border-border/60 bg-card/60 px-4 pb-5 pt-4 backdrop-blur-xl sm:px-6 md:px-8 md:pb-6 md:pt-5">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             submit();
           }}
           className={cn(
-            "group relative mx-auto flex w-full max-w-3xl items-end gap-2 rounded-3xl border border-border/70 bg-background/80 px-4 py-3 shadow-lg shadow-black/5 backdrop-blur-xl transition-all lg:max-w-4xl",
-            "focus-within:border-brand/60 focus-within:shadow-glow focus-within:shadow-brand/10",
+            "group relative mx-auto flex w-full max-w-3xl items-end gap-3 rounded-[2rem] border border-border/70 bg-background/80 px-5 py-4 shadow-xl shadow-black/5 backdrop-blur-xl transition-all duration-200 lg:max-w-4xl",
+            "focus-within:border-brand/60 focus-within:shadow-glow focus-within:shadow-brand/10 focus-within:ring-1 focus-within:ring-brand/20",
           )}
         >
           <textarea
@@ -264,16 +274,16 @@ function ChatThreadPage() {
             rows={1}
             aria-label="Message Coco"
             placeholder="Message Coco…"
-            className="max-h-[280px] min-h-[60px] flex-1 resize-none bg-transparent px-1 py-2 text-[15px] leading-relaxed outline-none placeholder:text-muted-foreground"
+            className="max-h-[280px] min-h-[92px] flex-1 resize-none bg-transparent px-1 py-2 text-base leading-relaxed outline-none placeholder:text-muted-foreground md:text-[17px]"
           />
           {isBusy ? (
             <button
               type="button"
               onClick={stop}
               aria-label="Stop generating"
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-foreground shadow-sm transition-all hover:bg-secondary/80 active:scale-95"
+              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-secondary text-foreground shadow-sm transition-all hover:bg-secondary/80 active:scale-95"
             >
-              <Square size={16} fill="currentColor" />
+              <Square size={18} fill="currentColor" />
             </button>
           ) : (
             <button
@@ -281,19 +291,19 @@ function ChatThreadPage() {
               disabled={!input.trim()}
               aria-label="Send message"
               className={cn(
-                "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-md transition-all duration-150 ease-out",
+                "flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl shadow-lg transition-all duration-150 ease-out",
                 "bg-gradient-brand text-primary-foreground hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-95",
                 "disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:shadow-sm",
               )}
             >
-              <ArrowUp size={20} strokeWidth={2.5} />
+              <ArrowUp size={22} strokeWidth={2.5} />
             </button>
           )}
         </form>
-        <p className="mx-auto mt-2 hidden max-w-3xl px-1 text-center text-[10px] text-muted-foreground md:block lg:max-w-4xl">
+        <p className="mx-auto mt-3 hidden max-w-3xl px-2 text-center text-[11px] text-muted-foreground md:block lg:max-w-4xl">
           Shift + Enter for a new line · Coco can make mistakes, verify important details with our team.
         </p>
-        <p className="mx-auto mt-2 max-w-3xl px-1 text-center text-[10px] text-muted-foreground md:hidden">
+        <p className="mx-auto mt-3 max-w-3xl px-2 text-center text-[11px] text-muted-foreground md:hidden">
           Coco can make mistakes.
         </p>
       </div>
