@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Send, Camera, ThumbsUp, Bird } from "lucide-react";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -88,7 +89,7 @@ function ContactPage() {
         </div>
 
         <form
-          onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+          onSubmit={handleSubmit}
           className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8"
         >
           {sent ? (
@@ -114,8 +115,13 @@ function ContactPage() {
                   placeholder="A few sentences is enough..."
                 />
               </div>
-              <button type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.01] active:scale-[0.98]">
-                Send message <Send size={16}/>
+              {error && (
+                <p role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                  {error}
+                </p>
+              )}
+              <button type="submit" disabled={sending} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60">
+                {sending ? "Sending…" : "Send message"} <Send size={16}/>
               </button>
             </div>
           )}
