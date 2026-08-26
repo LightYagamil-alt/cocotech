@@ -16,6 +16,39 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (sending) return;
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      service: String(data.get("service") ?? "").trim() || null,
+      message: String(data.get("message") ?? "").trim(),
+      source: "contact-page",
+    };
+
+    if (!payload.name || !payload.email.includes("@") || !payload.message) {
+      setError("Please add your name, a valid email and a short message.");
+      return;
+    }
+
+    setSending(true);
+    setError(null);
+    const { error: dbError } = await supabase.from("contact_leads").insert(payload);
+    setSending(false);
+
+    if (dbError) {
+      setError("We couldn't send that. Please try again or WhatsApp us on +256 785 852378.");
+      return;
+    }
+    setSent(true);
+  }
+
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-24">
