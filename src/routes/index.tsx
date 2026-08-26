@@ -307,17 +307,9 @@ function Index() {
           Full-bleed dark, live nebula, oversized composition.
       ============================================================ */}
       <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-10" aria-hidden>
-          <video
-            src={inkCloudAsset.url}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            aria-hidden
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+        <div className="absolute inset-0 -z-10 bg-[#070817]" aria-hidden>
+          <InkVideo src={inkCloudAsset.url} className="absolute inset-0" />
+
           {/* deep vignette so headline stays legible */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/85" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.55)_80%)]" />
