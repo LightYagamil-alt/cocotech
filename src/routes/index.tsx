@@ -10,6 +10,7 @@ import pFitness from "@/assets/project-fitness.jpg";
 import assistantLogo from "@/assets/assistant-logo.png";
 import inkCloudAsset from "@/assets/ink-cloud.mp4.asset.json";
 import { ChatBubble } from "@/components/ChatBubble";
+import { InkVideo } from "@/components/InkVideo";
 import { ClientMarquee } from "@/components/ClientMarquee";
 
 const OG_IMAGE =
