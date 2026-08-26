@@ -10,11 +10,59 @@ import pFitness from "@/assets/project-fitness.jpg";
 import assistantLogo from "@/assets/assistant-logo.png";
 import inkCloudAsset from "@/assets/ink-cloud.mp4.asset.json";
 import { ChatBubble } from "@/components/ChatBubble";
+import { InkVideo } from "@/components/InkVideo";
 import { ClientMarquee } from "@/components/ClientMarquee";
 
+const OG_IMAGE =
+  "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dd3fa582-67ec-42fb-b961-17fe339d7ab7/id-preview-09446fd9--b816c6ed-3fbe-45f2-b341-924d68585e23.lovable.app-1780274397342.png";
+
+const LOCAL_BUSINESS_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Coco Tech",
+  description:
+    "Creative studio in Kampala building websites, social media design, posters and video for small and medium businesses.",
+  slogan: "Creativity meets Technology",
+  areaServed: "Uganda",
+  address: { "@type": "PostalAddress", addressLocality: "Kampala", addressCountry: "UG" },
+  telephone: "+256785852378",
+  email: "hello@cocotech.co",
+  image: OG_IMAGE,
+  makesOffer: [
+    "Website design and development",
+    "Social media design",
+    "Poster and flyer design",
+    "Video editing",
+  ].map((n) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: n } })),
+};
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Coco Tech — Websites, Design & Video Studio in Kampala" },
+      {
+        name: "description",
+        content:
+          "Kampala creative studio building fast websites, scroll-stopping social design, posters and video for small businesses. Free quote in 24 hours.",
+      },
+      { property: "og:title", content: "Coco Tech — Websites, Design & Video Studio in Kampala" },
+      {
+        property: "og:description",
+        content:
+          "Websites, social media design, posters and video editing for ambitious small businesses in Uganda and beyond.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(LOCAL_BUSINESS_JSONLD) },
+    ],
+  }),
   component: Index,
 });
+
 
 const services = [
   { n: "01", icon: Code2, title: "Websites", desc: "Fast, editorial sites built to convert. From launch pages to full commerce.", tag: "Design · Build · Ship" },
@@ -260,17 +308,9 @@ function Index() {
           Full-bleed dark, live nebula, oversized composition.
       ============================================================ */}
       <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-10" aria-hidden>
-          <video
-            src={inkCloudAsset.url}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            aria-hidden
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+        <div className="absolute inset-0 -z-10 bg-[#070817]" aria-hidden>
+          <InkVideo src={inkCloudAsset.url} className="absolute inset-0" />
+
           {/* deep vignette so headline stays legible */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/85" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.55)_80%)]" />
