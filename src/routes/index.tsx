@@ -12,9 +12,56 @@ import inkCloudAsset from "@/assets/ink-cloud.mp4.asset.json";
 import { ChatBubble } from "@/components/ChatBubble";
 import { ClientMarquee } from "@/components/ClientMarquee";
 
+const OG_IMAGE =
+  "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dd3fa582-67ec-42fb-b961-17fe339d7ab7/id-preview-09446fd9--b816c6ed-3fbe-45f2-b341-924d68585e23.lovable.app-1780274397342.png";
+
+const LOCAL_BUSINESS_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Coco Tech",
+  description:
+    "Creative studio in Kampala building websites, social media design, posters and video for small and medium businesses.",
+  slogan: "Creativity meets Technology",
+  areaServed: "Uganda",
+  address: { "@type": "PostalAddress", addressLocality: "Kampala", addressCountry: "UG" },
+  telephone: "+256785852378",
+  email: "hello@cocotech.co",
+  image: OG_IMAGE,
+  makesOffer: [
+    "Website design and development",
+    "Social media design",
+    "Poster and flyer design",
+    "Video editing",
+  ].map((n) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: n } })),
+};
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Coco Tech — Websites, Design & Video Studio in Kampala" },
+      {
+        name: "description",
+        content:
+          "Kampala creative studio building fast websites, scroll-stopping social design, posters and video for small businesses. Free quote in 24 hours.",
+      },
+      { property: "og:title", content: "Coco Tech — Websites, Design & Video Studio in Kampala" },
+      {
+        property: "og:description",
+        content:
+          "Websites, social media design, posters and video editing for ambitious small businesses in Uganda and beyond.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(LOCAL_BUSINESS_JSONLD) },
+    ],
+  }),
   component: Index,
 });
+
 
 const services = [
   { n: "01", icon: Code2, title: "Websites", desc: "Fast, editorial sites built to convert. From launch pages to full commerce.", tag: "Design · Build · Ship" },
