@@ -30,7 +30,7 @@ function AboutPage() {
           { icon: Eye, title: "Our Vision", text: "A web where every small business gets to look — and feel — like a category leader." },
           { icon: Heart, title: "Our Values", text: "Honesty, creativity, speed, and obsessive attention to detail in every pixel and frame." },
         ].map((v) => (
-          <div key={v.title} className="rounded-2xl border border-border bg-card p-6">
+          <div key={v.title} className="glass-panel rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1">
             <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground">
               <v.icon size={20}/>
             </div>
@@ -54,7 +54,7 @@ function AboutPage() {
           ].map((p) => (
             <div
               key={p.name}
-              className="flex items-center gap-4 rounded-2xl border border-border bg-card p-6 transition-colors hover:border-brand/40 hover:shadow-glow"
+              className="glass-panel flex items-center gap-4 rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-glow"
             >
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-brand text-primary-foreground">
                 <Crown size={22} />
@@ -68,7 +68,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <div className="mt-16 rounded-3xl border border-border bg-card p-10 text-center">
+      <div className="glass-panel-strong mt-16 rounded-3xl p-10 text-center">
         <h2 className="text-3xl font-bold">Let's build something worth sharing.</h2>
         <Link to="/contact" className="mt-6 inline-flex rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.98]">
           Start a project
