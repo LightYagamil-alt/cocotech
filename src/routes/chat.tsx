@@ -111,7 +111,7 @@ function Sidebar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search conversations..."
-          className="w-full rounded-lg border border-border bg-background/60 py-1.5 pl-7 pr-2 text-xs outline-none placeholder:text-muted-foreground focus:border-brand/60"
+          className="glass-input w-full rounded-lg py-1.5 pl-7 pr-2 text-xs outline-none placeholder:text-muted-foreground"
         />
       </div>
       <div className="flex items-center justify-between px-2 pb-1 text-[10px] uppercase tracking-wide text-muted-foreground">
@@ -266,7 +266,7 @@ function ChatLayout() {
       <div className="mb-3 flex items-center justify-between md:hidden">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <button className="rounded-lg border border-border bg-card/60 p-2 active:scale-95" aria-label="Open conversations">
+            <button className="glass-chip rounded-lg p-2 active:scale-95" aria-label="Open conversations">
               <Menu size={18} />
             </button>
           </SheetTrigger>
@@ -294,7 +294,7 @@ function ChatLayout() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-[280px_1fr] md:gap-6">
-        <aside className="hidden max-h-[calc(100dvh-8rem)] rounded-2xl border border-border bg-card/60 p-3 backdrop-blur md:flex md:flex-col">
+        <aside className="glass-panel hidden max-h-[calc(100dvh-8rem)] rounded-2xl p-3 md:flex md:flex-col">
           {mounted ? (
             <Sidebar
               threads={sortedThreads}
@@ -308,8 +308,8 @@ function ChatLayout() {
           ) : null}
         </aside>
 
-        <section className="flex h-[calc(100dvh-6.5rem)] flex-col overflow-hidden rounded-3xl border border-border/70 bg-card/70 shadow-xl shadow-black/5 animate-fade-in backdrop-blur-xl md:h-[calc(100dvh-8rem)]">
-          <header className="flex shrink-0 items-center justify-between border-b border-border/60 bg-card/40 px-4 py-3 backdrop-blur-md md:px-6">
+        <section className="glass-panel-strong flex h-[calc(100dvh-6.5rem)] flex-col overflow-hidden rounded-3xl animate-fade-in md:h-[calc(100dvh-8rem)]">
+          <header className="flex shrink-0 items-center justify-between border-b border-border/50 px-4 py-3 md:px-6" style={{ boxShadow: "inset 0 1px 0 0 var(--glass-specular)" }}>
             <div className="flex items-center gap-2.5">
               <div className="relative">
                 <img src={assistantLogo} alt="" className="h-9 w-9" />

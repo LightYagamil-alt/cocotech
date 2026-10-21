@@ -129,7 +129,7 @@ function Index() {
               <Link to="/contact" className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950">
                 Start a project <ArrowUpRight size={16}/>
               </Link>
-              <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">
+              <Link to="/portfolio" className="glass-dark inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 active:scale-[0.98]">
                 See the work
               </Link>
             </div>
@@ -168,7 +168,7 @@ function Index() {
                 <span className="font-mono text-xs text-muted-foreground/70">{s.n}</span>
                 <div className="min-w-0">
                   <div className="flex items-center gap-4">
-                    <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-card text-brand transition-all group-hover:scale-105 group-hover:border-brand/60">
+                    <span className="glass-chip inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-brand transition-all group-hover:scale-105 group-hover:border-brand/50">
                       <s.icon size={18}/>
                     </span>
                     <h3 className="font-display text-3xl font-bold tracking-tight md:text-5xl">{s.title}</h3>
@@ -415,7 +415,7 @@ function Index() {
             <Link to="/contact" className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-semibold text-slate-950">
               Get started today <ArrowUpRight size={18}/>
             </Link>
-            <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-8 py-4 text-base font-semibold text-white hover:bg-white/10">
+            <Link to="/portfolio" className="glass-dark inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white transition-transform hover:-translate-y-0.5 active:scale-[0.98]">
               See the work
             </Link>
           </div>

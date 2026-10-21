@@ -45,15 +45,15 @@ export function ChatBubble() {
     <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-6 md:right-6">
       {/* Greeting nudge */}
       {nudge && !open && (
-        <div className="pointer-events-auto max-w-[16rem] animate-fade-up rounded-2xl rounded-br-sm border border-border bg-card px-3 py-2 text-xs shadow-glow">
+        <div className="glass-panel-strong pointer-events-auto max-w-[16rem] animate-fade-up rounded-2xl rounded-br-sm px-3 py-2 text-xs">
           <span className="text-foreground">Hi, I'm Coco 👋 — here to help with anything you need.</span>
         </div>
       )}
 
       {/* Expanded card */}
       {open && (
-        <div className="pointer-events-auto w-[min(20rem,calc(100vw-2rem))] origin-bottom-right animate-fade-up overflow-hidden rounded-2xl border border-border bg-card shadow-glow">
-          <div className="flex items-center gap-3 border-b border-border bg-gradient-brand/10 p-4">
+        <div className="glass-panel-strong pointer-events-auto w-[min(20rem,calc(100vw-2rem))] origin-bottom-right animate-fade-up overflow-hidden rounded-2xl">
+          <div className="flex items-center gap-3 border-b border-border/50 bg-gradient-brand/10 p-4">
             <img src={assistantLogo} alt="Coco" className="h-12 w-12 object-contain" />
             <div className="flex-1">
               <p className="text-sm font-semibold">Coco</p>
@@ -86,7 +86,7 @@ export function ChatBubble() {
                   search={{ q: s }}
                   preload="intent"
                   onClick={() => { setOpening(true); setOpen(false); }}
-                  className="group flex items-center justify-between rounded-lg border border-border bg-background/50 px-3 py-2 text-left text-xs text-muted-foreground transition-colors hover:border-brand/60 hover:text-foreground active:scale-[0.99]"
+                  className="glass-chip group flex items-center justify-between rounded-lg px-3 py-2 text-left text-xs text-muted-foreground transition-colors hover:border-brand/50 hover:text-foreground active:scale-[0.99]"
                 >
                   <span>{s}</span>
                   <ArrowRight size={12} className="opacity-0 transition-opacity group-hover:opacity-100" />
@@ -108,7 +108,7 @@ export function ChatBubble() {
 
       {/* Opening overlay */}
       {opening && (
-        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-border bg-card/90 px-3 py-2 text-xs text-foreground shadow-glow backdrop-blur-md animate-fade-in">
+        <div className="glass-panel-strong pointer-events-auto flex items-center gap-2 rounded-full px-3 py-2 text-xs text-foreground animate-fade-in">
           <Loader2 size={14} className="animate-spin text-brand" />
           <span>Opening Coco…</span>
         </div>

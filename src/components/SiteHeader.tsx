@@ -23,13 +23,13 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 glass">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-4">
+      <header className="sticky top-0 z-50 px-3 pt-3 md:px-5 md:pt-4">
+        <div className="glass-panel-strong mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full px-4 py-2.5 md:px-5 md:py-3">
           {/* Left: hamburger (mobile) + logo */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setOpen((o) => !o)}
-              className="relative z-[60] inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/70 text-foreground shadow-sm backdrop-blur-md transition-colors hover:bg-background/90 lg:hidden"
+              className="glass-chip relative z-[60] inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-foreground/8 lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
             >
@@ -51,8 +51,8 @@ export function SiteHeader() {
                 to={l.to}
                 preload="intent"
                 activeOptions={{ exact: l.to === "/" }}
-                className="rounded-full px-3 py-1.5 text-foreground/75 transition-colors hover:text-foreground hover:bg-foreground/5"
-                activeProps={{ className: "text-foreground bg-foreground/8" }}
+                className="rounded-full px-3 py-1.5 text-foreground/75 transition-all hover:text-foreground hover:bg-foreground/6 hover:shadow-[inset_0_1px_0_0_var(--glass-specular)]"
+                activeProps={{ className: "text-foreground bg-foreground/8 shadow-[inset_0_1px_0_0_var(--glass-specular)]" }}
               >
                 {l.label}
               </Link>
