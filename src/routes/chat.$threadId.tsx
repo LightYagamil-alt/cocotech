@@ -173,7 +173,7 @@ function ChatThreadPage() {
                     <button
                       key={s}
                       onClick={() => submit(s)}
-                      className="rounded-2xl border border-border bg-card/70 px-4 py-3.5 text-left text-sm font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:text-foreground hover:shadow-sm active:scale-[0.99]"
+                      className="glass-chip rounded-2xl px-4 py-3.5 text-left text-sm font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/50 hover:text-foreground active:scale-[0.99]"
                     >
                       {s}
                     </button>
@@ -250,15 +250,15 @@ function ChatThreadPage() {
       </div>
 
       {/* Sticky composer */}
-      <div className="shrink-0 border-t border-border/60 bg-card/60 px-4 pb-5 pt-4 backdrop-blur-xl sm:px-6 md:px-8 md:pb-6 md:pt-5">
+      <div className="shrink-0 border-t border-border/50 px-4 pb-5 pt-4 sm:px-6 md:px-8 md:pb-6 md:pt-5" style={{ background: "var(--glass-surface-faint)", backdropFilter: "blur(20px) saturate(150%)" }}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             submit();
           }}
           className={cn(
-            "group relative mx-auto flex w-full max-w-3xl items-end gap-3 rounded-[2rem] border border-border/70 bg-background/80 px-5 py-4 shadow-xl shadow-black/5 backdrop-blur-xl transition-all duration-200 lg:max-w-4xl",
-            "focus-within:border-brand/60 focus-within:shadow-glow focus-within:shadow-brand/10 focus-within:ring-1 focus-within:ring-brand/20",
+            "glass-panel-strong group relative mx-auto flex w-full max-w-3xl items-end gap-3 rounded-[2rem] px-5 py-4 transition-all duration-200 lg:max-w-4xl",
+            "focus-within:border-brand/50 focus-within:shadow-glow focus-within:ring-1 focus-within:ring-brand/20",
           )}
         >
           <textarea

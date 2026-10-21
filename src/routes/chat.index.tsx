@@ -36,7 +36,7 @@ function ChatIndex() {
   return (
     <div className="flex h-full flex-col items-center justify-center px-6 py-16 text-center">
       <img src={assistantLogo} alt="Coco assistant" className="h-16 w-16 animate-float" />
-      <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground">
+      <p className="glass-chip mt-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs text-muted-foreground">
         <Sparkles size={12} className="text-brand" /> Powered by AI
       </p>
       <h1 className="mt-4 font-display text-3xl font-bold md:text-5xl">
@@ -56,7 +56,7 @@ function ChatIndex() {
           <button
             key={s}
             onClick={() => startChat(s)}
-            className="rounded-xl border border-border bg-card/50 px-4 py-3 text-left text-sm text-muted-foreground transition-colors hover:border-brand/60 hover:text-foreground"
+            className="glass-chip rounded-xl px-4 py-3 text-left text-sm text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/50 hover:text-foreground"
           >
             {s}
           </button>
