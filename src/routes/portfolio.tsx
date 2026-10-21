@@ -68,7 +68,7 @@ function PortfolioPage() {
               className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors active:scale-[0.98] ${
                 isActive
                   ? "border-transparent bg-foreground text-background shadow-glow"
-                  : "border-border bg-card/50 text-muted-foreground hover:text-foreground hover:border-brand/50"
+                  : "glass-chip border-transparent text-muted-foreground hover:text-foreground hover:border-brand/40"
               }`}
             >
               {c}
@@ -82,7 +82,7 @@ function PortfolioPage() {
         {filtered.map((w, i) => (
           <article
             key={`${w.title}-${i}`}
-            className="group relative overflow-hidden rounded-3xl border border-border bg-card animate-fade-up hover-lift"
+            className="glass-panel group relative overflow-hidden rounded-3xl animate-fade-up hover-lift"
             style={{ animationDelay: `${(i % 6) * 60}ms` }}
           >
             <div className="relative aspect-[4/3] overflow-hidden">

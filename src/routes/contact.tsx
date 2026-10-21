@@ -59,7 +59,7 @@ function ContactPage() {
 
       <div className="mt-12 grid gap-10 md:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4">
-          <a href="tel:+256785852378" className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-brand/60">
+          <a href="tel:+256785852378" className="glass-panel flex items-start gap-4 rounded-2xl p-5 transition-all hover:-translate-y-0.5 hover:border-brand/50">
             <div className="rounded-xl bg-gradient-brand p-3 text-primary-foreground"><Phone size={18}/></div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Phone</p>
@@ -67,14 +67,14 @@ function ContactPage() {
               <p className="mt-1 font-semibold">+256 742 011601</p>
             </div>
           </a>
-          <a href="mailto:hello@cocotech.co" className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-brand/60">
+          <a href="mailto:hello@cocotech.co" className="glass-panel flex items-start gap-4 rounded-2xl p-5 transition-all hover:-translate-y-0.5 hover:border-brand/50">
             <div className="rounded-xl bg-gradient-brand p-3 text-primary-foreground"><Mail size={18}/></div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Email</p>
               <p className="mt-1 font-semibold">hello@cocotech.co</p>
             </div>
           </a>
-          <div className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5">
+          <div className="glass-panel flex items-start gap-4 rounded-2xl p-5">
             <div className="rounded-xl bg-gradient-brand p-3 text-primary-foreground"><MapPin size={18}/></div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Based in</p>
@@ -82,15 +82,15 @@ function ContactPage() {
             </div>
           </div>
           <div className="flex gap-3 pt-2">
-            <a href="#" aria-label="Instagram" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><Camera size={18}/></a>
-            <a href="#" aria-label="Facebook" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><ThumbsUp size={18}/></a>
-            <a href="#" aria-label="Twitter" className="rounded-full bg-secondary p-3 hover:bg-accent/30"><Bird size={18}/></a>
+            <a href="#" aria-label="Instagram" className="glass-chip rounded-full p-3 transition-transform hover:-translate-y-0.5"><Camera size={18}/></a>
+            <a href="#" aria-label="Facebook" className="glass-chip rounded-full p-3 transition-transform hover:-translate-y-0.5"><ThumbsUp size={18}/></a>
+            <a href="#" aria-label="Twitter" className="glass-chip rounded-full p-3 transition-transform hover:-translate-y-0.5"><Bird size={18}/></a>
           </div>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8"
+          className="glass-panel-strong rounded-3xl p-6 sm:p-8"
         >
           {sent ? (
             <div className="flex h-full min-h-[300px] flex-col items-center justify-center text-center">
@@ -111,7 +111,7 @@ function ContactPage() {
                 <label className="text-sm font-medium">Tell us about your project</label>
                 <textarea
                   required rows={5} name="message"
-                  className="mt-1 w-full rounded-xl border border-border bg-input/40 px-4 py-3 text-sm outline-none transition-colors focus:border-brand focus:ring-brand"
+                  className="glass-input mt-1 w-full rounded-xl px-4 py-3 text-sm outline-none"
                   placeholder="A few sentences is enough..."
                 />
               </div>
@@ -137,7 +137,7 @@ function Field({ label, ...props }: React.InputHTMLAttributes<HTMLInputElement> 
       <label className="text-sm font-medium">{label}</label>
       <input
         {...props}
-        className="mt-1 w-full rounded-xl border border-border bg-input/40 px-4 py-3 text-sm outline-none transition-colors focus:border-brand"
+        className="glass-input mt-1 w-full rounded-xl px-4 py-3 text-sm outline-none"
       />
     </div>
   );
