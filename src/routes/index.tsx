@@ -52,9 +52,7 @@ export const Route = createFileRoute("/")({
           "Websites, social media design, posters and video editing for ambitious small businesses in Uganda and beyond.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: OG_IMAGE },
     ],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(LOCAL_BUSINESS_JSONLD) },

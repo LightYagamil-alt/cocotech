@@ -23,6 +23,16 @@ const searchSchema = z.object({ q: z.string().optional() });
 
 export const Route = createFileRoute("/chat/$threadId")({
   validateSearch: (search) => searchSchema.parse(search),
+  head: () => ({
+    meta: [
+      { title: "Your Conversation with Coco | Coco Tech" },
+      { name: "description", content: "Continue your conversation with Coco, the Coco Tech AI assistant for creative projects." },
+      { property: "og:title", content: "Your Conversation with Coco | Coco Tech" },
+      { property: "og:description", content: "Continue your conversation with Coco, the Coco Tech AI assistant for creative projects." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: ChatThreadPage,
 });
 

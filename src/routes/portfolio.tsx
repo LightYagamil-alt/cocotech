@@ -10,11 +10,12 @@ import pFitness from "@/assets/project-fitness.jpg";
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Portfolio — Coco Tech" },
       { name: "description", content: "Selected websites, social campaigns, brand identities and videos crafted by Coco Tech." },
       { property: "og:title", content: "Portfolio — Coco Tech" },
       { property: "og:description", content: "Recent work from Coco Tech across web, social and video." },
-      { property: "og:image", content: pBoutique },
     ],
   }),
   component: PortfolioPage,
