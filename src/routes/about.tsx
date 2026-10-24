@@ -4,6 +4,8 @@ import { Target, Eye, Heart, Crown } from "lucide-react";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "About — Coco Tech" },
       { name: "description", content: "Coco Tech is a creative studio helping small businesses look pro online through web design, social graphics and video." },
       { property: "og:title", content: "About — Coco Tech" },

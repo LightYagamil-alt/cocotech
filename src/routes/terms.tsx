@@ -3,6 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Terms of Service — Coco Tech" },
       { name: "description", content: "Terms governing the use of Coco Tech services and website." },
       { property: "og:title", content: "Terms of Service — Coco Tech" },

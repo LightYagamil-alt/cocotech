@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
@@ -35,7 +36,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
 
@@ -83,8 +84,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Coco Tech — Creativity meets Technology" },
       { name: "twitter:description", content: "Coco Tech designs websites, social media graphics and videos for small businesses that want to look legit and stand out." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dd3fa582-67ec-42fb-b961-17fe339d7ab7/id-preview-09446fd9--b816c6ed-3fbe-45f2-b341-924d68585e23.lovable.app-1780274397342.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dd3fa582-67ec-42fb-b961-17fe339d7ab7/id-preview-09446fd9--b816c6ed-3fbe-45f2-b341-924d68585e23.lovable.app-1780274397342.png" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },

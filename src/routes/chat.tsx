@@ -10,7 +10,11 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/chat")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Chat with Coco — AI Assistant | Coco Tech" },
+      { property: "og:title", content: "Chat with Coco — AI Assistant | Coco Tech" },
+      { property: "og:description", content: "Get creative project guidance from Coco, the Coco Tech AI assistant." },
       { name: "description", content: "Chat with Coco, the AI assistant for Coco Tech. Get instant answers about our website, social and video services." },
     ],
   }),

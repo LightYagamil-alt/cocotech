@@ -5,6 +5,16 @@ import { createThreadId } from "@/lib/chat-storage";
 import assistantLogo from "@/assets/assistant-logo.png";
 
 export const Route = createFileRoute("/chat/")({
+  head: () => ({
+    meta: [
+      { title: "Coco AI — Start a Conversation | Coco Tech" },
+      { name: "description", content: "Start a conversation with Coco about websites, social media design, posters and video projects." },
+      { property: "og:title", content: "Coco AI — Start a Conversation | Coco Tech" },
+      { property: "og:description", content: "Start a conversation with Coco about websites, social media design, posters and video projects." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: ChatIndex,
 });
 

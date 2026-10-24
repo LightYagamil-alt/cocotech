@@ -4,6 +4,8 @@ import { Code2, Palette, Film, Check, Image as ImageIcon } from "lucide-react";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Services — Coco Tech" },
       { name: "description", content: "Website creation, social media design and video editing for small and medium businesses." },
       { property: "og:title", content: "Services — Coco Tech" },
