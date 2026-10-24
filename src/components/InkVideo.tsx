@@ -1,18 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Loads the ink-cloud loop only when it scrolls into view, and skips it
- * entirely for users who prefer reduced motion or are on a slow connection.
+ * Loads the ink-cloud loop only when it scrolls into view.
+ * Always renders the video so the flagship background is never missing —
+ * playback only pauses when the user prefers reduced motion.
  */
 export function InkVideo({ src, className }: { src: string; className?: string }) {
   const holder = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
+  const reducedMotion = useRef(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-    if (conn?.saveData || (conn?.effectiveType && /2g/.test(conn.effectiveType))) return;
-
+    reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const el = holder.current;
     if (!el) return;
     const io = new IntersectionObserver(
@@ -22,7 +21,7 @@ export function InkVideo({ src, className }: { src: string; className?: string }
           io.disconnect();
         }
       },
-      { rootMargin: "200px" }
+      { rootMargin: "400px" }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -33,11 +32,11 @@ export function InkVideo({ src, className }: { src: string; className?: string }
       {show && (
         <video
           src={src}
-          autoPlay
+          autoPlay={!reducedMotion.current}
           loop
           muted
           playsInline
-          preload="none"
+          preload="auto"
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover"
         />
