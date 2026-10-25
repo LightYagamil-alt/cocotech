@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useChatThreads, createThreadId, type ChatThread } from "@/lib/chat-storage";
 import assistantLogo from "@/assets/assistant-logo.png";
 import inkCloudAsset from "@/assets/ink-cloud.mp4.asset.json";
+import inkCloudWebmAsset from "@/assets/ink-cloud.webm.asset.json";
+import { InkVideo } from "@/components/InkVideo";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
@@ -253,13 +255,9 @@ function ChatLayout() {
     <div className="relative isolate">
       {/* Ambient ink-cloud background — ties chat visually to the home Coco AI moment */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden>
-        <video
+        <InkVideo
           src={inkCloudAsset.url}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
+          fallbackSrc={inkCloudWebmAsset.url}
           className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-background/85 backdrop-blur-2xl" />

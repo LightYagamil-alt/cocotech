@@ -9,6 +9,7 @@ import pRealestate from "@/assets/project-realestate.jpg";
 import pFitness from "@/assets/project-fitness.jpg";
 import assistantLogo from "@/assets/assistant-logo.png";
 import inkCloudAsset from "@/assets/ink-cloud.mp4.asset.json";
+import inkCloudWebmAsset from "@/assets/ink-cloud.webm.asset.json";
 import { ChatBubble } from "@/components/ChatBubble";
 import { InkVideo } from "@/components/InkVideo";
 import { ClientMarquee } from "@/components/ClientMarquee";
@@ -307,7 +308,7 @@ function Index() {
       ============================================================ */}
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[#070817]" aria-hidden>
-          <InkVideo src={inkCloudAsset.url} className="absolute inset-0" />
+          <InkVideo src={inkCloudAsset.url} fallbackSrc={inkCloudWebmAsset.url} className="absolute inset-0" />
 
           {/* deep vignette so headline stays legible */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/85" />
