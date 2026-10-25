@@ -3,8 +3,9 @@ import { Plus, MessageSquare, Trash2, Menu, Download, Eraser, Search, Pencil, Ch
 import { useEffect, useMemo, useState } from "react";
 import { useChatThreads, createThreadId, type ChatThread } from "@/lib/chat-storage";
 import assistantLogo from "@/assets/assistant-logo.png";
-import inkCloudAsset from "@/assets/ink-cloud.mp4.asset.json";
-import inkCloudWebmAsset from "@/assets/ink-cloud.webm.asset.json";
+import inkCloudAsset from "@/assets/coco-ink-restored.mp4.asset.json";
+import inkCloudWebmAsset from "@/assets/coco-ink-restored.webm.asset.json";
+import inkCloudPoster from "@/assets/coco-ink-poster.jpg.asset.json";
 import { InkVideo } from "@/components/InkVideo";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -258,9 +259,10 @@ function ChatLayout() {
         <InkVideo
           src={inkCloudAsset.url}
           fallbackSrc={inkCloudWebmAsset.url}
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          poster={inkCloudPoster.url}
+          className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/85 backdrop-blur-2xl" />
+        <div className="absolute inset-0 coco-ink-chat-scrim" />
       </div>
 
       <div className="mx-auto w-full max-w-[1400px] px-2 py-3 sm:px-4 md:px-6 md:py-6">

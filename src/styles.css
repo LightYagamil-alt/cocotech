@@ -79,6 +79,8 @@
   --glass-specular: oklch(1 0 0 / 0.85);
   --glass-shadow: 0 1px 2px oklch(0.18 0.02 270 / 0.05), 0 18px 44px -22px oklch(0.30 0.05 265 / 0.28);
   --glass-blur: 18px;
+  --ink-home-scrim: linear-gradient(90deg, oklch(0 0 0 / 0.65), oklch(0 0 0 / 0.20));
+  --ink-chat-scrim: oklch(0.985 0.012 78 / 0.42);
 }
 
 /* Dark theme */
@@ -121,6 +123,7 @@
   --glass-specular: oklch(1 0 0 / 0.20);
   --glass-shadow: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 24px 60px -28px oklch(0 0 0 / 0.65);
   --glass-blur: 22px;
+  --ink-chat-scrim: oklch(0.105 0.018 265 / 0.38);
 }
 
 @layer base {
@@ -140,6 +143,8 @@
 }
 
 @layer utilities {
+  .coco-ink-home-scrim { background: var(--ink-home-scrim); }
+  .coco-ink-chat-scrim { background: var(--ink-chat-scrim); }
   .text-gradient {
     background: var(--gradient-brand);
     -webkit-background-clip: text;

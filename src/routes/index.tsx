@@ -8,8 +8,9 @@ import pSkincare from "@/assets/project-skincare.jpg";
 import pRealestate from "@/assets/project-realestate.jpg";
 import pFitness from "@/assets/project-fitness.jpg";
 import assistantLogo from "@/assets/assistant-logo.png";
-import inkCloudAsset from "@/assets/ink-cloud.mp4.asset.json";
-import inkCloudWebmAsset from "@/assets/ink-cloud.webm.asset.json";
+import inkCloudAsset from "@/assets/coco-ink-restored.mp4.asset.json";
+import inkCloudWebmAsset from "@/assets/coco-ink-restored.webm.asset.json";
+import inkCloudPoster from "@/assets/coco-ink-poster.jpg.asset.json";
 import { ChatBubble } from "@/components/ChatBubble";
 import { InkVideo } from "@/components/InkVideo";
 import { ClientMarquee } from "@/components/ClientMarquee";
@@ -308,11 +309,10 @@ function Index() {
       ============================================================ */}
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[#070817]" aria-hidden>
-          <InkVideo src={inkCloudAsset.url} fallbackSrc={inkCloudWebmAsset.url} className="absolute inset-0" />
+          <InkVideo src={inkCloudAsset.url} fallbackSrc={inkCloudWebmAsset.url} poster={inkCloudPoster.url} className="absolute inset-0" />
 
           {/* deep vignette so headline stays legible */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/85" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.55)_80%)]" />
+          <div className="absolute inset-0 coco-ink-home-scrim" />
         </div>
 
         <div className="relative mx-auto grid max-w-[92rem] items-center gap-12 px-6 py-32 md:py-48 lg:grid-cols-12">
