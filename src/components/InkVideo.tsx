@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
  * Always renders the video so the flagship background is never missing —
  * playback only pauses when the user prefers reduced motion.
  */
-export function InkVideo({ src, className }: { src: string; className?: string }) {
+export function InkVideo({ src, fallbackSrc, className }: { src: string; fallbackSrc?: string; className?: string }) {
   const holder = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
   const reducedMotion = useRef(false);
@@ -31,7 +31,6 @@ export function InkVideo({ src, className }: { src: string; className?: string }
     <div ref={holder} className={className} aria-hidden>
       {show && (
         <video
-          src={src}
           autoPlay={!reducedMotion.current}
           loop
           muted
@@ -39,7 +38,10 @@ export function InkVideo({ src, className }: { src: string; className?: string }
           preload="auto"
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover"
-        />
+        >
+          {fallbackSrc && <source src={fallbackSrc} type="video/webm" />}
+          <source src={src} type="video/mp4" />
+        </video>
       )}
     </div>
   );
