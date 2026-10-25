@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -65,18 +66,18 @@ export function InkVideo({ src, fallbackSrc, poster, className }: { src: string;
           {fallbackSrc && <source src={fallbackSrc} type="video/webm" />}
           <source src={src} type="video/mp4" />
         </video>
-      {needsPlay && (
+      {needsPlay && createPortal(
         <Button
           type="button"
           variant="secondary"
           size="icon"
-          className="pointer-events-auto absolute bottom-4 right-4 z-20"
+          className="pointer-events-auto fixed bottom-4 left-4 z-50"
           aria-label="Play live wallpaper"
           title="Play live wallpaper"
           onClick={() => startPlayback(true)}
         >
           <Play />
-        </Button>
+        </Button>, document.body
       )}
     </div>
   );
