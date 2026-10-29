@@ -12,8 +12,8 @@
 - [x] Apply the routine security package update
 
 ## Editorial redesign
-- [ ] Replace excessive effects with a restrained shared visual system
-- [ ] Recompose homepage around studio services and selected work
-- [ ] Unify navigation and refine remaining business pages
-- [ ] Compact chat, preserve wallpaper and functionality, handle mobile keyboard
-- [ ] Verify desktop, 390px and 430px in light and dark themes
+- [x] Replace excessive effects with a restrained shared visual system
+- [x] Recompose homepage around studio services and selected work
+- [x] Unify navigation and refine remaining business pages
+- [x] Compact chat, preserve wallpaper and functionality, handle mobile keyboard
+- [x] Verify desktop, 390px and 430px in light and dark themes
