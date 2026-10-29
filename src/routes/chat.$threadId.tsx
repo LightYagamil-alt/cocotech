@@ -17,6 +17,7 @@ import {
 } from "@/components/ai-elements/message";
 import { useChatThreads } from "@/lib/chat-storage";
 import assistantLogo from "@/assets/assistant-logo.png";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const searchSchema = z.object({ q: z.string().optional() });
@@ -36,17 +37,7 @@ export const Route = createFileRoute("/chat/$threadId")({
   component: ChatThreadPage,
 });
 
-const SUGGESTIONS = [
-  "How much does a website cost?",
-  "Start my project",
-  "Show your portfolio",
-  "Build a mobile app",
-  "Branding packages",
-  "Hosting & domains",
-  "SEO services",
-  "Website maintenance",
-  "Talk to a human",
-];
+const SUGGESTIONS = ["Website pricing", "Plan a project", "Explore the portfolio"];
 
 function ChatThreadPage() {
   const { threadId } = Route.useParams();
@@ -131,12 +122,12 @@ function ChatThreadPage() {
     const el = textareaRef.current;
     if (!el) return;
     el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, 240)}px`;
+    el.style.height = `${Math.min(el.scrollHeight, 144)}px`;
   }, [input]);
 
   // Autofocus on mount and after thread change
   useEffect(() => {
-    textareaRef.current?.focus();
+    if (window.matchMedia("(pointer: fine)").matches) textareaRef.current?.focus();
   }, [threadId]);
 
   const isBusy = status === "submitted" || status === "streaming";
@@ -153,40 +144,31 @@ function ChatThreadPage() {
 
   return (
     <div className="flex h-full flex-col">
-      {/* Scroll region with soft fade masks top & bottom */}
-      <div
-        className="relative min-h-0 flex-1"
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0, black 28px, black calc(100% - 28px), transparent 100%)",
-          maskImage:
-            "linear-gradient(to bottom, transparent 0, black 28px, black calc(100% - 28px), transparent 100%)",
-        }}
-      >
-        <Conversation className="h-full">
-          <ConversationContent className="mx-auto w-full max-w-3xl gap-8 px-4 py-7 sm:px-7 md:px-10 md:py-10 lg:max-w-4xl">
+      <div className="relative min-h-0 flex-1">
+        <Conversation className="chat-scroll h-full">
+          <ConversationContent className="mx-auto w-full max-w-3xl gap-6 px-4 py-6 sm:px-7 md:px-10 md:py-8 lg:max-w-4xl">
             {messages.length === 0 ? (
-              <div className="flex h-full min-h-[50vh] flex-col items-center justify-center gap-8 py-10 text-center">
+              <div className="flex flex-col items-center justify-center gap-4 py-6 text-center">
                 <ConversationEmptyState
                   icon={
                     <img
                       src={assistantLogo}
                       alt="Coco AI"
-                      className="h-28 w-28 object-contain drop-shadow-[0_10px_30px_rgba(168,85,247,0.45)]"
+                      className="h-16 w-16 object-contain"
                     />
                   }
                   title="Say hi to Coco"
                   description="Ask about our services, pricing approach, or get help scoping a project."
                 />
-                <div className="grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+                <div className="flex w-full max-w-2xl flex-wrap justify-center gap-2">
                   {SUGGESTIONS.map((s) => (
-                    <button
+                    <Button variant="ghost"
                       key={s}
                       onClick={() => submit(s)}
-                      className="glass-chip rounded-2xl px-4 py-3.5 text-left text-sm font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/50 hover:text-foreground active:scale-[0.99]"
+                      className="h-auto whitespace-normal rounded-md border border-border px-3 py-2 text-left text-xs text-muted-foreground hover:text-foreground"
                     >
                       {s}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -210,10 +192,10 @@ function ChatThreadPage() {
                       from={message.role}
                       className={cn(
                         "max-w-[92%] sm:max-w-[88%]",
-                        message.role === "user" ? "animate-slide-in-right" : "animate-slide-in-left",
+                        "animate-fade-in",
                       )}
                     >
-                      <MessageContent className="px-5 py-3.5 text-[15px] leading-relaxed">
+                      <MessageContent className="px-4 py-3 text-base leading-relaxed">
                         {message.parts.map((part, i) => {
                           if (part.type === "text") {
                             return message.role === "assistant" ? (
@@ -260,15 +242,15 @@ function ChatThreadPage() {
       </div>
 
       {/* Sticky composer */}
-      <div className="shrink-0 border-t border-border/50 px-4 pb-5 pt-4 sm:px-6 md:px-8 md:pb-6 md:pt-5" style={{ background: "var(--glass-surface-faint)", backdropFilter: "blur(20px) saturate(150%)" }}>
+      <div className="chat-composer shrink-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             submit();
           }}
           className={cn(
-            "glass-panel-strong group relative mx-auto flex w-full max-w-3xl items-end gap-3 rounded-[2rem] px-5 py-4 transition-all duration-200 lg:max-w-4xl",
-            "focus-within:border-brand/50 focus-within:shadow-glow focus-within:ring-1 focus-within:ring-brand/20",
+            "group relative mx-auto flex w-full max-w-3xl items-end gap-2 rounded-md border border-border bg-background px-3 py-2 lg:max-w-4xl",
+            "focus-within:border-brand",
           )}
         >
           <textarea
@@ -276,7 +258,7 @@ function ChatThreadPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
+              if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
                 e.preventDefault();
                 submit();
               }
@@ -284,38 +266,33 @@ function ChatThreadPage() {
             rows={1}
             aria-label="Message Coco"
             placeholder="Message Coco…"
-            className="max-h-[280px] min-h-[92px] flex-1 resize-none bg-transparent px-1 py-2 text-base leading-relaxed outline-none placeholder:text-muted-foreground md:text-[17px]"
+            className="min-w-0 flex-1 resize-none bg-transparent px-1 py-2 text-base leading-relaxed outline-none placeholder:text-muted-foreground"
           />
           {isBusy ? (
-            <button
+            <Button variant="ghost"
               type="button"
               onClick={stop}
               aria-label="Stop generating"
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-secondary text-foreground shadow-sm transition-all hover:bg-secondary/80 active:scale-95"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-secondary text-foreground shadow-sm transition-all hover:bg-secondary/80 active:scale-95"
             >
               <Square size={18} fill="currentColor" />
-            </button>
+            </Button>
           ) : (
-            <button
+            <Button variant="ghost"
               type="submit"
               disabled={!input.trim()}
               aria-label="Send message"
               className={cn(
-                "flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl shadow-lg transition-all duration-150 ease-out",
-                "bg-gradient-brand text-primary-foreground hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-95",
+                "flex h-10 w-10 shrink-0 items-center justify-center rounded-md shadow-none transition-all duration-150 ease-out",
+                "bg-primary text-primary-foreground hover:-translate-y-0.5 hover:shadow-glow active:translate-y-0 active:scale-95",
                 "disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:shadow-sm",
               )}
             >
               <ArrowUp size={22} strokeWidth={2.5} />
-            </button>
+            </Button>
           )}
         </form>
-        <p className="mx-auto mt-3 hidden max-w-3xl px-2 text-center text-[11px] text-muted-foreground md:block lg:max-w-4xl">
-          Shift + Enter for a new line · Coco can make mistakes, verify important details with our team.
-        </p>
-        <p className="mx-auto mt-3 max-w-3xl px-2 text-center text-[11px] text-muted-foreground md:hidden">
-          Coco can make mistakes.
-        </p>
+        <p className="mt-2 text-center text-[10px] text-muted-foreground">Coco can make mistakes. Confirm important details with our team.</p>
       </div>
     </div>
   );
@@ -393,7 +370,7 @@ function ActionBtn({
   active?: boolean;
 }) {
   return (
-    <button
+    <Button variant="ghost"
       type="button"
       onClick={onClick}
       aria-label={label}
@@ -404,6 +381,6 @@ function ActionBtn({
       )}
     >
       {children}
-    </button>
+    </Button>
   );
 }

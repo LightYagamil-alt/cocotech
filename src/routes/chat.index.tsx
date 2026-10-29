@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 import { createThreadId } from "@/lib/chat-storage";
 import assistantLogo from "@/assets/assistant-logo.png";
@@ -37,39 +37,33 @@ function ChatIndex() {
     });
   }
 
-  // Auto-redirect users landing on /chat with no thread into a fresh one only
-  // if they click — keep this as an inviting landing page by default.
-  useEffect(() => {
-    // No auto-redirect logic needed here as per design requirements
-  }, []);
-
   return (
-    <div className="flex h-full flex-col items-center justify-center px-6 py-16 text-center">
-      <img src={assistantLogo} alt="Coco assistant" className="h-16 w-16 animate-float" />
-      <p className="glass-chip mt-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs text-muted-foreground">
+    <div className="flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6 text-center">
+      <img src={assistantLogo} alt="Coco assistant" className="h-16 w-16 " />
+      <p className="mt-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs text-muted-foreground">
         <Sparkles size={12} className="text-brand" /> Powered by AI
       </p>
-      <h1 className="mt-4 font-display text-3xl font-bold md:text-5xl">
+      <h1 className="mt-4 font-display text-4xl md:text-5xl">
         Hi, I'm <span className="text-gradient">Coco</span>.
       </h1>
-      <p className="mt-3 max-w-md text-muted-foreground">
+      <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
         Ask me anything about our websites, social media design or video editing — or get help scoping your next project.
       </p>
-      <button
+      <Button
         onClick={() => startChat()}
-        className="mt-6 rounded-full bg-gradient-brand px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105"
+        className="mt-5"
       >
         Start a conversation
-      </button>
-      <div className="mt-8 grid w-full max-w-2xl gap-2 sm:grid-cols-2">
+      </Button>
+      <div className="mt-6 grid w-full max-w-xl gap-2 sm:grid-cols-2">
         {suggestions.map((s) => (
-          <button
+          <Button
             key={s}
             onClick={() => startChat(s)}
-            className="glass-chip rounded-xl px-4 py-3 text-left text-sm text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-brand/50 hover:text-foreground"
+            className="h-auto whitespace-normal rounded-md border border-border bg-background px-3 py-2 text-left text-xs leading-relaxed text-muted-foreground hover:bg-secondary hover:text-foreground"
           >
             {s}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

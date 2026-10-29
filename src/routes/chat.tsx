@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate, useParams, useRouterState } from "@tanstack/react-router";
-import { Plus, MessageSquare, Trash2, Menu, Download, Eraser, Search, Pencil, Check, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { Plus, MessageSquare, Trash2, History, Download, Eraser, Search, Pencil, Check, X } from "lucide-react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { useChatThreads, createThreadId, type ChatThread } from "@/lib/chat-storage";
 import assistantLogo from "@/assets/assistant-logo.png";
 import inkCloudAsset from "@/assets/coco-ink-restored.mp4.asset.json";
@@ -8,6 +8,7 @@ import inkCloudWebmAsset from "@/assets/coco-ink-restored.webm.asset.json";
 import inkCloudPoster from "@/assets/coco-ink-poster.jpg.asset.json";
 import { InkVideo } from "@/components/InkVideo";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/chat")({
@@ -106,41 +107,41 @@ function Sidebar({
           <p className="text-xs text-muted-foreground">Your chats with Coco</p>
         </div>
       </div>
-      <button
+      <Button variant="ghost"
         onClick={onNew}
-        className="mb-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-3 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02] active:scale-95"
+        className="mb-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground  transition-transform hover:scale-[1.02] active:scale-95"
       >
         <Plus size={14} /> New Chat
-      </button>
+      </Button>
       <div className="relative mb-2">
         <Search size={13} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search conversations..."
-          className="glass-input w-full rounded-lg py-1.5 pl-7 pr-2 text-xs outline-none placeholder:text-muted-foreground"
+          className="border border-input bg-card w-full rounded-lg py-1.5 pl-7 pr-2 text-xs outline-none placeholder:text-muted-foreground"
         />
       </div>
       <div className="flex items-center justify-between px-2 pb-1 text-[10px] uppercase tracking-wide text-muted-foreground">
         <span>Recent</span>
         {threads.length > 0 && (
           <div className="flex items-center gap-1">
-            <button
+            <Button variant="ghost"
               onClick={() => downloadAll(threads)}
               className="rounded p-1 hover:bg-secondary"
               aria-label="Download all chats"
               title="Download history"
             >
               <Download size={12} />
-            </button>
-            <button
+            </Button>
+            <Button variant="ghost"
               onClick={onClearAll}
               className="rounded p-1 hover:bg-secondary"
               aria-label="Clear all chats"
               title="Clear all"
             >
               <Eraser size={12} />
-            </button>
+            </Button>
           </div>
         )}
       </div>
@@ -175,12 +176,12 @@ function Sidebar({
                     }}
                     className="min-w-0 flex-1 rounded border border-border bg-background px-1.5 py-1 text-sm outline-none focus:border-brand/60"
                   />
-                  <button onClick={commitEdit} className="rounded p-1 text-muted-foreground hover:text-foreground" aria-label="Save">
+                  <Button variant="ghost" onClick={commitEdit} className="rounded p-1 text-muted-foreground hover:text-foreground" aria-label="Save">
                     <Check size={13} />
-                  </button>
-                  <button onClick={() => setEditingId(null)} className="rounded p-1 text-muted-foreground hover:text-foreground" aria-label="Cancel">
+                  </Button>
+                  <Button variant="ghost" onClick={() => setEditingId(null)} className="rounded p-1 text-muted-foreground hover:text-foreground" aria-label="Cancel">
                     <X size={13} />
-                  </button>
+                  </Button>
                 </div>
               ) : (
                 <>
@@ -194,28 +195,28 @@ function Sidebar({
                     <span className="min-w-0 flex-1 truncate">{t.title || "New chat"}</span>
                     <span className="shrink-0 text-[10px] text-muted-foreground">{formatTime(t.updatedAt)}</span>
                   </Link>
-                  <button
+                  <Button variant="ghost"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       startEdit(t);
                     }}
                     aria-label="Rename chat"
-                    className="rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-background hover:text-foreground group-hover:opacity-100"
+                    className="rounded-md h-9 w-9 p-1.5 text-muted-foreground opacity-100 transition-opacity hover:bg-background hover:text-foreground group-hover:opacity-100"
                   >
                     <Pencil size={13} />
-                  </button>
-                  <button
+                  </Button>
+                  <Button variant="ghost"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       onDelete(t.id);
                     }}
                     aria-label="Delete chat"
-                    className="rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-background hover:text-foreground group-hover:opacity-100"
+                    className="rounded-md h-9 w-9 p-1.5 text-muted-foreground opacity-100 transition-opacity hover:bg-background hover:text-foreground group-hover:opacity-100"
                   >
                     <Trash2 size={13} />
-                  </button>
+                  </Button>
                 </>
               )}
             </div>
@@ -233,7 +234,30 @@ function ChatLayout() {
   const activeId = pathname.startsWith("/chat/") ? pathname.split("/chat/")[1] : undefined;
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const shellRef = useRef<HTMLDivElement>(null);
   useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const viewport = window.visualViewport;
+    const resize = () => {
+      const shell = shellRef.current;
+      if (!shell) return;
+      const top = shell.getBoundingClientRect().top;
+      const available = (viewport?.height ?? window.innerHeight) + (viewport?.offsetTop ?? 0) - top;
+      shell.style.height = `${Math.max(180, available)}px`;
+    };
+    resize();
+    viewport?.addEventListener("resize", resize);
+    viewport?.addEventListener("scroll", resize);
+    window.addEventListener("resize", resize);
+    return () => {
+      document.body.style.overflow = previous;
+      viewport?.removeEventListener("resize", resize);
+      viewport?.removeEventListener("scroll", resize);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
 
   function newChat() {
     const id = createThreadId();
@@ -253,9 +277,9 @@ function ChatLayout() {
   const sortedThreads = useMemo(() => threads, [threads]);
 
   return (
-    <div className="relative isolate">
+    <div ref={shellRef} className="chat-shell relative isolate">
       {/* Ambient ink-cloud background — ties chat visually to the home Coco AI moment */}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden>
+      <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
         <InkVideo
           src={inkCloudAsset.url}
           fallbackSrc={inkCloudWebmAsset.url}
@@ -265,40 +289,8 @@ function ChatLayout() {
         <div className="absolute inset-0 coco-ink-chat-scrim" />
       </div>
 
-      <div className="mx-auto w-full max-w-[1400px] px-2 py-3 sm:px-4 md:px-6 md:py-6">
-      {/* Mobile header */}
-      <div className="mb-3 flex items-center justify-between md:hidden">
-        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-          <SheetTrigger asChild>
-            <button className="glass-chip rounded-lg p-2 active:scale-95" aria-label="Open conversations">
-              <Menu size={18} />
-            </button>
-          </SheetTrigger>
-          <SheetContent side="left" className="w-[300px] p-3">
-            <SheetHeader className="sr-only">
-              <SheetTitle>Conversations</SheetTitle>
-            </SheetHeader>
-            {mounted && (
-              <Sidebar
-                threads={sortedThreads}
-                activeId={activeId}
-                onNew={newChat}
-                onSelect={() => setMobileOpen(false)}
-                onDelete={handleDelete}
-                onRename={renameThread}
-                onClearAll={clearAll}
-              />
-            )}
-          </SheetContent>
-        </Sheet>
-        <div className="flex items-center gap-2">
-          <img src={assistantLogo} alt="" className="h-7 w-7" />
-          <span className="font-display text-sm font-semibold">Coco</span>
-        </div>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-[280px_1fr] md:gap-6">
-        <aside className="glass-panel hidden max-h-[calc(100dvh-8rem)] rounded-2xl p-3 md:flex md:flex-col">
+      <div className="chat-frame mx-auto w-full max-w-[1440px]">
+        <aside className="hidden min-h-0 rounded-md border border-border bg-card p-4 md:flex md:flex-col">
           {mounted ? (
             <Sidebar
               threads={sortedThreads}
@@ -312,24 +304,30 @@ function ChatLayout() {
           ) : null}
         </aside>
 
-        <section className="glass-panel-strong flex h-[calc(100dvh-6.5rem)] flex-col overflow-hidden rounded-3xl animate-fade-in md:h-[calc(100dvh-8rem)]">
-          <header className="flex shrink-0 items-center justify-between border-b border-border/50 px-4 py-3 md:px-6" style={{ boxShadow: "inset 0 1px 0 0 var(--glass-specular)" }}>
+        <section className="chat-surface">
+          <header className="flex shrink-0 items-center justify-between border-b border-border/50 px-4 py-3 md:px-6">
             <div className="flex items-center gap-2.5">
               <div className="relative">
                 <img src={assistantLogo} alt="" className="h-9 w-9" />
-                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-card bg-emerald-500 shadow-[0_0_8px_rgb(16_185_129)]" aria-hidden />
+                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-card bg-status" aria-hidden />
               </div>
               <div>
                 <p className="text-sm font-semibold leading-none">Coco</p>
                 <p className="mt-1 text-[11px] text-muted-foreground">Online · AI Assistant</p>
               </div>
             </div>
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild><Button variant="ghost" className="md:hidden" aria-label="Open conversations"><History size={18}/><span className="text-xs">History</span></Button></SheetTrigger>
+              <SheetContent side="left" className="w-[min(340px,100vw)] bg-card p-4 pt-12">
+                <SheetHeader className="sr-only"><SheetTitle>Conversations</SheetTitle></SheetHeader>
+                {mounted && <Sidebar threads={sortedThreads} activeId={activeId} onNew={newChat} onSelect={() => setMobileOpen(false)} onDelete={handleDelete} onRename={renameThread} onClearAll={clearAll}/>}
+              </SheetContent>
+            </Sheet>
           </header>
           <div className="min-h-0 flex-1">
             <Outlet />
           </div>
         </section>
-      </div>
       </div>
     </div>
   );
