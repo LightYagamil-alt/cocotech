@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { X, Sparkles, ArrowRight, Loader2 } from "lucide-react";
@@ -42,33 +43,33 @@ export function ChatBubble() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 md:bottom-6 md:right-6">
+    <div className="pointer-events-none fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-50 flex flex-col items-end gap-3 md:bottom-6 md:right-6">
       {/* Greeting nudge */}
       {nudge && !open && (
-        <div className="glass-panel-strong pointer-events-auto max-w-[16rem] animate-fade-up rounded-2xl rounded-br-sm px-3 py-2 text-xs">
+        <div className="glass-panel-strong pointer-events-auto max-w-[16rem] animate-fade-up rounded-lg rounded-br-sm px-3 py-2 text-xs">
           <span className="text-foreground">Hi, I'm Coco 👋 — here to help with anything you need.</span>
         </div>
       )}
 
       {/* Expanded card */}
       {open && (
-        <div className="glass-panel-strong pointer-events-auto w-[min(20rem,calc(100vw-2rem))] origin-bottom-right animate-fade-up overflow-hidden rounded-2xl">
-          <div className="flex items-center gap-3 border-b border-border/50 bg-gradient-brand/10 p-4">
+        <div className="glass-panel-strong pointer-events-auto w-[min(20rem,calc(100vw-2rem))] origin-bottom-right animate-fade-up overflow-hidden rounded-lg">
+          <div className="flex items-center gap-3 border-b border-border/50 bg-primary/10 p-4">
             <img src={assistantLogo} alt="Coco" className="h-12 w-12 object-contain" />
             <div className="flex-1">
               <p className="text-sm font-semibold">Coco</p>
               <p className="flex items-center gap-1 text-xs text-muted-foreground">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-status" />
                 Online · usually replies instantly
               </p>
             </div>
-            <button
+            <Button variant="ghost"
               onClick={() => setOpen(false)}
               aria-label="Close"
               className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
               <X size={16} />
-            </button>
+            </Button>
           </div>
           <div className="p-4">
             <p className="inline-flex items-center gap-1 text-xs text-brand">
@@ -98,7 +99,7 @@ export function ChatBubble() {
               params={{ threadId }}
               preload="intent"
               onClick={() => { setOpening(true); setOpen(false); }}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform duration-100 hover:scale-[1.02] active:scale-[0.98]"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform duration-100 hover:scale-[1.02] active:scale-[0.98]"
             >
               Start a chat <ArrowRight size={14} />
             </Link>
@@ -116,15 +117,12 @@ export function ChatBubble() {
 
       {/* Floating bubble button */}
       <div className="pointer-events-auto relative">
-        {!open && (
-          <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-brand/30" aria-hidden />
-        )}
-        <button
+        <Button variant="ghost"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close chat" : "Chat with Coco"}
           className={`relative flex h-16 w-16 items-center justify-center rounded-full shadow-glow transition-transform duration-100 hover:scale-105 active:scale-95 ${
-            open ? "bg-gradient-brand text-primary-foreground" : "bg-transparent"
-          } ${nudge && !open ? "animate-float" : ""}`}
+            open ? "bg-primary text-primary-foreground" : "bg-transparent"
+          }`}
         >
           {open ? (
             <X size={24} />
@@ -132,10 +130,10 @@ export function ChatBubble() {
             <img
               src={assistantLogo}
               alt="Coco AI"
-              className="h-16 w-16 object-contain drop-shadow-[0_4px_16px_rgba(168,85,247,0.5)]"
+               className="h-16 w-16 shrink-0 object-contain"
             />
           )}
-        </button>
+        </Button>
       </div>
     </div>
   );

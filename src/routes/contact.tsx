@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Send, Camera, ThumbsUp, Bird } from "lucide-react";
 import { useState } from "react";
@@ -54,49 +55,49 @@ function ContactPage() {
 
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-24">
+    <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
       <p className="text-sm uppercase tracking-widest text-brand">Contact</p>
-      <h1 className="mt-2 max-w-3xl text-5xl font-bold md:text-6xl">Let's make <span className="text-gradient">something</span>.</h1>
+      <h1 className="mt-2 max-w-3xl page-title">Let's make <span className="text-gradient">something</span>.</h1>
       <p className="mt-4 max-w-2xl text-muted-foreground">Tell us about your project — we usually reply within a few hours.</p>
 
       <div className="mt-12 grid gap-10 md:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4">
-          <a href="tel:+256785852378" className="glass-panel flex items-start gap-4 rounded-2xl p-5 transition-all hover:-translate-y-0.5 hover:border-brand/50">
-            <div className="rounded-xl bg-gradient-brand p-3 text-primary-foreground"><Phone size={18}/></div>
+          <a href="tel:+256785852378" className="border-t border-border flex items-start gap-4 rounded-md p-5 ">
+            <div className="rounded-md bg-primary p-3 text-primary-foreground"><Phone size={18}/></div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Phone</p>
               <p className="mt-1 font-semibold">+256 785 852378</p>
               <p className="mt-1 font-semibold">+256 742 011601</p>
             </div>
           </a>
-          <a href="mailto:hello@cocotech.co" className="glass-panel flex items-start gap-4 rounded-2xl p-5 transition-all hover:-translate-y-0.5 hover:border-brand/50">
-            <div className="rounded-xl bg-gradient-brand p-3 text-primary-foreground"><Mail size={18}/></div>
+          <a href="mailto:hello@cocotech.co" className="border-t border-border flex items-start gap-4 rounded-md p-5 ">
+            <div className="rounded-md bg-primary p-3 text-primary-foreground"><Mail size={18}/></div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Email</p>
               <p className="mt-1 font-semibold">hello@cocotech.co</p>
             </div>
           </a>
-          <div className="glass-panel flex items-start gap-4 rounded-2xl p-5">
-            <div className="rounded-xl bg-gradient-brand p-3 text-primary-foreground"><MapPin size={18}/></div>
+          <div className="border-t border-border flex items-start gap-4 rounded-md p-5">
+            <div className="rounded-md bg-primary p-3 text-primary-foreground"><MapPin size={18}/></div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Based in</p>
               <p className="mt-1 font-semibold">Kampala, Uganda</p>
             </div>
           </div>
           <div className="flex gap-3 pt-2">
-            <a href="#" aria-label="Instagram" className="glass-chip rounded-full p-3 transition-transform hover:-translate-y-0.5"><Camera size={18}/></a>
-            <a href="#" aria-label="Facebook" className="glass-chip rounded-full p-3 transition-transform hover:-translate-y-0.5"><ThumbsUp size={18}/></a>
-            <a href="#" aria-label="Twitter" className="glass-chip rounded-full p-3 transition-transform hover:-translate-y-0.5"><Bird size={18}/></a>
+            <a href="#" aria-label="Instagram" className="border border-border bg-secondary rounded-md p-3 transition-transform hover:-translate-y-0.5"><Camera size={18}/></a>
+            <a href="#" aria-label="Facebook" className="border border-border bg-secondary rounded-md p-3 transition-transform hover:-translate-y-0.5"><ThumbsUp size={18}/></a>
+            <a href="#" aria-label="Twitter" className="border border-border bg-secondary rounded-md p-3 transition-transform hover:-translate-y-0.5"><Bird size={18}/></a>
           </div>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="glass-panel-strong rounded-3xl p-6 sm:p-8"
+          className="border-t border-border py-6 sm:pl-8"
         >
           {sent ? (
             <div className="flex h-full min-h-[300px] flex-col items-center justify-center text-center">
-              <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-brand text-primary-foreground shadow-glow">
+              <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-md bg-primary text-primary-foreground ">
                 <Send size={22}/>
               </div>
               <h3 className="text-2xl font-bold">Message sent!</h3>
@@ -110,21 +111,21 @@ function ContactPage() {
               </div>
               <Field label="Service of interest" name="service" placeholder="Website, social, video..." />
               <div>
-                <label className="text-sm font-medium">Tell us about your project</label>
+                <label htmlFor="project-message" className="text-sm font-medium">Tell us about your project</label>
                 <textarea
-                  required rows={5} name="message"
-                  className="glass-input mt-1 w-full rounded-xl px-4 py-3 text-sm outline-none"
+                  required rows={5} name="message" id="project-message"
+                  className="border border-input bg-card mt-1 w-full rounded-md px-4 py-3 text-sm outline-none"
                   placeholder="A few sentences is enough..."
                 />
               </div>
               {error && (
-                <p role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                <p role="alert" className="rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
                   {error}
                 </p>
               )}
-              <button type="submit" disabled={sending} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60">
+              <Button type="submit" disabled={sending} className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground  transition-transform hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60">
                 {sending ? "Sending…" : "Send message"} <Send size={16}/>
-              </button>
+              </Button>
             </div>
           )}
         </form>
@@ -136,10 +137,11 @@ function ContactPage() {
 function Field({ label, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
   return (
     <div>
-      <label className="text-sm font-medium">{label}</label>
+      <label htmlFor={props.name} className="text-sm font-medium">{label}</label>
       <input
+        id={props.name}
         {...props}
-        className="glass-input mt-1 w-full rounded-xl px-4 py-3 text-sm outline-none"
+        className="border border-input bg-card mt-1 w-full rounded-md px-4 py-3 text-sm outline-none"
       />
     </div>
   );

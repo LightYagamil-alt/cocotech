@@ -1,115 +1,23 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Menu, ArrowUpRight } from "lucide-react";
 import cocoLogo from "@/assets/coco-logo.png";
-
 const links = [
-  { to: "/", label: "Home", n: "01" },
-  { to: "/about", label: "About", n: "02" },
-  { to: "/services", label: "Services", n: "03" },
-  { to: "/portfolio", label: "Portfolio", n: "04" },
-  { to: "/chat", label: "AI Assistant", n: "05" },
-  { to: "/contact", label: "Contact", n: "06" },
+ { to: "/", label: "Home" }, { to: "/about", label: "About" }, { to: "/services", label: "Services" },
+ { to: "/portfolio", label: "Portfolio" }, { to: "/chat", label: "Coco AI" }, { to: "/contact", label: "Contact" },
 ] as const;
-
 export function SiteHeader() {
-  const [open, setOpen] = useState(false);
-
-  // Lock body scroll while overlay is open
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
-
-  return (
-    <>
-      <header className="sticky top-0 z-50 px-3 pt-3 md:px-5 md:pt-4">
-        <div className="glass-panel-strong mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full px-4 py-2.5 md:px-5 md:py-3">
-          {/* Left: hamburger (mobile) + logo */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setOpen((o) => !o)}
-              className="glass-chip relative z-[60] inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-foreground/8 lg:hidden"
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-            >
-              <span className={`hamburger ${open ? "is-open" : ""}`} aria-hidden>
-                <span /><span /><span />
-              </span>
-            </button>
-            <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold" onClick={() => setOpen(false)}>
-              <img src={cocoLogo} alt="Coco Tech" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(168,85,247,0.4)]" />
-              <span>Coco<span className="text-gradient"> Tech</span></span>
-            </Link>
-          </div>
-
-          {/* Center: desktop inline nav */}
-          <nav className="hidden lg:flex items-center gap-1 text-sm">
-            {links.slice(1).map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                preload="intent"
-                activeOptions={{ exact: l.to === "/" }}
-                className="rounded-full px-3 py-1.5 text-foreground/75 transition-all hover:text-foreground hover:bg-foreground/6 hover:shadow-[inset_0_1px_0_0_var(--glass-specular)]"
-                activeProps={{ className: "text-foreground bg-foreground/8 shadow-[inset_0_1px_0_0_var(--glass-specular)]" }}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Right: CTA + theme toggle */}
-          <div className="flex items-center gap-2 md:gap-3">
-            <Link
-              to="/contact"
-              preload="intent"
-              className="hidden rounded-full bg-gradient-brand px-5 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.98] md:inline-block"
-            >
-              Get a Quote
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      {/* Full-screen overlay menu */}
-      <div
-        className={`fixed inset-0 z-40 transition-opacity duration-500 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        aria-hidden={!open}
-      >
-        <div className="absolute inset-0 bg-[#070817]">
-          <div className="glow-lamp absolute inset-0 opacity-60" aria-hidden />
-          <div className="absolute inset-0 bg-black/40" aria-hidden />
-        </div>
-
-        <nav className="relative flex h-full flex-col justify-center px-6 pt-24 md:px-16">
-          <p className="mb-8 text-[10px] uppercase tracking-[0.32em] text-white/50">Menu</p>
-          <ul className="space-y-2 md:space-y-4">
-            {links.map((l, i) => (
-              <li key={l.to} className="overflow-hidden">
-                <Link
-                  to={l.to}
-                  onClick={() => setOpen(false)}
-                  className={`group flex items-baseline gap-4 font-display font-black leading-[0.95] text-white transition-transform duration-500 hover:translate-x-3 ${open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
-                  style={{ transitionDelay: open ? `${120 + i * 60}ms` : "0ms" }}
-                  activeOptions={{ exact: l.to === "/" }}
-                  activeProps={{ className: "text-aurora" }}
-                >
-                  <span className="font-mono text-xs font-normal text-white/40">{l.n}</span>
-                  <span className="text-4xl tracking-tight md:text-7xl">{l.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-14 flex flex-wrap items-center gap-6 text-sm text-white/60">
-            <span>Kampala · Uganda</span>
-            <span className="h-4 w-px bg-white/20" />
-            <a href="mailto:hello@cocotech.co" className="hover:text-white">hello@cocotech.co</a>
-          </div>
-        </nav>
-      </div>
-    </>
-  );
+ return <header className="site-header nav-glass sticky top-0 z-40 flex items-center">
+  <div className="mx-auto grid w-full max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center gap-5 px-5 md:flex md:justify-between md:px-10">
+   <Link to="/" className="flex min-w-0 items-center gap-2 font-sans text-lg font-semibold"><img src={cocoLogo} alt="" className="h-9 w-9 shrink-0 object-contain"/><span className="truncate">Coco Tech<span className="text-brand">.</span></span></Link>
+   <nav aria-label="Main navigation" className="hidden items-center gap-7 text-sm lg:flex">{links.slice(1).map(l=><Link key={l.to} to={l.to} preload="intent" className="text-muted-foreground hover:text-foreground" activeProps={{className:"text-foreground underline underline-offset-8"}}>{l.label}</Link>)}</nav>
+   <div className="flex shrink-0 items-center gap-2"><ThemeToggle/><Button asChild variant="outline" className="hidden sm:inline-flex"><Link to="/contact">Let's talk <ArrowUpRight/></Link></Button>
+    <Sheet><SheetTrigger asChild><Button variant="ghost" size="icon" aria-label="Open menu" title="Site menu" className="lg:hidden"><Menu/></Button></SheetTrigger>
+     <SheetContent side="right" className="w-[min(360px,100vw)] bg-background px-7 pt-16"><SheetHeader><SheetTitle className="text-left font-sans text-sm">Coco Tech — Menu</SheetTitle></SheetHeader><nav aria-label="Mobile navigation" className="mt-10 flex flex-col gap-6">{links.map((l,i)=><SheetClose asChild key={l.to}><Link to={l.to} className="flex items-baseline gap-4 text-4xl font-display"><span className="text-xs font-sans text-muted-foreground">0{i+1}</span>{l.label}</Link></SheetClose>)}</nav><p className="mt-12 border-t border-border pt-6 text-sm text-muted-foreground">Kampala · Uganda</p></SheetContent>
+    </Sheet>
+   </div>
+  </div>
+ </header>;
 }

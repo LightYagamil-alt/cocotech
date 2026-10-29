@@ -54,9 +54,9 @@ export const MessageContent = ({
 }: MessageContentProps) => (
   <div
     className={cn(
-      "flex w-fit min-w-0 max-w-full flex-col gap-2 overflow-hidden text-sm shadow-sm",
-      "group-[.is-user]:ml-auto group-[.is-user]:rounded-2xl group-[.is-user]:rounded-br-sm group-[.is-user]:bg-primary group-[.is-user]:px-4 group-[.is-user]:py-2.5 group-[.is-user]:text-primary-foreground",
-      "group-[.is-assistant]:rounded-2xl group-[.is-assistant]:rounded-bl-sm group-[.is-assistant]:bg-[var(--glass-surface)] group-[.is-assistant]:backdrop-blur-xl group-[.is-assistant]:border group-[.is-assistant]:border-[var(--glass-edge)] group-[.is-assistant]:shadow-[inset_0_1px_0_0_var(--glass-specular)] group-[.is-assistant]:px-4 group-[.is-assistant]:py-2.5 group-[.is-assistant]:text-foreground",
+      "flex w-fit min-w-0 max-w-full flex-col gap-2 overflow-hidden text-base leading-relaxed",
+      "group-[.is-user]:ml-auto group-[.is-user]:rounded-lg group-[.is-user]:rounded-br-sm group-[.is-user]:bg-secondary group-[.is-user]:px-4 group-[.is-user]:py-2.5 group-[.is-user]:text-foreground",
+      "group-[.is-assistant]:bg-transparent group-[.is-assistant]:px-0 group-[.is-assistant]:py-2 group-[.is-assistant]:text-foreground",
       className
     )}
     {...props}

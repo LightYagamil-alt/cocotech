@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, Heart, Crown } from "lucide-react";
 
@@ -17,9 +18,9 @@ export const Route = createFileRoute("/about")({
 
 function AboutPage() {
   return (
-    <div className="mx-auto max-w-5xl px-6 py-24">
+    <div className="mx-auto max-w-5xl px-6 py-16 md:py-24">
       <p className="text-sm uppercase tracking-widest text-brand">About</p>
-      <h1 className="mt-2 text-5xl font-bold md:text-6xl">A small studio with <span className="text-gradient">big creative</span> energy.</h1>
+      <h1 className="mt-2 page-title">A small studio with <span className="text-gradient">big creative</span> energy.</h1>
       <p className="mt-6 max-w-3xl text-lg text-muted-foreground">
         Coco Tech is a creative services studio built for small and medium businesses that want
         to show up online with the same polish as the biggest brands. We blend clean design,
@@ -32,8 +33,8 @@ function AboutPage() {
           { icon: Eye, title: "Our Vision", text: "A web where every small business gets to look — and feel — like a category leader." },
           { icon: Heart, title: "Our Values", text: "Honesty, creativity, speed, and obsessive attention to detail in every pixel and frame." },
         ].map((v) => (
-          <div key={v.title} className="glass-panel rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1">
-            <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground">
+          <div key={v.title} className="border-t border-border rounded-md p-6 ">
+            <div className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <v.icon size={20}/>
             </div>
             <h3 className="mt-4 text-lg font-semibold">{v.title}</h3>
@@ -56,9 +57,9 @@ function AboutPage() {
           ].map((p) => (
             <div
               key={p.name}
-              className="glass-panel flex items-center gap-4 rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-glow"
+              className="border-t border-border flex items-center gap-4 rounded-md p-6 "
             >
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-brand text-primary-foreground">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground">
                 <Crown size={22} />
               </div>
               <div className="min-w-0">
@@ -70,11 +71,11 @@ function AboutPage() {
         </div>
       </section>
 
-      <div className="glass-panel-strong mt-16 rounded-3xl p-10 text-center">
+      <div className="border-t border-border mt-16 py-10">
         <h2 className="text-3xl font-bold">Let's build something worth sharing.</h2>
-        <Link to="/contact" className="mt-6 inline-flex rounded-full bg-gradient-brand px-6 py-3 font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.98]">
+        <Button asChild size="lg"><Link to="/contact" className="mt-6 inline-flex rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground  transition-transform hover:scale-[1.03] active:scale-[0.98]">
           Start a project
-        </Link>
+        </Link></Button>
       </div>
     </div>
   );
