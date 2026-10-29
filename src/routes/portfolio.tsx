@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import pBoutique from "@/assets/project-boutique.jpg";
@@ -48,9 +49,9 @@ function PortfolioPage() {
   );
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-24">
+    <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
       <p className="text-sm uppercase tracking-widest text-brand">Portfolio</p>
-      <h1 className="mt-2 max-w-4xl font-display font-black uppercase leading-[0.9] tracking-tight text-5xl md:text-8xl">
+      <h1 className="mt-2 max-w-4xl page-title">
         Work we're <span className="text-aurora">proud of</span>.
       </h1>
       <p className="mt-4 max-w-2xl text-muted-foreground">
@@ -63,27 +64,27 @@ function PortfolioPage() {
           const isActive = c === active;
           const count = c === "All" ? items.length : items.filter((i) => i.tag === c).length;
           return (
-            <button
+            <Button variant="ghost"
               key={c}
               onClick={() => setActive(c)}
-              className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors active:scale-[0.98] ${
+              className={`inline-flex items-center gap-2 rounded-md border px-5 py-2.5 text-sm font-semibold transition-colors active:scale-[0.98] ${
                 isActive
-                  ? "border-transparent bg-foreground text-background shadow-glow"
-                  : "glass-chip border-transparent text-muted-foreground hover:text-foreground hover:border-brand/40"
+                  ? "border-transparent bg-foreground text-background "
+                  : "bg-transparent border-border text-muted-foreground hover:text-foreground hover:border-brand/40"
               }`}
             >
               {c}
               <span className={`text-xs ${isActive ? "text-background/70" : "text-muted-foreground/60"}`}>{count}</span>
-            </button>
+            </Button>
           );
         })}
       </div>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-2">
         {filtered.map((w, i) => (
           <article
             key={`${w.title}-${i}`}
-            className="glass-panel group relative overflow-hidden rounded-3xl animate-fade-up hover-lift"
+            className="group relative min-w-0"
             style={{ animationDelay: `${(i % 6) * 60}ms` }}
           >
             <div className="relative aspect-[4/3] overflow-hidden">
@@ -94,16 +95,13 @@ function PortfolioPage() {
                 decoding="async"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                <span className="inline-flex rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest backdrop-blur">
-                  {w.tag}
-                </span>
-                <h3 className="mt-3 text-xl font-bold leading-tight">{w.title}</h3>
-                <p className="mt-1 text-xs text-white/70">{w.client} · {w.year}</p>
-              </div>
             </div>
-            <div className="p-5">
+            <div className="mt-4">
+              <p className="text-xs text-brand">{w.tag} · {w.year}</p>
+              <h3 className="mt-2 text-3xl">{w.title}</h3>
+              <p className="mt-1 text-xs text-muted-foreground">{w.client}</p>
+            </div>
+            <div className="mt-3">
               <p className="text-sm text-muted-foreground">{w.desc}</p>
             </div>
           </article>
