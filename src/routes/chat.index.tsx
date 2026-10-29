@@ -19,10 +19,10 @@ export const Route = createFileRoute("/chat/")({
 });
 
 const suggestions = [
-  "I need a website for my bakery — where do we start?",
-  "Can you redesign my Instagram feed?",
-  "Edit a 30-second reel for my brand launch.",
-  "What does a typical project cost?",
+  "Plan a website",
+  "Social media design",
+  "Video editing",
+  "Project pricing",
 ];
 
 function ChatIndex() {

@@ -130,7 +130,7 @@ export function ChatBubble() {
             <img
               src={assistantLogo}
               alt="Coco AI"
-              className="h-16 w-16 object-contain "
+               className="h-16 w-16 shrink-0 object-contain"
             />
           )}
         </Button>
