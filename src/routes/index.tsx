@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Sparkles, Code2, Palette, Film, Image as ImageIcon, Bot } from "lucide-react";
-import doodles from "@/assets/hero-doodles.png";
+import studioImage from "@/assets/studio-editorial.jpg";
+import { Button } from "@/components/ui/button";
 import pBoutique from "@/assets/project-boutique.jpg";
 import pCoffee from "@/assets/project-coffee.jpg";
 import pFestival from "@/assets/project-festival.jpg";
@@ -13,7 +14,7 @@ import inkCloudWebmAsset from "@/assets/coco-ink-restored.webm.asset.json";
 import inkCloudPoster from "@/assets/coco-ink-poster.jpg.asset.json";
 import { ChatBubble } from "@/components/ChatBubble";
 import { InkVideo } from "@/components/InkVideo";
-import { ClientMarquee } from "@/components/ClientMarquee";
+
 
 const OG_IMAGE =
   "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dd3fa582-67ec-42fb-b961-17fe339d7ab7/id-preview-09446fd9--b816c6ed-3fbe-45f2-b341-924d68585e23.lovable.app-1780274397342.png";
@@ -88,340 +89,30 @@ const projects = [
 ];
 
 function Index() {
-  return (
-    <div>
-      {/* ============================================================
-          HERO — editorial, restrained, one focal point.
-          Live background: slow doodle drift + soft lamp bloom.
-      ============================================================ */}
-      <section className="relative isolate overflow-hidden bg-[#070817]">
-        <div
-          className="absolute inset-0 doodle-bg opacity-[0.14]"
-          style={{ backgroundImage: `url(${doodles})`, filter: "invert(1)" }}
-          aria-hidden
-        />
-        <div className="absolute inset-0 opacity-70" aria-hidden>
-          <div className="glow-lamp" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#070817]/70 to-[#070817]" aria-hidden />
-
-        <div className="relative mx-auto grid max-w-[92rem] gap-10 px-6 pt-24 pb-40 md:pt-36 md:pb-56 lg:grid-cols-12 lg:gap-6">
-          <div className="lg:col-span-9">
-            <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.32em] text-white/60 animate-fade-in">
-              <span className="h-px w-8 bg-white/40" /> Creative studio · Uganda
-            </span>
-
-            {/* Editorial headline — mixed weights and italics for human hierarchy */}
-            <h1 className="mt-8 font-display font-black text-white leading-[0.86] tracking-[-0.04em] text-[clamp(3.4rem,13vw,11rem)] letter-rise">
-              <span className="block">Creativity,</span>
-              <span className="block pl-[0.06em] italic font-normal text-white/70">meets</span>
-              <span className="block text-aurora">Technology.</span>
-            </h1>
-          </div>
-
-          {/* Right column — small block that breaks the symmetry */}
-          <div className="lg:col-span-3 lg:pt-40">
-            <p className="max-w-sm text-base leading-relaxed text-white/75 animate-fade-up [animation-delay:500ms]">
-              A small studio in Kampala building websites, campaigns and film for brands that
-              want to feel <em className="text-white">established from day one</em>.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3 animate-fade-up [animation-delay:700ms]">
-              <Link to="/contact" className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950">
-                Start a project <ArrowUpRight size={16}/>
-              </Link>
-              <Link to="/portfolio" className="glass-dark inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 active:scale-[0.98]">
-                See the work
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="seam seam-dark-to-light" aria-hidden />
-
-      <ClientMarquee />
-
-      {/* ============================================================
-          SERVICES — asymmetric editorial list, not a grid of cards.
-      ============================================================ */}
-      <section className="mx-auto max-w-[86rem] px-6 pt-32 pb-24 md:pt-40">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <p className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground">(01) What we do</p>
-            <h2 className="mt-4 font-display text-5xl font-black leading-[0.95] tracking-tight md:text-7xl">
-              A studio, <br/>
-              <span className="italic font-normal text-muted-foreground">not a</span> factory.
-            </h2>
-            <p className="mt-6 max-w-sm text-muted-foreground">
-              Four disciplines, one small team. We take fewer projects on purpose — so
-              each one gets the craft it deserves.
-            </p>
-          </div>
-
-          <ol className="lg:col-span-8 divide-y divide-border border-y border-border">
-            {services.map((s, i) => (
-              <li
-                key={s.title}
-                className="group grid grid-cols-[auto_1fr_auto] items-center gap-6 py-8 transition-colors hover:bg-secondary/40 md:py-10 md:px-4 animate-fade-up"
-                style={{ animationDelay: `${i * 80}ms` }}
-              >
-                <span className="font-mono text-xs text-muted-foreground/70">{s.n}</span>
-                <div className="min-w-0">
-                  <div className="flex items-center gap-4">
-                    <span className="glass-chip inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-brand transition-all group-hover:scale-105 group-hover:border-brand/50">
-                      <s.icon size={18}/>
-                    </span>
-                    <h3 className="font-display text-3xl font-bold tracking-tight md:text-5xl">{s.title}</h3>
-                  </div>
-                  <p className="mt-3 max-w-xl text-sm text-muted-foreground md:pl-[3.75rem]">{s.desc}</p>
-                </div>
-                <span className="hidden shrink-0 text-[10px] uppercase tracking-[0.28em] text-muted-foreground md:block">{s.tag}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="mt-14 flex justify-end">
-          <Link to="/services" className="inline-flex items-center gap-2 text-sm font-semibold text-foreground underline-offset-8 hover:underline">
-            Every service in detail <ArrowRight size={14}/>
-          </Link>
-        </div>
-      </section>
-
-      <div className="seam seam-light-to-dark" aria-hidden />
-
-      {/* ============================================================
-          THE COCO CODE — editorial numbered manifesto.
-          One dominant statement, four supporting principles.
-      ============================================================ */}
-      <section className="relative overflow-hidden bg-[#0a0b18] py-32 md:py-48">
-        <div className="absolute inset-0 opacity-60" aria-hidden>
-          <div className="glow-lamp" />
-        </div>
-        <div className="absolute inset-0 bg-[#0a0b18]/70" aria-hidden />
-
-        <div className="relative mx-auto max-w-[86rem] px-6 text-white">
-          <p className="text-[10px] uppercase tracking-[0.32em] text-white/50">(02) Our philosophy</p>
-
-          <div className="mt-6 grid gap-10 lg:grid-cols-12">
-            <h2 className="lg:col-span-7 font-display font-black leading-[0.9] tracking-[-0.03em] text-[clamp(3rem,9vw,8rem)]">
-              We treat every <br className="hidden md:block"/>
-              brief like a <span className="text-aurora italic">first date</span>.
-            </h2>
-            <p className="lg:col-span-4 lg:col-start-9 lg:pt-6 text-lg text-white/70">
-              Curious. Attentive. A little nervous in the best way. Four rules keep us honest
-              — every project, every time.
-            </p>
-          </div>
-
-          <div className="mt-24 grid gap-x-10 gap-y-16 md:grid-cols-2">
-            {manifesto.map((m, i) => (
-              <div
-                key={m.n}
-                className={`group relative ${i % 2 === 1 ? "md:pl-10 md:pt-16" : ""}`}
-              >
-                <span className="font-display text-[7rem] font-black leading-none text-white/8 md:text-[10rem]">{m.n}</span>
-                <div className="-mt-16 md:-mt-24">
-                  <h3 className="font-display text-3xl font-bold tracking-tight md:text-5xl">{m.title}</h3>
-                  <p className="mt-4 max-w-md text-base text-white/70">{m.text}</p>
-                  <span className="mt-6 block h-px w-16 bg-white/30 transition-all duration-500 group-hover:w-40 group-hover:bg-amber-200/70" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="seam seam-dark-to-light" aria-hidden />
-
-      {/* A breath — deliberate pause between manifesto and work */}
-      <div className="mx-auto max-w-[86rem] px-6 pt-20 md:pt-28">
-        <span className="rule-breath text-foreground" />
-      </div>
-
-      {/* ============================================================
-          FEATURED WORK — magazine grid, asymmetric, tighter type.
-      ============================================================ */}
-      <section className="mx-auto max-w-[86rem] px-6 py-32 reveal-on-scroll">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground">(03) Selected work</p>
-            <h2 className="mt-4 font-display text-5xl font-black leading-[0.95] tracking-tight md:text-7xl">
-              Real brands. <br/>
-              <span className="italic font-normal text-muted-foreground">Real</span> glow-ups.
-            </h2>
-          </div>
-          <Link to="/portfolio" className="text-sm font-semibold underline-offset-8 hover:underline">View archive →</Link>
-        </div>
-
-        <div className="mt-16 grid gap-5 md:grid-cols-6 md:grid-rows-2">
-          {projects.slice(0, 4).map((w, i) => {
-            const layouts = [
-              "md:col-span-4 md:row-span-2 md:min-h-[560px]",
-              "md:col-span-2 md:min-h-[270px]",
-              "md:col-span-1 md:min-h-[270px]",
-              "md:col-span-1 md:min-h-[270px]",
-            ];
-            return (
-              <article
-                key={w.title}
-                className={`group relative overflow-hidden rounded-2xl bg-card animate-fade-up ${layouts[i]}`}
-                style={{ animationDelay: `${i * 90}ms` }}
-              >
-                <img src={w.img} alt={w.title} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">{w.tag}</span>
-                  <h3 className={`mt-2 font-display font-bold leading-tight ${i === 0 ? "text-3xl md:text-5xl" : "text-xl md:text-2xl"}`}>{w.title}</h3>
-                  <p className="mt-1 text-xs text-white/60">{w.client}</p>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        <div className="mt-5 grid gap-5 md:grid-cols-3">
-          {projects.slice(3, 6).map((w, i) => (
-            <article
-              key={w.title + i}
-              className={`group relative overflow-hidden rounded-2xl bg-card animate-fade-up ${i === 1 ? "md:mt-8" : ""} ${i === 2 ? "md:-mt-6" : ""}`}
-              style={{ animationDelay: `${i * 100}ms` }}
-            >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img src={w.img} alt={w.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]" />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">{w.tag}</span>
-                <h3 className="mt-2 font-display text-xl font-bold md:text-2xl">{w.title}</h3>
-                <p className="mt-1 text-xs text-white/60">{w.client}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <div className="seam seam-light-to-dark" aria-hidden />
-
-      {/* ============================================================
-          COCO AI — flagship product moment.
-          Full-bleed dark, live nebula, oversized composition.
-      ============================================================ */}
-      <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[#070817]" aria-hidden>
-          <InkVideo src={inkCloudAsset.url} fallbackSrc={inkCloudWebmAsset.url} poster={inkCloudPoster.url} className="absolute inset-0" />
-
-          {/* deep vignette so headline stays legible */}
-          <div className="absolute inset-0 coco-ink-home-scrim" />
-        </div>
-
-        <div className="relative mx-auto grid max-w-[92rem] items-center gap-12 px-6 py-32 md:py-48 lg:grid-cols-12">
-          <div className="lg:col-span-7 text-white">
-            <p className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.32em] text-white/60">
-              <Sparkles size={12}/> (04) A flagship experience
-            </p>
-            <h2 className="mt-6 font-display font-black leading-[0.88] tracking-[-0.03em] text-[clamp(3rem,10vw,9rem)]">
-              Meet <span className="italic font-normal text-white/75">Coco</span> — <br/>
-              <span className="text-aurora">your creative</span><br/>
-              co-pilot.
-            </h2>
-            <p className="mt-8 max-w-xl text-lg text-white/70">
-              Sketch a website in a sentence. Draft a week of posts in a minute. Brief the studio
-              before you finish your coffee. Coco is trained on the way small brands actually grow.
-            </p>
-            <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Link to="/chat" className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-slate-950">
-                <Bot size={16}/> Talk to Coco <ArrowUpRight size={16}/>
-              </Link>
-              <Link to="/services" className="text-sm font-semibold text-white/80 underline-offset-8 hover:text-white hover:underline">
-                Or explore the studio →
-              </Link>
-            </div>
-          </div>
-
-          <div className="relative flex items-center justify-center lg:col-span-5">
-            <div aria-hidden className="absolute inset-0 -z-10">
-              <div className="absolute inset-8 rounded-full bg-gradient-brand opacity-40 blur-[80px]" />
-            </div>
-            <img
-              src={assistantLogo}
-              alt="Coco AI"
-              loading="lazy"
-              className="relative h-72 w-72 animate-float drop-shadow-[0_30px_60px_rgba(168,85,247,0.45)] md:h-[26rem] md:w-[26rem]"
-            />
-          </div>
-        </div>
-      </section>
-
-      <div className="seam seam-dark-to-light" aria-hidden />
-
-      {/* ============================================================
-          TESTIMONIALS — one dominant pull-quote, not a grid.
-      ============================================================ */}
-      <section className="mx-auto max-w-[80rem] px-6 py-36 md:py-52 reveal-on-scroll">
-        <p className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground">(05) In their words</p>
-        <blockquote className="mt-10 max-w-5xl font-display text-4xl font-medium leading-[1.15] tracking-tight md:text-7xl">
-          <span className="text-muted-foreground/40">"</span>
-          Coco Tech rebuilt our store and sales <em className="not-italic text-aurora">doubled in a month</em>.
-          The visuals just hit different.
-          <span className="text-muted-foreground/40">"</span>
-        </blockquote>
-        <div className="mt-10 flex items-center gap-4">
-          <span className="h-px w-12 bg-foreground/40" />
-          <div>
-            <p className="text-sm font-semibold">Aisha N.</p>
-            <p className="text-xs text-muted-foreground">Founder · Sahara Bloom Boutique</p>
-          </div>
-        </div>
-
-        <div className="mt-16 grid gap-8 border-t border-border pt-10 md:grid-cols-2">
-          <figure className="animate-fade-up">
-            <p className="text-lg leading-relaxed text-foreground/90">
-              "Their video edits make my reels look like a Netflix trailer. Pure magic."
-            </p>
-            <figcaption className="mt-4 text-xs uppercase tracking-widest text-muted-foreground">Daniel K. · Creator</figcaption>
-          </figure>
-          <figure className="animate-fade-up md:pt-10 [animation-delay:120ms]">
-            <p className="text-lg leading-relaxed text-foreground/90">
-              "Professional, fast, creative. Our Instagram finally feels like a real brand."
-            </p>
-            <figcaption className="mt-4 text-xs uppercase tracking-widest text-muted-foreground">Linda M. · Cafe Founder</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <div className="seam seam-light-to-dark" aria-hidden />
-
-      {/* ============================================================
-          FINAL CTA — glow-lamp live background.
-      ============================================================ */}
-      <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="glow-lamp" aria-hidden />
-          <div className="absolute inset-0 bg-black/45" />
-        </div>
-        <div className="relative mx-auto max-w-5xl px-6 py-32 text-center text-white md:py-52">
-          <p className="text-[10px] uppercase tracking-[0.32em] text-white/60">(06) Let's build</p>
-          <h2 className="mt-6 font-display font-black leading-[0.9] tracking-[-0.03em] text-[clamp(3rem,9vw,8.5rem)]">
-            Let's make it <br/>
-            <span className="text-aurora italic">happen</span> together.
-          </h2>
-          <p className="mx-auto mt-8 max-w-xl text-lg text-white/75">
-            We thrive on bold ideas and small-brand stories. Ready to create something people
-            actually remember?
-          </p>
-          <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-semibold text-slate-950">
-              Get started today <ArrowUpRight size={18}/>
-            </Link>
-            <Link to="/portfolio" className="glass-dark inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white transition-transform hover:-translate-y-0.5 active:scale-[0.98]">
-              See the work
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <ChatBubble />
-    </div>
-  );
+ return <div>
+  <section className="studio-hero relative isolate flex items-center overflow-hidden bg-image-ground text-on-image">
+   <img src={studioImage} alt="Creative studio workspace with design studies and a blue paper sculpture" width={1536} height={1024} fetchPriority="high" className="absolute inset-0 -z-20 h-full w-full object-cover"/>
+   <div className="image-scrim absolute inset-0 -z-10" aria-hidden/>
+   <div className="mx-auto w-full max-w-[1440px] px-6 py-16 md:px-10 md:py-24">
+    <p className="mb-7 text-xs text-image-muted">COCO TECH / CREATIVE TECHNOLOGY STUDIO</p>
+    <h1 className="hero-title max-w-3xl font-display">Coco Tech<span className="text-brand">.</span></h1>
+    <p className="mt-5 font-display text-4xl md:text-5xl">Creativity meets <em>technology.</em></p>
+    <p className="mt-7 max-w-md text-base leading-relaxed text-image-muted">A small studio in Kampala building websites, campaigns and film for brands that want to feel established from day one.</p>
+    <div className="mt-9 flex flex-wrap gap-3"><Button asChild size="lg"><Link to="/contact">Start a project <ArrowUpRight/></Link></Button><Button asChild variant="outline" size="lg" className="border-on-image/40 bg-transparent text-on-image hover:bg-on-image/10 hover:text-on-image"><Link to="/portfolio">See the work <ArrowRight/></Link></Button></div>
+   </div>
+  </section>
+  <div className="border-b border-border"><div className="mx-auto flex max-w-[1440px] flex-wrap justify-between gap-3 px-6 py-5 text-xs text-muted-foreground md:px-10"><span>Independent studio · Kampala, Uganda</span><span>Websites / Branding / Social / Posters / Video</span></div></div>
+  <section className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-28">
+   <div className="grid gap-10 lg:grid-cols-[1fr_1.7fr]"><div><p className="text-xs text-brand">01 / WHAT WE DO</p><h2 className="section-title mt-5">A studio,<br/><em className="text-muted-foreground">not a factory.</em></h2><p className="mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground">Four disciplines, one small team. We take fewer projects on purpose — so each one gets the craft it deserves.</p></div>
+    <ol className="divide-y divide-border border-y border-border">{services.map(s=><li key={s.n} className="grid grid-cols-[24px_minmax(0,1fr)_24px] gap-4 py-7 md:gap-8"><span className="pt-2 text-xs text-muted-foreground">{s.n}</span><div><h3 className="text-3xl md:text-4xl">{s.title}</h3><p className="mt-2 max-w-lg text-sm leading-relaxed text-muted-foreground">{s.desc}</p></div><Link to="/services" aria-label={`Explore ${s.title}`} className="pt-2 text-brand"><ArrowUpRight size={20}/></Link></li>)}</ol>
+   </div><div className="mt-8 flex justify-end"><Button asChild variant="link"><Link to="/services">Every service in detail <ArrowRight/></Link></Button></div>
+  </section>
+  <section className="border-y border-border bg-secondary/40"><div className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-28"><div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4"><div><p className="text-xs text-brand">02 / SELECTED WORK</p><h2 className="section-title mt-5">Design, in the real world.</h2></div><Link to="/portfolio" aria-label="View portfolio" className="mb-2 text-brand"><ArrowUpRight size={28}/></Link></div>
+   <div className="mt-12 grid items-start gap-x-8 gap-y-12 md:grid-cols-2">{projects.map((w,i)=><article key={w.title} className={i%2 ? "md:pt-20" : ""}><Link to="/portfolio" className="group block"><div className={`overflow-hidden bg-card ${i%3===0 ? "aspect-[5/4]" : "aspect-[4/3]"}`}><img src={w.img} alt={w.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"/></div><div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] gap-4"><div><h3 className="text-3xl">{w.title}</h3><p className="mt-1 text-xs text-muted-foreground">{w.tag} · {w.client}</p></div><ArrowUpRight size={20} className="mt-2 text-muted-foreground"/></div></Link></article>)}</div>
+  </div></section>
+  <section className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-28"><div className="grid gap-12 lg:grid-cols-[1.2fr_1fr]"><div><p className="text-xs text-brand">03 / THE COCO CODE</p><h2 className="section-title mt-5 max-w-xl">We treat every brief like a <em>first date.</em></h2><p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">Curious. Attentive. A little nervous in the best way. Four rules keep us honest — every project, every time.</p></div><div className="divide-y divide-border border-t border-border">{manifesto.map(m=><div key={m.n} className="grid grid-cols-[24px_minmax(0,1fr)] gap-5 py-6"><span className="pt-1 text-xs text-brand">{m.n}</span><div><h3 className="text-3xl">{m.title}</h3><p className="mt-2 text-sm text-muted-foreground">{m.text}</p></div></div>)}</div></div></section>
+  <section className="relative isolate overflow-hidden bg-image-ground text-on-image" aria-label="Coco AI"><InkVideo src={inkCloudAsset.url} fallbackSrc={inkCloudWebmAsset.url} poster={inkCloudPoster.url} className="absolute inset-0 -z-20"/><div className="coco-ink-home-scrim absolute inset-0 -z-10" aria-hidden/><div className="mx-auto grid max-w-[1440px] items-center gap-10 px-6 py-20 md:grid-cols-[1.5fr_1fr] md:px-10 md:py-24"><div><p className="text-xs text-image-muted">04 / YOUR CREATIVE CO-PILOT</p><h2 className="section-title mt-5">Meet <em>Coco.</em></h2><p className="mt-5 max-w-lg text-base leading-relaxed text-image-muted">Ask about our services, explore an idea, or brief the studio before you finish your coffee.</p><Button asChild size="lg" className="mt-8"><Link to="/chat">Talk to Coco <ArrowUpRight/></Link></Button></div><img src={assistantLogo} alt="Coco AI" loading="lazy" className="mx-auto h-40 w-40 object-contain md:h-56 md:w-56"/></div></section>
+  <section className="mx-auto max-w-[1440px] px-6 py-20 md:px-10 md:py-28"><p className="text-xs text-brand">05 / LET'S BUILD</p><div className="mt-5 grid items-end gap-8 md:grid-cols-[1.5fr_1fr]"><h2 className="section-title">Let's make it<br/><em>happen together.</em></h2><div><p className="max-w-sm text-sm leading-relaxed text-muted-foreground">We thrive on bold ideas and small-brand stories. Ready to create something people actually remember?</p><Button asChild size="lg" className="mt-6"><Link to="/contact">Get started today <ArrowUpRight/></Link></Button></div></div></section>
+  <ChatBubble/>
+ </div>;
 }
